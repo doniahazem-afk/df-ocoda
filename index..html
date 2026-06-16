@@ -1,492 +1,960 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="ar" dir="rtl">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Account Managers Dashboard</title>
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@2.44.0/tabler-icons.min.css">
-<style>
-*{box-sizing:border-box;margin:0;padding:0}
-body{font-family:system-ui,-apple-system,sans-serif;background:#f5f5f3;color:#1a1a18;padding:24px;min-height:100vh}
-.dash{max-width:1100px;margin:0 auto}
-.header{display:flex;justify-content:space-between;align-items:center;margin-bottom:1.5rem;padding-bottom:1rem;border-bottom:1px solid #e0ded6}
-.header h1{font-size:20px;font-weight:600;color:#1a1a18}
-.header p{font-size:13px;color:#6b6b67;margin-top:4px}
-.target-badge{background:#EAF3DE;color:#3B6D11;font-size:12px;padding:6px 14px;border-radius:8px;font-weight:500;display:flex;align-items:center;gap:6px}
-.metric-row{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:1.5rem}
-.metric-card{background:#ececea;border-radius:8px;padding:14px;text-align:center}
-.metric-label{font-size:12px;color:#6b6b67;margin-bottom:6px}
-.metric-val{font-size:22px;font-weight:600;color:#1a1a18}
-.metric-sub{font-size:11px;color:#6b6b67;margin-top:3px}
-.tabs{display:flex;gap:4px;margin-bottom:1.5rem;border-bottom:1px solid #e0ded6;padding-bottom:0}
-.tab{font-size:13px;padding:9px 16px;cursor:pointer;color:#6b6b67;border-bottom:2px solid transparent;margin-bottom:-1px;background:none;border-top:none;border-left:none;border-right:none;display:flex;align-items:center;gap:6px}
-.tab.active{color:#1a1a18;border-bottom-color:#1a1a18;font-weight:500}
-.tab:hover{color:#1a1a18}
-.view{display:none}.view.active{display:block}
-.section-title{font-size:12px;font-weight:500;color:#6b6b67;text-transform:uppercase;letter-spacing:.06em;margin-bottom:14px}
-.team-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;margin-bottom:1.5rem}
-.am-card{background:#fff;border:0.5px solid #dddbd3;border-radius:12px;padding:16px}
-.am-header{display:flex;align-items:center;gap:10px;margin-bottom:14px}
-.avatar{width:40px;height:40px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:500;flex-shrink:0}
-.av-blue{background:#E6F1FB;color:#185FA5}
-.av-teal{background:#E1F5EE;color:#0F6E56}
-.av-coral{background:#FAECE7;color:#993C1D}
-.av-purple{background:#EEEDFE;color:#534AB7}
-.am-name{font-size:14px;font-weight:500;color:#1a1a18}
-.am-title{font-size:12px;color:#6b6b67}
-.score-row{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:10px}
-.score-item{background:#f5f5f3;border-radius:8px;padding:10px}
-.score-label{font-size:11px;color:#6b6b67;margin-bottom:4px}
-.score-num{font-size:16px;font-weight:500}
-.good{color:#0F6E56}.mid{color:#854F0B}.low{color:#A32D2D}
-.bar-wrap{margin-bottom:8px}
-.bar-label{display:flex;justify-content:space-between;font-size:11px;color:#6b6b67;margin-bottom:3px}
-.bar-bg{background:#ececea;border-radius:4px;height:6px;overflow:hidden}
-.bar-fill{height:100%;border-radius:4px}
-.fill-green{background:#1D9E75}.fill-amber{background:#EF9F27}.fill-red{background:#E24B4A}.fill-blue{background:#378ADD}.fill-purple{background:#7F77DD}
-.attend-row{display:flex;gap:8px;margin-top:10px}
-.attend-badge{font-size:11px;padding:4px 10px;border-radius:8px;font-weight:500;display:flex;align-items:center;gap:4px}
-.present-b{background:#EAF3DE;color:#3B6D11}
-.absent-b{background:#FCEBEB;color:#A32D2D}
-.proj-wrap{background:#fff;border:0.5px solid #dddbd3;border-radius:12px;overflow:hidden;margin-bottom:1.5rem}
-.proj-table{width:100%;border-collapse:collapse;font-size:13px}
-.proj-table th{text-align:right;padding:10px 14px;color:#6b6b67;font-weight:500;font-size:12px;border-bottom:0.5px solid #e0ded6;background:#f9f9f7}
-.proj-table td{padding:12px 14px;border-bottom:0.5px solid #f0eee8;color:#1a1a18;vertical-align:middle}
-.proj-table tr:last-child td{border-bottom:none}
-.proj-table tr:hover td{background:#fafaf8}
-.pkg-badge{font-size:11px;padding:3px 9px;border-radius:8px;font-weight:500;white-space:nowrap}
-.pkg-gold{background:#FAEEDA;color:#633806}
-.pkg-silver{background:#F1EFE8;color:#444441}
-.pkg-prem{background:#EEEDFE;color:#3C3489}
-.social-icons{display:flex;gap:8px;align-items:center}
-.social-icons i{font-size:17px}
-.status-ok{color:#0F6E56;font-size:12px;display:flex;align-items:center;gap:4px}
-.status-warn{color:#854F0B;font-size:12px;display:flex;align-items:center;gap:4px}
-.status-bad{color:#A32D2D;font-size:12px;display:flex;align-items:center;gap:4px}
-.rev-card{background:#fff;border:0.5px solid #dddbd3;border-radius:12px;padding:18px;margin-bottom:14px}
-.rev-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-top:16px}
-.rev-item{text-align:center}
-.rev-name{font-size:12px;color:#6b6b67;margin-bottom:6px}
-.rev-num{font-size:20px;font-weight:600;color:#1a1a18}
-.rev-target-line{font-size:11px;color:#6b6b67;margin-top:2px}
-.progress-outer{background:#ececea;border-radius:4px;height:8px;margin-top:10px;overflow:hidden}
-.progress-inner{height:100%;border-radius:4px}
-.chart-legend{display:flex;gap:16px;margin-bottom:10px;flex-wrap:wrap}
-.legend-item{display:flex;align-items:center;gap:5px;font-size:12px;color:#6b6b67}
-.legend-dot{width:10px;height:10px;border-radius:2px}
-.chart-wrap{background:#fff;border:0.5px solid #dddbd3;border-radius:12px;padding:18px}
-.zoho-grid2{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:1.5rem}
-.zoho-card{background:#fff;border:0.5px solid #dddbd3;border-radius:12px;padding:14px}
-.zoho-header{display:flex;align-items:center;gap:8px;margin-bottom:12px}
-.zoho-title{font-size:13px;font-weight:500;color:#1a1a18}
-.zoho-metrics{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
-.zoho-item{background:#f5f5f3;border-radius:8px;padding:10px}
-.zoho-label{font-size:11px;color:#6b6b67;margin-bottom:3px}
-.zoho-val{font-size:14px;font-weight:500;color:#1a1a18}
-.skills-grid2{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
-.skill-card{background:#fff;border:0.5px solid #dddbd3;border-radius:12px;padding:14px}
-.skill-card-header{display:flex;align-items:center;gap:8px;margin-bottom:12px}
-.skill-row{margin-bottom:8px}
-.skill-label{font-size:11px;color:#6b6b67;margin-bottom:3px}
-.stars{font-size:13px;color:#EF9F27}
-.gray-star{color:#dddbd3}
-.top-bar{display:flex;align-items:center;gap:10px}
-select{font-size:13px;padding:6px 12px;border:0.5px solid #dddbd3;border-radius:8px;background:#fff;color:#1a1a18;cursor:pointer}
-select:focus{outline:none;border-color:#888}
-a{color:#185FA5;text-decoration:none}
-a:hover{text-decoration:underline}
-.site-link{font-size:11px;color:#6b6b67}
-</style>
-</head>
-<body>
-<div class="dash">
-
-<div class="header">
-  <div>
-    <h1>Account Managers Dashboard</h1>
-    <p>يونيو 2025 — تقرير شهري للفريق</p>
-  </div>
-  <div class="top-bar">
-    <select id="memberFilter" onchange="filterMember(this.value)">
-      <option value="all">كل الفريق</option>
-      <option value="0">سارة</option>
-      <option value="1">محمد</option>
-      <option value="2">لمياء</option>
-      <option value="3">عمر</option>
-    </select>
-    <span class="target-badge"><i class="ti ti-target"></i> تارجت: 100,000 ريال</span>
-  </div>
-</div>
-
-<div class="metric-row">
-  <div class="metric-card">
-    <div class="metric-label">إيراد الفريق الكلي</div>
-    <div class="metric-val">87,500</div>
-    <div class="metric-sub">ريال / الهدف 100,000</div>
-  </div>
-  <div class="metric-card">
-    <div class="metric-label">متوسط Client Health</div>
-    <div class="metric-val" style="color:#0F6E56">82%</div>
-    <div class="metric-sub">رضا العملاء</div>
-  </div>
-  <div class="metric-card">
-    <div class="metric-label">متوسط Efficiency</div>
-    <div class="metric-val" style="color:#854F0B">76%</div>
-    <div class="metric-sub">كفاءة العمليات</div>
-  </div>
-  <div class="metric-card">
-    <div class="metric-label">إجمالي المشاريع</div>
-    <div class="metric-val">12</div>
-    <div class="metric-sub">مشروع نشط</div>
-  </div>
-</div>
-
-<div class="tabs">
-  <button class="tab active" onclick="switchTab('team')"><i class="ti ti-users"></i> الفريق</button>
-  <button class="tab" onclick="switchTab('projects')"><i class="ti ti-briefcase"></i> المشاريع والعقود</button>
-  <button class="tab" onclick="switchTab('revenue')"><i class="ti ti-chart-bar"></i> الإيرادات والتارجت</button>
-  <button class="tab" onclick="switchTab('zoho')"><i class="ti ti-database"></i> Zoho & المهارات</button>
-</div>
-
-<!-- Team View -->
-<div class="view active" id="view-team">
-  <div class="section-title">أداء أعضاء الفريق</div>
-  <div class="team-grid" id="teamGrid">
-
-    <div class="am-card">
-      <div class="am-header">
-        <div class="avatar av-blue">سا</div>
-        <div><div class="am-name">سارة الأحمد</div><div class="am-title">Account Manager</div></div>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Account Managers Dashboard</title>
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@2.44.0/tabler-icons.min.css"
+    />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="dash">
+      <div class="header">
+        <div>
+          <h1>Account Managers Dashboard</h1>
+          <p>يونيو 2025 — تقرير شهري للفريق</p>
+        </div>
+        <div class="top-bar">
+          <select id="memberFilter" onchange="filterMember(this.value)">
+            <option value="all">كل الفريق</option>
+            <option value="0">سارة</option>
+            <option value="1">محمد</option>
+            <option value="2">لمياء</option>
+            <option value="3">عمر</option>
+          </select>
+          <span class="target-badge"
+            ><i class="ti ti-target"></i> تارجت: 100,000 ريال</span
+          >
+        </div>
       </div>
-      <div class="score-row">
-        <div class="score-item"><div class="score-label">Monthly Revenue</div><div class="score-num good">24,000 ر</div></div>
-        <div class="score-item"><div class="score-label">Client Health</div><div class="score-num good">88%</div></div>
+
+      <div class="metric-row">
+        <div class="metric-card">
+          <div class="metric-label">إيراد الفريق الكلي</div>
+          <div class="metric-val">87,500</div>
+          <div class="metric-sub">ريال / الهدف 100,000</div>
+        </div>
+        <div class="metric-card">
+          <div class="metric-label">متوسط Client Health</div>
+          <div class="metric-val" style="color: #0f6e56">82%</div>
+          <div class="metric-sub">رضا العملاء</div>
+        </div>
+        <div class="metric-card">
+          <div class="metric-label">متوسط Efficiency</div>
+          <div class="metric-val" style="color: #854f0b">76%</div>
+          <div class="metric-sub">كفاءة العمليات</div>
+        </div>
+        <div class="metric-card">
+          <div class="metric-label">إجمالي المشاريع</div>
+          <div class="metric-val">12</div>
+          <div class="metric-sub">مشروع نشط</div>
+        </div>
       </div>
-      <div class="bar-wrap"><div class="bar-label"><span>Operational Efficiency</span><span>82%</span></div><div class="bar-bg"><div class="bar-fill fill-green" style="width:82%"></div></div></div>
-      <div class="bar-wrap"><div class="bar-label"><span>وقت الرد على العميل</span><span>جيد — 90%</span></div><div class="bar-bg"><div class="bar-fill fill-blue" style="width:90%"></div></div></div>
-      <div class="bar-wrap"><div class="bar-label"><span>Zoho System Score</span><span>85%</span></div><div class="bar-bg"><div class="bar-fill fill-purple" style="width:85%"></div></div></div>
-      <div class="attend-row">
-        <span class="attend-badge present-b"><i class="ti ti-check"></i> حضور: 22 يوم</span>
-        <span class="attend-badge absent-b"><i class="ti ti-x"></i> غياب: 2 يوم</span>
+
+      <div class="tabs">
+        <button class="tab active" onclick="switchTab('team')">
+          <i class="ti ti-users"></i> الفريق
+        </button>
+        <button class="tab" onclick="switchTab('projects')">
+          <i class="ti ti-briefcase"></i> المشاريع والعقود
+        </button>
+        <button class="tab" onclick="switchTab('revenue')">
+          <i class="ti ti-chart-bar"></i> الإيرادات والتارجت
+        </button>
+        <button class="tab" onclick="switchTab('zoho')">
+          <i class="ti ti-database"></i> Zoho & المهارات
+        </button>
+      </div>
+
+      <!-- Team View -->
+      <div class="view active" id="view-team">
+        <div class="section-title">أداء أعضاء الفريق</div>
+        <div class="team-grid" id="teamGrid">
+          <div class="am-card">
+            <div class="am-header">
+              <div class="avatar av-blue">سا</div>
+              <div>
+                <div class="am-name">سارة الأحمد</div>
+                <div class="am-title">Account Manager</div>
+              </div>
+            </div>
+            <div class="score-row">
+              <div class="score-item">
+                <div class="score-label">Monthly Revenue</div>
+                <div class="score-num good">24,000 ر</div>
+              </div>
+              <div class="score-item">
+                <div class="score-label">Client Health</div>
+                <div class="score-num good">88%</div>
+              </div>
+            </div>
+            <div class="bar-wrap">
+              <div class="bar-label">
+                <span>Operational Efficiency</span><span>82%</span>
+              </div>
+              <div class="bar-bg">
+                <div class="bar-fill fill-green" style="width: 82%"></div>
+              </div>
+            </div>
+            <div class="bar-wrap">
+              <div class="bar-label">
+                <span>وقت الرد على العميل</span><span>جيد — 90%</span>
+              </div>
+              <div class="bar-bg">
+                <div class="bar-fill fill-blue" style="width: 90%"></div>
+              </div>
+            </div>
+            <div class="bar-wrap">
+              <div class="bar-label">
+                <span>Zoho System Score</span><span>85%</span>
+              </div>
+              <div class="bar-bg">
+                <div class="bar-fill fill-purple" style="width: 85%"></div>
+              </div>
+            </div>
+            <div class="attend-row">
+              <span class="attend-badge present-b"
+                ><i class="ti ti-check"></i> حضور: 22 يوم</span
+              >
+              <span class="attend-badge absent-b"
+                ><i class="ti ti-x"></i> غياب: 2 يوم</span
+              >
+            </div>
+          </div>
+
+          <div class="am-card">
+            <div class="am-header">
+              <div class="avatar av-teal">مح</div>
+              <div>
+                <div class="am-name">محمد السعيد</div>
+                <div class="am-title">Account Manager</div>
+              </div>
+            </div>
+            <div class="score-row">
+              <div class="score-item">
+                <div class="score-label">Monthly Revenue</div>
+                <div class="score-num good">26,500 ر</div>
+              </div>
+              <div class="score-item">
+                <div class="score-label">Client Health</div>
+                <div class="score-num good">91%</div>
+              </div>
+            </div>
+            <div class="bar-wrap">
+              <div class="bar-label">
+                <span>Operational Efficiency</span><span>88%</span>
+              </div>
+              <div class="bar-bg">
+                <div class="bar-fill fill-green" style="width: 88%"></div>
+              </div>
+            </div>
+            <div class="bar-wrap">
+              <div class="bar-label">
+                <span>وقت الرد على العميل</span><span>ممتاز — 95%</span>
+              </div>
+              <div class="bar-bg">
+                <div class="bar-fill fill-blue" style="width: 95%"></div>
+              </div>
+            </div>
+            <div class="bar-wrap">
+              <div class="bar-label">
+                <span>Zoho System Score</span><span>92%</span>
+              </div>
+              <div class="bar-bg">
+                <div class="bar-fill fill-purple" style="width: 92%"></div>
+              </div>
+            </div>
+            <div class="attend-row">
+              <span class="attend-badge present-b"
+                ><i class="ti ti-check"></i> حضور: 24 يوم</span
+              >
+              <span class="attend-badge absent-b"
+                ><i class="ti ti-x"></i> غياب: 0 يوم</span
+              >
+            </div>
+          </div>
+
+          <div class="am-card">
+            <div class="am-header">
+              <div class="avatar av-coral">لم</div>
+              <div>
+                <div class="am-name">لمياء القحطاني</div>
+                <div class="am-title">Account Manager</div>
+              </div>
+            </div>
+            <div class="score-row">
+              <div class="score-item">
+                <div class="score-label">Monthly Revenue</div>
+                <div class="score-num mid">18,000 ر</div>
+              </div>
+              <div class="score-item">
+                <div class="score-label">Client Health</div>
+                <div class="score-num mid">71%</div>
+              </div>
+            </div>
+            <div class="bar-wrap">
+              <div class="bar-label">
+                <span>Operational Efficiency</span><span>65%</span>
+              </div>
+              <div class="bar-bg">
+                <div class="bar-fill fill-amber" style="width: 65%"></div>
+              </div>
+            </div>
+            <div class="bar-wrap">
+              <div class="bar-label">
+                <span>وقت الرد على العميل</span><span>متأخر أحياناً — 58%</span>
+              </div>
+              <div class="bar-bg">
+                <div class="bar-fill fill-amber" style="width: 58%"></div>
+              </div>
+            </div>
+            <div class="bar-wrap">
+              <div class="bar-label">
+                <span>Zoho System Score</span><span>70%</span>
+              </div>
+              <div class="bar-bg">
+                <div class="bar-fill fill-amber" style="width: 70%"></div>
+              </div>
+            </div>
+            <div class="attend-row">
+              <span class="attend-badge present-b"
+                ><i class="ti ti-check"></i> حضور: 20 يوم</span
+              >
+              <span class="attend-badge absent-b"
+                ><i class="ti ti-x"></i> غياب: 4 يوم</span
+              >
+            </div>
+          </div>
+
+          <div class="am-card">
+            <div class="am-header">
+              <div class="avatar av-purple">عم</div>
+              <div>
+                <div class="am-name">عمر الزهراني</div>
+                <div class="am-title">Account Manager</div>
+              </div>
+            </div>
+            <div class="score-row">
+              <div class="score-item">
+                <div class="score-label">Monthly Revenue</div>
+                <div class="score-num low">19,000 ر</div>
+              </div>
+              <div class="score-item">
+                <div class="score-label">Client Health</div>
+                <div class="score-num mid">77%</div>
+              </div>
+            </div>
+            <div class="bar-wrap">
+              <div class="bar-label">
+                <span>Operational Efficiency</span><span>72%</span>
+              </div>
+              <div class="bar-bg">
+                <div class="bar-fill fill-amber" style="width: 72%"></div>
+              </div>
+            </div>
+            <div class="bar-wrap">
+              <div class="bar-label">
+                <span>وقت الرد على العميل</span><span>متأخر أحياناً — 65%</span>
+              </div>
+              <div class="bar-bg">
+                <div class="bar-fill fill-amber" style="width: 65%"></div>
+              </div>
+            </div>
+            <div class="bar-wrap">
+              <div class="bar-label">
+                <span>Zoho System Score</span><span>78%</span>
+              </div>
+              <div class="bar-bg">
+                <div class="bar-fill fill-purple" style="width: 78%"></div>
+              </div>
+            </div>
+            <div class="attend-row">
+              <span class="attend-badge present-b"
+                ><i class="ti ti-check"></i> حضور: 21 يوم</span
+              >
+              <span class="attend-badge absent-b"
+                ><i class="ti ti-x"></i> غياب: 3 يوم</span
+              >
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Projects View -->
+      <div class="view" id="view-projects">
+        <div class="section-title">عقود ومشاريع العملاء</div>
+        <div class="proj-wrap">
+          <table class="proj-table">
+            <thead>
+              <tr>
+                <th>العميل والموقع</th>
+                <th>الباقة</th>
+                <th>قيمة العقد</th>
+                <th>المشرف</th>
+                <th>السوشيال ميديا</th>
+                <th>تجديد العقد</th>
+                <th>حالة العميل</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>
+                  <div style="font-weight: 500">شركة الرياض للتقنية</div>
+                  <div class="site-link">
+                    <a href="https://example.com" target="_blank"
+                      >riyad-tech.com</a
+                    >
+                  </div>
+                </td>
+                <td><span class="pkg-badge pkg-gold">Gold</span></td>
+                <td>8,500 ر/شهر</td>
+                <td>
+                  <div style="display: flex; align-items: center; gap: 6px">
+                    <div
+                      class="avatar av-teal"
+                      style="width: 26px; height: 26px; font-size: 10px"
+                    >
+                      مح
+                    </div>
+                    محمد
+                  </div>
+                </td>
+                <td>
+                  <div class="social-icons">
+                    <i class="ti ti-brand-instagram" style="color: #e24b4a"></i
+                    ><i class="ti ti-brand-twitter" style="color: #378add"></i
+                    ><i class="ti ti-brand-linkedin" style="color: #185fa5"></i>
+                  </div>
+                </td>
+                <td style="font-size: 12px">15 يوليو 2025</td>
+                <td>
+                  <div class="status-ok">
+                    <i class="ti ti-circle-check"></i> راضي
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <div style="font-weight: 500">مجموعة الأمل التجارية</div>
+                  <div class="site-link">
+                    <a href="https://example.com" target="_blank"
+                      >alamal-group.com</a
+                    >
+                  </div>
+                </td>
+                <td><span class="pkg-badge pkg-prem">Premium</span></td>
+                <td>12,000 ر/شهر</td>
+                <td>
+                  <div style="display: flex; align-items: center; gap: 6px">
+                    <div
+                      class="avatar av-blue"
+                      style="width: 26px; height: 26px; font-size: 10px"
+                    >
+                      سا
+                    </div>
+                    سارة
+                  </div>
+                </td>
+                <td>
+                  <div class="social-icons">
+                    <i class="ti ti-brand-instagram" style="color: #e24b4a"></i
+                    ><i class="ti ti-brand-facebook" style="color: #185fa5"></i>
+                  </div>
+                </td>
+                <td style="font-size: 12px">1 أغسطس 2025</td>
+                <td>
+                  <div class="status-ok">
+                    <i class="ti ti-circle-check"></i> راضي جداً
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <div style="font-weight: 500">متجر الوفاء الإلكتروني</div>
+                  <div class="site-link">
+                    <a href="https://example.com" target="_blank"
+                      >alwafa-store.com</a
+                    >
+                  </div>
+                </td>
+                <td><span class="pkg-badge pkg-silver">Silver</span></td>
+                <td>4,500 ر/شهر</td>
+                <td>
+                  <div style="display: flex; align-items: center; gap: 6px">
+                    <div
+                      class="avatar av-coral"
+                      style="width: 26px; height: 26px; font-size: 10px"
+                    >
+                      لم
+                    </div>
+                    لمياء
+                  </div>
+                </td>
+                <td>
+                  <div class="social-icons">
+                    <i class="ti ti-brand-tiktok"></i
+                    ><i
+                      class="ti ti-brand-instagram"
+                      style="color: #e24b4a"
+                    ></i>
+                  </div>
+                </td>
+                <td style="font-size: 12px">10 سبتمبر 2025</td>
+                <td>
+                  <div class="status-warn">
+                    <i class="ti ti-alert-circle"></i> تأخر في الرد
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <div style="font-weight: 500">مطاعم النجمة</div>
+                  <div class="site-link">
+                    <a href="https://example.com" target="_blank"
+                      >star-restaurants.com</a
+                    >
+                  </div>
+                </td>
+                <td><span class="pkg-badge pkg-gold">Gold</span></td>
+                <td>7,000 ر/شهر</td>
+                <td>
+                  <div style="display: flex; align-items: center; gap: 6px">
+                    <div
+                      class="avatar av-purple"
+                      style="width: 26px; height: 26px; font-size: 10px"
+                    >
+                      عم
+                    </div>
+                    عمر
+                  </div>
+                </td>
+                <td>
+                  <div class="social-icons">
+                    <i class="ti ti-brand-instagram" style="color: #e24b4a"></i
+                    ><i class="ti ti-brand-snapchat" style="color: #ef9f27"></i>
+                  </div>
+                </td>
+                <td style="font-size: 12px">20 يونيو 2025</td>
+                <td>
+                  <div class="status-bad">
+                    <i class="ti ti-alert-triangle"></i> غير راضي
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <div style="font-weight: 500">شركة الإبداع للتصميم</div>
+                  <div class="site-link">
+                    <a href="https://example.com" target="_blank"
+                      >ibda3-design.com</a
+                    >
+                  </div>
+                </td>
+                <td><span class="pkg-badge pkg-prem">Premium</span></td>
+                <td>15,000 ر/شهر</td>
+                <td>
+                  <div style="display: flex; align-items: center; gap: 6px">
+                    <div
+                      class="avatar av-teal"
+                      style="width: 26px; height: 26px; font-size: 10px"
+                    >
+                      مح
+                    </div>
+                    محمد
+                  </div>
+                </td>
+                <td>
+                  <div class="social-icons">
+                    <i class="ti ti-brand-behance" style="color: #185fa5"></i
+                    ><i class="ti ti-brand-linkedin" style="color: #185fa5"></i
+                    ><i
+                      class="ti ti-brand-instagram"
+                      style="color: #e24b4a"
+                    ></i>
+                  </div>
+                </td>
+                <td style="font-size: 12px">5 أكتوبر 2025</td>
+                <td>
+                  <div class="status-ok">
+                    <i class="ti ti-circle-check"></i> ممتاز
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <div style="font-weight: 500">كافيه لوكس</div>
+                  <div class="site-link">
+                    <a href="https://example.com" target="_blank"
+                      >luxecafe.sa</a
+                    >
+                  </div>
+                </td>
+                <td><span class="pkg-badge pkg-silver">Silver</span></td>
+                <td>3,500 ر/شهر</td>
+                <td>
+                  <div style="display: flex; align-items: center; gap: 6px">
+                    <div
+                      class="avatar av-blue"
+                      style="width: 26px; height: 26px; font-size: 10px"
+                    >
+                      سا
+                    </div>
+                    سارة
+                  </div>
+                </td>
+                <td>
+                  <div class="social-icons">
+                    <i class="ti ti-brand-instagram" style="color: #e24b4a"></i
+                    ><i class="ti ti-brand-snapchat" style="color: #ef9f27"></i>
+                  </div>
+                </td>
+                <td style="font-size: 12px">30 يوليو 2025</td>
+                <td>
+                  <div class="status-ok">
+                    <i class="ti ti-circle-check"></i> راضي
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <div style="font-weight: 500">عيادات الصحة الحديثة</div>
+                  <div class="site-link">
+                    <a href="https://example.com" target="_blank"
+                      >modernhealth.sa</a
+                    >
+                  </div>
+                </td>
+                <td><span class="pkg-badge pkg-gold">Gold</span></td>
+                <td>9,000 ر/شهر</td>
+                <td>
+                  <div style="display: flex; align-items: center; gap: 6px">
+                    <div
+                      class="avatar av-purple"
+                      style="width: 26px; height: 26px; font-size: 10px"
+                    >
+                      عم
+                    </div>
+                    عمر
+                  </div>
+                </td>
+                <td>
+                  <div class="social-icons">
+                    <i class="ti ti-brand-instagram" style="color: #e24b4a"></i
+                    ><i class="ti ti-brand-twitter" style="color: #378add"></i>
+                  </div>
+                </td>
+                <td style="font-size: 12px">15 أغسطس 2025</td>
+                <td>
+                  <div class="status-warn">
+                    <i class="ti ti-alert-circle"></i> متأخر أحياناً
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Revenue View -->
+      <div class="view" id="view-revenue">
+        <div class="rev-card">
+          <div
+            style="
+              display: flex;
+              justify-content: space-between;
+              align-items: center;
+              margin-bottom: 14px;
+            "
+          >
+            <div class="section-title" style="margin: 0">
+              تارجت الإيرادات الشهري
+            </div>
+            <div style="font-size: 13px; color: #6b6b67">
+              إجمالي الفريق:
+              <strong style="color: #1a1a18">87,500 / 100,000 ريال</strong>
+            </div>
+          </div>
+          <div class="bar-label">
+            <span>تقدم الفريق</span><span>87.5%</span>
+          </div>
+          <div class="bar-bg" style="height: 12px">
+            <div class="bar-fill fill-green" style="width: 87.5%"></div>
+          </div>
+          <div class="rev-grid">
+            <div class="rev-item">
+              <div class="rev-name">سارة الأحمد</div>
+              <div class="rev-num" style="color: #854f0b">24,000</div>
+              <div class="rev-target-line">هدف: 25,000 ريال</div>
+              <div class="progress-outer">
+                <div class="progress-inner fill-amber" style="width: 96%"></div>
+              </div>
+              <div style="font-size: 11px; color: #854f0b; margin-top: 4px">
+                ناقص 1,000 ريال
+              </div>
+            </div>
+            <div class="rev-item">
+              <div class="rev-name">محمد السعيد</div>
+              <div class="rev-num" style="color: #0f6e56">26,500</div>
+              <div class="rev-target-line">هدف: 25,000 ريال</div>
+              <div class="progress-outer">
+                <div
+                  class="progress-inner fill-green"
+                  style="width: 100%"
+                ></div>
+              </div>
+              <div style="font-size: 11px; color: #0f6e56; margin-top: 4px">
+                تجاوز الهدف ✓
+              </div>
+            </div>
+            <div class="rev-item">
+              <div class="rev-name">لمياء القحطاني</div>
+              <div class="rev-num" style="color: #a32d2d">18,000</div>
+              <div class="rev-target-line">هدف: 25,000 ريال</div>
+              <div class="progress-outer">
+                <div class="progress-inner fill-red" style="width: 72%"></div>
+              </div>
+              <div style="font-size: 11px; color: #a32d2d; margin-top: 4px">
+                ناقص 7,000 ريال
+              </div>
+            </div>
+            <div class="rev-item">
+              <div class="rev-name">عمر الزهراني</div>
+              <div class="rev-num" style="color: #a32d2d">19,000</div>
+              <div class="rev-target-line">هدف: 25,000 ريال</div>
+              <div class="progress-outer">
+                <div class="progress-inner fill-red" style="width: 76%"></div>
+              </div>
+              <div style="font-size: 11px; color: #a32d2d; margin-top: 4px">
+                ناقص 6,000 ريال
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="chart-wrap">
+          <div class="section-title">مقارنة درجات الأداء</div>
+          <div class="chart-legend">
+            <div class="legend-item">
+              <div class="legend-dot" style="background: #1d9e75"></div>
+              Operational Efficiency
+            </div>
+            <div class="legend-item">
+              <div class="legend-dot" style="background: #378add"></div>
+              Client Health
+            </div>
+            <div class="legend-item">
+              <div class="legend-dot" style="background: #7f77dd"></div>
+              Zoho Score
+            </div>
+          </div>
+          <div style="position: relative; width: 100%; height: 260px">
+            <canvas
+              id="scoreChart"
+              role="img"
+              aria-label="مقارنة درجات أداء أعضاء الفريق الأربعة"
+              >درجات الأداء: سارة 82، محمد 91، لمياء 65، عمر 72</canvas
+            >
+          </div>
+        </div>
+      </div>
+
+      <!-- Zoho & Skills View -->
+      <div class="view" id="view-zoho">
+        <div class="section-title">Zoho CRM — متابعة النظام</div>
+        <div class="zoho-grid2">
+          <div class="zoho-card">
+            <div class="zoho-header">
+              <div
+                class="avatar av-blue"
+                style="width: 30px; height: 30px; font-size: 11px"
+              >
+                سا
+              </div>
+              <div class="zoho-title">سارة الأحمد</div>
+            </div>
+            <div class="zoho-metrics">
+              <div class="zoho-item">
+                <div class="zoho-label">عدد اللوجات</div>
+                <div class="zoho-val">142</div>
+              </div>
+              <div class="zoho-item">
+                <div class="zoho-label">التقارير المُدخلة</div>
+                <div class="zoho-val good">18/20</div>
+              </div>
+              <div class="zoho-item">
+                <div class="zoho-label">Follow-ups</div>
+                <div class="zoho-val good">95%</div>
+              </div>
+            </div>
+          </div>
+          <div class="zoho-card">
+            <div class="zoho-header">
+              <div
+                class="avatar av-teal"
+                style="width: 30px; height: 30px; font-size: 11px"
+              >
+                مح
+              </div>
+              <div class="zoho-title">محمد السعيد</div>
+            </div>
+            <div class="zoho-metrics">
+              <div class="zoho-item">
+                <div class="zoho-label">عدد اللوجات</div>
+                <div class="zoho-val">198</div>
+              </div>
+              <div class="zoho-item">
+                <div class="zoho-label">التقارير المُدخلة</div>
+                <div class="zoho-val good">20/20</div>
+              </div>
+              <div class="zoho-item">
+                <div class="zoho-label">Follow-ups</div>
+                <div class="zoho-val good">100%</div>
+              </div>
+            </div>
+          </div>
+          <div class="zoho-card">
+            <div class="zoho-header">
+              <div
+                class="avatar av-coral"
+                style="width: 30px; height: 30px; font-size: 11px"
+              >
+                لم
+              </div>
+              <div class="zoho-title">لمياء القحطاني</div>
+            </div>
+            <div class="zoho-metrics">
+              <div class="zoho-item">
+                <div class="zoho-label">عدد اللوجات</div>
+                <div class="zoho-val mid">89</div>
+              </div>
+              <div class="zoho-item">
+                <div class="zoho-label">التقارير المُدخلة</div>
+                <div class="zoho-val mid">13/20</div>
+              </div>
+              <div class="zoho-item">
+                <div class="zoho-label">Follow-ups</div>
+                <div class="zoho-val mid">68%</div>
+              </div>
+            </div>
+          </div>
+          <div class="zoho-card">
+            <div class="zoho-header">
+              <div
+                class="avatar av-purple"
+                style="width: 30px; height: 30px; font-size: 11px"
+              >
+                عم
+              </div>
+              <div class="zoho-title">عمر الزهراني</div>
+            </div>
+            <div class="zoho-metrics">
+              <div class="zoho-item">
+                <div class="zoho-label">عدد اللوجات</div>
+                <div class="zoho-val mid">110</div>
+              </div>
+              <div class="zoho-item">
+                <div class="zoho-label">التقارير المُدخلة</div>
+                <div class="zoho-val mid">15/20</div>
+              </div>
+              <div class="zoho-item">
+                <div class="zoho-label">Follow-ups</div>
+                <div class="zoho-val mid">78%</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="section-title">المهارات الشخصية والمهنية</div>
+        <div class="skills-grid2">
+          <div class="skill-card">
+            <div class="skill-card-header">
+              <div
+                class="avatar av-blue"
+                style="width: 30px; height: 30px; font-size: 11px"
+              >
+                سا
+              </div>
+              <div style="font-size: 13px; font-weight: 500">سارة</div>
+            </div>
+            <div class="skill-row">
+              <div class="skill-label">التواصل</div>
+              <div class="stars">★★★★<span class="gray-star">★</span></div>
+            </div>
+            <div class="skill-row">
+              <div class="skill-label">التفاوض</div>
+              <div class="stars">★★★★<span class="gray-star">★</span></div>
+            </div>
+            <div class="skill-row">
+              <div class="skill-label">إدارة الوقت</div>
+              <div class="stars">★★★<span class="gray-star">★★</span></div>
+            </div>
+            <div class="skill-row">
+              <div class="skill-label">حل المشكلات</div>
+              <div class="stars">★★★★★</div>
+            </div>
+          </div>
+          <div class="skill-card">
+            <div class="skill-card-header">
+              <div
+                class="avatar av-teal"
+                style="width: 30px; height: 30px; font-size: 11px"
+              >
+                مح
+              </div>
+              <div style="font-size: 13px; font-weight: 500">محمد</div>
+            </div>
+            <div class="skill-row">
+              <div class="skill-label">التواصل</div>
+              <div class="stars">★★★★★</div>
+            </div>
+            <div class="skill-row">
+              <div class="skill-label">التفاوض</div>
+              <div class="stars">★★★★★</div>
+            </div>
+            <div class="skill-row">
+              <div class="skill-label">إدارة الوقت</div>
+              <div class="stars">★★★★★</div>
+            </div>
+            <div class="skill-row">
+              <div class="skill-label">حل المشكلات</div>
+              <div class="stars">★★★★<span class="gray-star">★</span></div>
+            </div>
+          </div>
+          <div class="skill-card">
+            <div class="skill-card-header">
+              <div
+                class="avatar av-coral"
+                style="width: 30px; height: 30px; font-size: 11px"
+              >
+                لم
+              </div>
+              <div style="font-size: 13px; font-weight: 500">لمياء</div>
+            </div>
+            <div class="skill-row">
+              <div class="skill-label">التواصل</div>
+              <div class="stars">★★★<span class="gray-star">★★</span></div>
+            </div>
+            <div class="skill-row">
+              <div class="skill-label">التفاوض</div>
+              <div class="stars">★★★<span class="gray-star">★★</span></div>
+            </div>
+            <div class="skill-row">
+              <div class="skill-label">إدارة الوقت</div>
+              <div class="stars">★★<span class="gray-star">★★★</span></div>
+            </div>
+            <div class="skill-row">
+              <div class="skill-label">حل المشكلات</div>
+              <div class="stars">★★★<span class="gray-star">★★</span></div>
+            </div>
+          </div>
+          <div class="skill-card">
+            <div class="skill-card-header">
+              <div
+                class="avatar av-purple"
+                style="width: 30px; height: 30px; font-size: 11px"
+              >
+                عم
+              </div>
+              <div style="font-size: 13px; font-weight: 500">عمر</div>
+            </div>
+            <div class="skill-row">
+              <div class="skill-label">التواصل</div>
+              <div class="stars">★★★★<span class="gray-star">★</span></div>
+            </div>
+            <div class="skill-row">
+              <div class="skill-label">التفاوض</div>
+              <div class="stars">★★★<span class="gray-star">★★</span></div>
+            </div>
+            <div class="skill-row">
+              <div class="skill-label">إدارة الوقت</div>
+              <div class="stars">★★★★<span class="gray-star">★</span></div>
+            </div>
+            <div class="skill-row">
+              <div class="skill-label">حل المشكلات</div>
+              <div class="stars">★★★★<span class="gray-star">★</span></div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
 
-    <div class="am-card">
-      <div class="am-header">
-        <div class="avatar av-teal">مح</div>
-        <div><div class="am-name">محمد السعيد</div><div class="am-title">Account Manager</div></div>
-      </div>
-      <div class="score-row">
-        <div class="score-item"><div class="score-label">Monthly Revenue</div><div class="score-num good">26,500 ر</div></div>
-        <div class="score-item"><div class="score-label">Client Health</div><div class="score-num good">91%</div></div>
-      </div>
-      <div class="bar-wrap"><div class="bar-label"><span>Operational Efficiency</span><span>88%</span></div><div class="bar-bg"><div class="bar-fill fill-green" style="width:88%"></div></div></div>
-      <div class="bar-wrap"><div class="bar-label"><span>وقت الرد على العميل</span><span>ممتاز — 95%</span></div><div class="bar-bg"><div class="bar-fill fill-blue" style="width:95%"></div></div></div>
-      <div class="bar-wrap"><div class="bar-label"><span>Zoho System Score</span><span>92%</span></div><div class="bar-bg"><div class="bar-fill fill-purple" style="width:92%"></div></div></div>
-      <div class="attend-row">
-        <span class="attend-badge present-b"><i class="ti ti-check"></i> حضور: 24 يوم</span>
-        <span class="attend-badge absent-b"><i class="ti ti-x"></i> غياب: 0 يوم</span>
-      </div>
-    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+    <script>
+      var chartDone = false;
 
-    <div class="am-card">
-      <div class="am-header">
-        <div class="avatar av-coral">لم</div>
-        <div><div class="am-name">لمياء القحطاني</div><div class="am-title">Account Manager</div></div>
-      </div>
-      <div class="score-row">
-        <div class="score-item"><div class="score-label">Monthly Revenue</div><div class="score-num mid">18,000 ر</div></div>
-        <div class="score-item"><div class="score-label">Client Health</div><div class="score-num mid">71%</div></div>
-      </div>
-      <div class="bar-wrap"><div class="bar-label"><span>Operational Efficiency</span><span>65%</span></div><div class="bar-bg"><div class="bar-fill fill-amber" style="width:65%"></div></div></div>
-      <div class="bar-wrap"><div class="bar-label"><span>وقت الرد على العميل</span><span>متأخر أحياناً — 58%</span></div><div class="bar-bg"><div class="bar-fill fill-amber" style="width:58%"></div></div></div>
-      <div class="bar-wrap"><div class="bar-label"><span>Zoho System Score</span><span>70%</span></div><div class="bar-bg"><div class="bar-fill fill-amber" style="width:70%"></div></div></div>
-      <div class="attend-row">
-        <span class="attend-badge present-b"><i class="ti ti-check"></i> حضور: 20 يوم</span>
-        <span class="attend-badge absent-b"><i class="ti ti-x"></i> غياب: 4 يوم</span>
-      </div>
-    </div>
-
-    <div class="am-card">
-      <div class="am-header">
-        <div class="avatar av-purple">عم</div>
-        <div><div class="am-name">عمر الزهراني</div><div class="am-title">Account Manager</div></div>
-      </div>
-      <div class="score-row">
-        <div class="score-item"><div class="score-label">Monthly Revenue</div><div class="score-num low">19,000 ر</div></div>
-        <div class="score-item"><div class="score-label">Client Health</div><div class="score-num mid">77%</div></div>
-      </div>
-      <div class="bar-wrap"><div class="bar-label"><span>Operational Efficiency</span><span>72%</span></div><div class="bar-bg"><div class="bar-fill fill-amber" style="width:72%"></div></div></div>
-      <div class="bar-wrap"><div class="bar-label"><span>وقت الرد على العميل</span><span>متأخر أحياناً — 65%</span></div><div class="bar-bg"><div class="bar-fill fill-amber" style="width:65%"></div></div></div>
-      <div class="bar-wrap"><div class="bar-label"><span>Zoho System Score</span><span>78%</span></div><div class="bar-bg"><div class="bar-fill fill-purple" style="width:78%"></div></div></div>
-      <div class="attend-row">
-        <span class="attend-badge present-b"><i class="ti ti-check"></i> حضور: 21 يوم</span>
-        <span class="attend-badge absent-b"><i class="ti ti-x"></i> غياب: 3 يوم</span>
-      </div>
-    </div>
-
-  </div>
-</div>
-
-<!-- Projects View -->
-<div class="view" id="view-projects">
-  <div class="section-title">عقود ومشاريع العملاء</div>
-  <div class="proj-wrap">
-    <table class="proj-table">
-      <thead>
-        <tr>
-          <th>العميل والموقع</th>
-          <th>الباقة</th>
-          <th>قيمة العقد</th>
-          <th>المشرف</th>
-          <th>السوشيال ميديا</th>
-          <th>تجديد العقد</th>
-          <th>حالة العميل</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td><div style="font-weight:500">شركة الرياض للتقنية</div><div class="site-link"><a href="https://example.com" target="_blank">riyad-tech.com</a></div></td>
-          <td><span class="pkg-badge pkg-gold">Gold</span></td>
-          <td>8,500 ر/شهر</td>
-          <td><div style="display:flex;align-items:center;gap:6px"><div class="avatar av-teal" style="width:26px;height:26px;font-size:10px">مح</div>محمد</div></td>
-          <td><div class="social-icons"><i class="ti ti-brand-instagram" style="color:#E24B4A"></i><i class="ti ti-brand-twitter" style="color:#378ADD"></i><i class="ti ti-brand-linkedin" style="color:#185FA5"></i></div></td>
-          <td style="font-size:12px">15 يوليو 2025</td>
-          <td><div class="status-ok"><i class="ti ti-circle-check"></i> راضي</div></td>
-        </tr>
-        <tr>
-          <td><div style="font-weight:500">مجموعة الأمل التجارية</div><div class="site-link"><a href="https://example.com" target="_blank">alamal-group.com</a></div></td>
-          <td><span class="pkg-badge pkg-prem">Premium</span></td>
-          <td>12,000 ر/شهر</td>
-          <td><div style="display:flex;align-items:center;gap:6px"><div class="avatar av-blue" style="width:26px;height:26px;font-size:10px">سا</div>سارة</div></td>
-          <td><div class="social-icons"><i class="ti ti-brand-instagram" style="color:#E24B4A"></i><i class="ti ti-brand-facebook" style="color:#185FA5"></i></div></td>
-          <td style="font-size:12px">1 أغسطس 2025</td>
-          <td><div class="status-ok"><i class="ti ti-circle-check"></i> راضي جداً</div></td>
-        </tr>
-        <tr>
-          <td><div style="font-weight:500">متجر الوفاء الإلكتروني</div><div class="site-link"><a href="https://example.com" target="_blank">alwafa-store.com</a></div></td>
-          <td><span class="pkg-badge pkg-silver">Silver</span></td>
-          <td>4,500 ر/شهر</td>
-          <td><div style="display:flex;align-items:center;gap:6px"><div class="avatar av-coral" style="width:26px;height:26px;font-size:10px">لم</div>لمياء</div></td>
-          <td><div class="social-icons"><i class="ti ti-brand-tiktok"></i><i class="ti ti-brand-instagram" style="color:#E24B4A"></i></div></td>
-          <td style="font-size:12px">10 سبتمبر 2025</td>
-          <td><div class="status-warn"><i class="ti ti-alert-circle"></i> تأخر في الرد</div></td>
-        </tr>
-        <tr>
-          <td><div style="font-weight:500">مطاعم النجمة</div><div class="site-link"><a href="https://example.com" target="_blank">star-restaurants.com</a></div></td>
-          <td><span class="pkg-badge pkg-gold">Gold</span></td>
-          <td>7,000 ر/شهر</td>
-          <td><div style="display:flex;align-items:center;gap:6px"><div class="avatar av-purple" style="width:26px;height:26px;font-size:10px">عم</div>عمر</div></td>
-          <td><div class="social-icons"><i class="ti ti-brand-instagram" style="color:#E24B4A"></i><i class="ti ti-brand-snapchat" style="color:#EF9F27"></i></div></td>
-          <td style="font-size:12px">20 يونيو 2025</td>
-          <td><div class="status-bad"><i class="ti ti-alert-triangle"></i> غير راضي</div></td>
-        </tr>
-        <tr>
-          <td><div style="font-weight:500">شركة الإبداع للتصميم</div><div class="site-link"><a href="https://example.com" target="_blank">ibda3-design.com</a></div></td>
-          <td><span class="pkg-badge pkg-prem">Premium</span></td>
-          <td>15,000 ر/شهر</td>
-          <td><div style="display:flex;align-items:center;gap:6px"><div class="avatar av-teal" style="width:26px;height:26px;font-size:10px">مح</div>محمد</div></td>
-          <td><div class="social-icons"><i class="ti ti-brand-behance" style="color:#185FA5"></i><i class="ti ti-brand-linkedin" style="color:#185FA5"></i><i class="ti ti-brand-instagram" style="color:#E24B4A"></i></div></td>
-          <td style="font-size:12px">5 أكتوبر 2025</td>
-          <td><div class="status-ok"><i class="ti ti-circle-check"></i> ممتاز</div></td>
-        </tr>
-        <tr>
-          <td><div style="font-weight:500">كافيه لوكس</div><div class="site-link"><a href="https://example.com" target="_blank">luxecafe.sa</a></div></td>
-          <td><span class="pkg-badge pkg-silver">Silver</span></td>
-          <td>3,500 ر/شهر</td>
-          <td><div style="display:flex;align-items:center;gap:6px"><div class="avatar av-blue" style="width:26px;height:26px;font-size:10px">سا</div>سارة</div></td>
-          <td><div class="social-icons"><i class="ti ti-brand-instagram" style="color:#E24B4A"></i><i class="ti ti-brand-snapchat" style="color:#EF9F27"></i></div></td>
-          <td style="font-size:12px">30 يوليو 2025</td>
-          <td><div class="status-ok"><i class="ti ti-circle-check"></i> راضي</div></td>
-        </tr>
-        <tr>
-          <td><div style="font-weight:500">عيادات الصحة الحديثة</div><div class="site-link"><a href="https://example.com" target="_blank">modernhealth.sa</a></div></td>
-          <td><span class="pkg-badge pkg-gold">Gold</span></td>
-          <td>9,000 ر/شهر</td>
-          <td><div style="display:flex;align-items:center;gap:6px"><div class="avatar av-purple" style="width:26px;height:26px;font-size:10px">عم</div>عمر</div></td>
-          <td><div class="social-icons"><i class="ti ti-brand-instagram" style="color:#E24B4A"></i><i class="ti ti-brand-twitter" style="color:#378ADD"></i></div></td>
-          <td style="font-size:12px">15 أغسطس 2025</td>
-          <td><div class="status-warn"><i class="ti ti-alert-circle"></i> متأخر أحياناً</div></td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
-</div>
-
-<!-- Revenue View -->
-<div class="view" id="view-revenue">
-  <div class="rev-card">
-    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px">
-      <div class="section-title" style="margin:0">تارجت الإيرادات الشهري</div>
-      <div style="font-size:13px;color:#6b6b67">إجمالي الفريق: <strong style="color:#1a1a18">87,500 / 100,000 ريال</strong></div>
-    </div>
-    <div class="bar-label"><span>تقدم الفريق</span><span>87.5%</span></div>
-    <div class="bar-bg" style="height:12px"><div class="bar-fill fill-green" style="width:87.5%"></div></div>
-    <div class="rev-grid">
-      <div class="rev-item">
-        <div class="rev-name">سارة الأحمد</div>
-        <div class="rev-num" style="color:#854F0B">24,000</div>
-        <div class="rev-target-line">هدف: 25,000 ريال</div>
-        <div class="progress-outer"><div class="progress-inner fill-amber" style="width:96%"></div></div>
-        <div style="font-size:11px;color:#854F0B;margin-top:4px">ناقص 1,000 ريال</div>
-      </div>
-      <div class="rev-item">
-        <div class="rev-name">محمد السعيد</div>
-        <div class="rev-num" style="color:#0F6E56">26,500</div>
-        <div class="rev-target-line">هدف: 25,000 ريال</div>
-        <div class="progress-outer"><div class="progress-inner fill-green" style="width:100%"></div></div>
-        <div style="font-size:11px;color:#0F6E56;margin-top:4px">تجاوز الهدف ✓</div>
-      </div>
-      <div class="rev-item">
-        <div class="rev-name">لمياء القحطاني</div>
-        <div class="rev-num" style="color:#A32D2D">18,000</div>
-        <div class="rev-target-line">هدف: 25,000 ريال</div>
-        <div class="progress-outer"><div class="progress-inner fill-red" style="width:72%"></div></div>
-        <div style="font-size:11px;color:#A32D2D;margin-top:4px">ناقص 7,000 ريال</div>
-      </div>
-      <div class="rev-item">
-        <div class="rev-name">عمر الزهراني</div>
-        <div class="rev-num" style="color:#A32D2D">19,000</div>
-        <div class="rev-target-line">هدف: 25,000 ريال</div>
-        <div class="progress-outer"><div class="progress-inner fill-red" style="width:76%"></div></div>
-        <div style="font-size:11px;color:#A32D2D;margin-top:4px">ناقص 6,000 ريال</div>
-      </div>
-    </div>
-  </div>
-
-  <div class="chart-wrap">
-    <div class="section-title">مقارنة درجات الأداء</div>
-    <div class="chart-legend">
-      <div class="legend-item"><div class="legend-dot" style="background:#1D9E75"></div>Operational Efficiency</div>
-      <div class="legend-item"><div class="legend-dot" style="background:#378ADD"></div>Client Health</div>
-      <div class="legend-item"><div class="legend-dot" style="background:#7F77DD"></div>Zoho Score</div>
-    </div>
-    <div style="position:relative;width:100%;height:260px">
-      <canvas id="scoreChart" role="img" aria-label="مقارنة درجات أداء أعضاء الفريق الأربعة">درجات الأداء: سارة 82، محمد 91، لمياء 65، عمر 72</canvas>
-    </div>
-  </div>
-</div>
-
-<!-- Zoho & Skills View -->
-<div class="view" id="view-zoho">
-  <div class="section-title">Zoho CRM — متابعة النظام</div>
-  <div class="zoho-grid2">
-    <div class="zoho-card">
-      <div class="zoho-header"><div class="avatar av-blue" style="width:30px;height:30px;font-size:11px">سا</div><div class="zoho-title">سارة الأحمد</div></div>
-      <div class="zoho-metrics">
-        <div class="zoho-item"><div class="zoho-label">عدد اللوجات</div><div class="zoho-val">142</div></div>
-        <div class="zoho-item"><div class="zoho-label">التقارير المُدخلة</div><div class="zoho-val good">18/20</div></div>
-        <div class="zoho-item"><div class="zoho-label">Follow-ups</div><div class="zoho-val good">95%</div></div>
-      </div>
-    </div>
-    <div class="zoho-card">
-      <div class="zoho-header"><div class="avatar av-teal" style="width:30px;height:30px;font-size:11px">مح</div><div class="zoho-title">محمد السعيد</div></div>
-      <div class="zoho-metrics">
-        <div class="zoho-item"><div class="zoho-label">عدد اللوجات</div><div class="zoho-val">198</div></div>
-        <div class="zoho-item"><div class="zoho-label">التقارير المُدخلة</div><div class="zoho-val good">20/20</div></div>
-        <div class="zoho-item"><div class="zoho-label">Follow-ups</div><div class="zoho-val good">100%</div></div>
-      </div>
-    </div>
-    <div class="zoho-card">
-      <div class="zoho-header"><div class="avatar av-coral" style="width:30px;height:30px;font-size:11px">لم</div><div class="zoho-title">لمياء القحطاني</div></div>
-      <div class="zoho-metrics">
-        <div class="zoho-item"><div class="zoho-label">عدد اللوجات</div><div class="zoho-val mid">89</div></div>
-        <div class="zoho-item"><div class="zoho-label">التقارير المُدخلة</div><div class="zoho-val mid">13/20</div></div>
-        <div class="zoho-item"><div class="zoho-label">Follow-ups</div><div class="zoho-val mid">68%</div></div>
-      </div>
-    </div>
-    <div class="zoho-card">
-      <div class="zoho-header"><div class="avatar av-purple" style="width:30px;height:30px;font-size:11px">عم</div><div class="zoho-title">عمر الزهراني</div></div>
-      <div class="zoho-metrics">
-        <div class="zoho-item"><div class="zoho-label">عدد اللوجات</div><div class="zoho-val mid">110</div></div>
-        <div class="zoho-item"><div class="zoho-label">التقارير المُدخلة</div><div class="zoho-val mid">15/20</div></div>
-        <div class="zoho-item"><div class="zoho-label">Follow-ups</div><div class="zoho-val mid">78%</div></div>
-      </div>
-    </div>
-  </div>
-
-  <div class="section-title">المهارات الشخصية والمهنية</div>
-  <div class="skills-grid2">
-    <div class="skill-card">
-      <div class="skill-card-header"><div class="avatar av-blue" style="width:30px;height:30px;font-size:11px">سا</div><div style="font-size:13px;font-weight:500">سارة</div></div>
-      <div class="skill-row"><div class="skill-label">التواصل</div><div class="stars">★★★★<span class="gray-star">★</span></div></div>
-      <div class="skill-row"><div class="skill-label">التفاوض</div><div class="stars">★★★★<span class="gray-star">★</span></div></div>
-      <div class="skill-row"><div class="skill-label">إدارة الوقت</div><div class="stars">★★★<span class="gray-star">★★</span></div></div>
-      <div class="skill-row"><div class="skill-label">حل المشكلات</div><div class="stars">★★★★★</div></div>
-    </div>
-    <div class="skill-card">
-      <div class="skill-card-header"><div class="avatar av-teal" style="width:30px;height:30px;font-size:11px">مح</div><div style="font-size:13px;font-weight:500">محمد</div></div>
-      <div class="skill-row"><div class="skill-label">التواصل</div><div class="stars">★★★★★</div></div>
-      <div class="skill-row"><div class="skill-label">التفاوض</div><div class="stars">★★★★★</div></div>
-      <div class="skill-row"><div class="skill-label">إدارة الوقت</div><div class="stars">★★★★★</div></div>
-      <div class="skill-row"><div class="skill-label">حل المشكلات</div><div class="stars">★★★★<span class="gray-star">★</span></div></div>
-    </div>
-    <div class="skill-card">
-      <div class="skill-card-header"><div class="avatar av-coral" style="width:30px;height:30px;font-size:11px">لم</div><div style="font-size:13px;font-weight:500">لمياء</div></div>
-      <div class="skill-row"><div class="skill-label">التواصل</div><div class="stars">★★★<span class="gray-star">★★</span></div></div>
-      <div class="skill-row"><div class="skill-label">التفاوض</div><div class="stars">★★★<span class="gray-star">★★</span></div></div>
-      <div class="skill-row"><div class="skill-label">إدارة الوقت</div><div class="stars">★★<span class="gray-star">★★★</span></div></div>
-      <div class="skill-row"><div class="skill-label">حل المشكلات</div><div class="stars">★★★<span class="gray-star">★★</span></div></div>
-    </div>
-    <div class="skill-card">
-      <div class="skill-card-header"><div class="avatar av-purple" style="width:30px;height:30px;font-size:11px">عم</div><div style="font-size:13px;font-weight:500">عمر</div></div>
-      <div class="skill-row"><div class="skill-label">التواصل</div><div class="stars">★★★★<span class="gray-star">★</span></div></div>
-      <div class="skill-row"><div class="skill-label">التفاوض</div><div class="stars">★★★<span class="gray-star">★★</span></div></div>
-      <div class="skill-row"><div class="skill-label">إدارة الوقت</div><div class="stars">★★★★<span class="gray-star">★</span></div></div>
-      <div class="skill-row"><div class="skill-label">حل المشكلات</div><div class="stars">★★★★<span class="gray-star">★</span></div></div>
-    </div>
-  </div>
-</div>
-
-</div>
-
-<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
-<script>
-var chartDone = false;
-
-function switchTab(name) {
-  document.querySelectorAll('.tab').forEach(function(t){ t.classList.remove('active'); });
-  document.querySelectorAll('.view').forEach(function(v){ v.classList.remove('active'); });
-  var tabs = ['team','projects','revenue','zoho'];
-  var idx = tabs.indexOf(name);
-  document.querySelectorAll('.tab')[idx].classList.add('active');
-  document.getElementById('view-' + name).classList.add('active');
-  if (name === 'revenue' && !chartDone) {
-    chartDone = true;
-    setTimeout(function(){
-      var ctx = document.getElementById('scoreChart');
-      if (ctx) {
-        new Chart(ctx, {
-          type: 'bar',
-          data: {
-            labels: ['سارة','محمد','لمياء','عمر'],
-            datasets: [
-              {label:'Operational Efficiency', data:[82,88,65,72], backgroundColor:'#1D9E75', borderRadius:4},
-              {label:'Client Health', data:[88,91,71,77], backgroundColor:'#378ADD', borderRadius:4},
-              {label:'Zoho Score', data:[85,92,70,78], backgroundColor:'#7F77DD', borderRadius:4}
-            ]
-          },
-          options: {
-            responsive: true,
-            maintainAspectRatio: false,
-            plugins: { legend: { display: false } },
-            scales: {
-              y: { beginAtZero: true, max: 100, grid: { color: 'rgba(0,0,0,0.06)' }, ticks: { font: { size: 11 } } },
-              x: { grid: { display: false }, ticks: { font: { size: 12 } } }
+      function switchTab(name) {
+        document.querySelectorAll(".tab").forEach(function (t) {
+          t.classList.remove("active");
+        });
+        document.querySelectorAll(".view").forEach(function (v) {
+          v.classList.remove("active");
+        });
+        var tabs = ["team", "projects", "revenue", "zoho"];
+        var idx = tabs.indexOf(name);
+        document.querySelectorAll(".tab")[idx].classList.add("active");
+        document.getElementById("view-" + name).classList.add("active");
+        if (name === "revenue" && !chartDone) {
+          chartDone = true;
+          setTimeout(function () {
+            var ctx = document.getElementById("scoreChart");
+            if (ctx) {
+              new Chart(ctx, {
+                type: "bar",
+                data: {
+                  labels: ["سارة", "محمد", "لمياء", "عمر"],
+                  datasets: [
+                    {
+                      label: "Operational Efficiency",
+                      data: [82, 88, 65, 72],
+                      backgroundColor: "#1D9E75",
+                      borderRadius: 4,
+                    },
+                    {
+                      label: "Client Health",
+                      data: [88, 91, 71, 77],
+                      backgroundColor: "#378ADD",
+                      borderRadius: 4,
+                    },
+                    {
+                      label: "Zoho Score",
+                      data: [85, 92, 70, 78],
+                      backgroundColor: "#7F77DD",
+                      borderRadius: 4,
+                    },
+                  ],
+                },
+                options: {
+                  responsive: true,
+                  maintainAspectRatio: false,
+                  plugins: { legend: { display: false } },
+                  scales: {
+                    y: {
+                      beginAtZero: true,
+                      max: 100,
+                      grid: { color: "rgba(0,0,0,0.06)" },
+                      ticks: { font: { size: 11 } },
+                    },
+                    x: {
+                      grid: { display: false },
+                      ticks: { font: { size: 12 } },
+                    },
+                  },
+                },
+              });
             }
-          }
+          }, 100);
+        }
+      }
+
+      function filterMember(v) {
+        var cards = document.querySelectorAll(".am-card");
+        cards.forEach(function (c, i) {
+          c.style.display = v === "all" || v == i ? "block" : "none";
         });
       }
-    }, 100);
-  }
-}
-
-function filterMember(v) {
-  var cards = document.querySelectorAll('.am-card');
-  cards.forEach(function(c, i){
-    c.style.display = (v === 'all' || v == i) ? 'block' : 'none';
-  });
-}
-</script>
-</body>
+    </script>
+  </body>
 </html>
