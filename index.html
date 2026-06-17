@@ -1,960 +1,711 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="ar" dir="rtl">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Account Managers Dashboard</title>
-    <link
-      rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@2.44.0/tabler-icons.min.css"
-    />
-    <link rel="stylesheet" href="style.css" />
-  </head>
-  <body>
-    <div class="dash">
-      <div class="header">
-        <div>
-          <h1>Account Managers Dashboard</h1>
-          <p>يونيو 2025 — تقرير شهري للفريق</p>
-        </div>
-        <div class="top-bar">
-          <select id="memberFilter" onchange="filterMember(this.value)">
-            <option value="all">كل الفريق</option>
-            <option value="0">سارة</option>
-            <option value="1">محمد</option>
-            <option value="2">لمياء</option>
-            <option value="3">عمر</option>
-          </select>
-          <span class="target-badge"
-            ><i class="ti ti-target"></i> تارجت: 100,000 ريال</span
-          >
-        </div>
-      </div>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Account Managers Dashboard</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@2.44.0/tabler-icons.min.css">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:system-ui,-apple-system,sans-serif;background:#f5f5f3;color:#1a1a18;padding:24px;min-height:100vh}
+.dash{max-width:1100px;margin:0 auto}
+.header{display:flex;justify-content:space-between;align-items:center;margin-bottom:1.5rem;padding-bottom:1rem;border-bottom:1px solid #e0ded6}
+.header h1{font-size:20px;font-weight:600}
+.header p{font-size:13px;color:#6b6b67;margin-top:4px}
+.top-controls{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.target-badge{background:#EAF3DE;color:#3B6D11;font-size:12px;padding:6px 14px;border-radius:8px;font-weight:500}
+.btn{font-size:13px;padding:7px 14px;border-radius:8px;border:0.5px solid #dddbd3;background:#fff;cursor:pointer;display:flex;align-items:center;gap:6px;font-family:inherit;color:#1a1a18}
+.btn:hover{background:#f5f5f3}
+.btn-primary{background:#1a1a18;color:#fff;border-color:#1a1a18}
+.btn-primary:hover{background:#333}
+.btn-danger{background:#FCEBEB;color:#A32D2D;border-color:#f5c5c5}
+.btn-danger:hover{background:#f5c5c5}
+.metric-row{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:1.5rem}
+.metric-card{background:#ececea;border-radius:8px;padding:14px;text-align:center}
+.metric-label{font-size:12px;color:#6b6b67;margin-bottom:6px}
+.metric-val{font-size:22px;font-weight:600}
+.metric-sub{font-size:11px;color:#6b6b67;margin-top:3px}
+.tabs{display:flex;gap:4px;margin-bottom:1.5rem;border-bottom:1px solid #e0ded6}
+.tab{font-size:13px;padding:9px 16px;cursor:pointer;color:#6b6b67;border:none;border-bottom:2px solid transparent;margin-bottom:-1px;background:none;display:flex;align-items:center;gap:6px;font-family:inherit}
+.tab.active{color:#1a1a18;border-bottom-color:#1a1a18;font-weight:500}
+.tab:hover{color:#1a1a18}
+.view{display:none}.view.active{display:block}
+.section-title{font-size:12px;font-weight:500;color:#6b6b67;text-transform:uppercase;letter-spacing:.06em;margin-bottom:14px}
+.team-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;margin-bottom:1.5rem}
+.am-card{background:#fff;border:0.5px solid #dddbd3;border-radius:12px;padding:16px;position:relative}
+.am-card-actions{position:absolute;top:12px;left:12px;display:flex;gap:6px}
+.icon-btn{background:none;border:none;cursor:pointer;color:#6b6b67;font-size:16px;padding:4px;border-radius:6px}
+.icon-btn:hover{background:#f5f5f3;color:#1a1a18}
+.am-header{display:flex;align-items:center;gap:10px;margin-bottom:14px}
+.avatar{width:40px;height:40px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:600;flex-shrink:0}
+.av-0{background:#E6F1FB;color:#185FA5}
+.av-1{background:#E1F5EE;color:#0F6E56}
+.av-2{background:#FAECE7;color:#993C1D}
+.av-3{background:#EEEDFE;color:#534AB7}
+.av-4{background:#FEF3E2;color:#7A4210}
+.am-name{font-size:14px;font-weight:500}
+.am-title{font-size:12px;color:#6b6b67}
+.score-row{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:10px}
+.score-item{background:#f5f5f3;border-radius:8px;padding:10px}
+.score-label{font-size:11px;color:#6b6b67;margin-bottom:4px}
+.score-num{font-size:16px;font-weight:500}
+.good{color:#0F6E56}.mid{color:#854F0B}.low{color:#A32D2D}
+.bar-wrap{margin-bottom:8px}
+.bar-label{display:flex;justify-content:space-between;font-size:11px;color:#6b6b67;margin-bottom:3px}
+.bar-bg{background:#ececea;border-radius:4px;height:6px;overflow:hidden}
+.bar-fill{height:100%;border-radius:4px;transition:width .4s}
+.fill-green{background:#1D9E75}.fill-amber{background:#EF9F27}.fill-red{background:#E24B4A}
+.fill-blue{background:#378ADD}.fill-purple{background:#7F77DD}
+.attend-row{display:flex;gap:8px;margin-top:10px}
+.attend-badge{font-size:11px;padding:4px 10px;border-radius:8px;font-weight:500;display:flex;align-items:center;gap:4px}
+.present-b{background:#EAF3DE;color:#3B6D11}
+.absent-b{background:#FCEBEB;color:#A32D2D}
+/* Modal */
+.modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.4);z-index:100;justify-content:center;align-items:center}
+.modal-overlay.open{display:flex}
+.modal{background:#fff;border-radius:14px;padding:24px;width:560px;max-width:95vw;max-height:90vh;overflow-y:auto;position:relative}
+.modal h2{font-size:16px;font-weight:600;margin-bottom:18px}
+.modal-close{position:absolute;top:16px;left:16px;background:none;border:none;cursor:pointer;font-size:20px;color:#6b6b67}
+.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.form-group{display:flex;flex-direction:column;gap:5px}
+.form-group.full{grid-column:1/-1}
+.form-group label{font-size:12px;color:#6b6b67;font-weight:500}
+.form-group input,.form-group select{font-size:13px;padding:8px 12px;border:0.5px solid #dddbd3;border-radius:8px;font-family:inherit;background:#fff;color:#1a1a18}
+.form-group input:focus,.form-group select:focus{outline:none;border-color:#888}
+.range-wrap{display:flex;align-items:center;gap:10px}
+.range-wrap input[type=range]{flex:1;accent-color:#1a1a18}
+.range-val{font-size:13px;font-weight:500;min-width:36px;text-align:center}
+.modal-footer{display:flex;justify-content:flex-end;gap:8px;margin-top:20px;padding-top:16px;border-top:0.5px solid #e0ded6}
+/* Projects */
+.proj-wrap{background:#fff;border:0.5px solid #dddbd3;border-radius:12px;overflow:hidden;margin-bottom:14px}
+.proj-table{width:100%;border-collapse:collapse;font-size:13px}
+.proj-table th{text-align:right;padding:10px 14px;color:#6b6b67;font-weight:500;font-size:12px;border-bottom:0.5px solid #e0ded6;background:#f9f9f7}
+.proj-table td{padding:11px 14px;border-bottom:0.5px solid #f0eee8;color:#1a1a18;vertical-align:middle}
+.proj-table tr:last-child td{border-bottom:none}
+.proj-table tr:hover td{background:#fafaf8}
+.pkg-badge{font-size:11px;padding:3px 9px;border-radius:8px;font-weight:500;white-space:nowrap}
+.pkg-Gold{background:#FAEEDA;color:#633806}
+.pkg-Silver{background:#F1EFE8;color:#444441}
+.pkg-Premium{background:#EEEDFE;color:#3C3489}
+.status-ok{color:#0F6E56;font-size:12px;display:flex;align-items:center;gap:4px}
+.status-warn{color:#854F0B;font-size:12px;display:flex;align-items:center;gap:4px}
+.status-bad{color:#A32D2D;font-size:12px;display:flex;align-items:center;gap:4px}
+.social-icons{display:flex;gap:6px;font-size:16px}
+/* Revenue */
+.rev-card{background:#fff;border:0.5px solid #dddbd3;border-radius:12px;padding:18px;margin-bottom:14px}
+.rev-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-top:16px}
+.rev-item{text-align:center}
+.rev-name{font-size:12px;color:#6b6b67;margin-bottom:6px}
+.rev-num{font-size:20px;font-weight:600}
+.rev-target-line{font-size:11px;color:#6b6b67;margin-top:2px}
+.prog-outer{background:#ececea;border-radius:4px;height:8px;margin-top:10px;overflow:hidden}
+.prog-inner{height:100%;border-radius:4px}
+.chart-wrap{background:#fff;border:0.5px solid #dddbd3;border-radius:12px;padding:18px}
+.chart-legend{display:flex;gap:16px;margin-bottom:10px;flex-wrap:wrap}
+.legend-item{display:flex;align-items:center;gap:5px;font-size:12px;color:#6b6b67}
+.legend-dot{width:10px;height:10px;border-radius:2px}
+/* Zoho */
+.zoho-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:1.5rem}
+.zoho-card{background:#fff;border:0.5px solid #dddbd3;border-radius:12px;padding:14px}
+.zoho-header{display:flex;align-items:center;gap:8px;margin-bottom:12px}
+.zoho-metrics{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.zoho-item{background:#f5f5f3;border-radius:8px;padding:10px}
+.zoho-label{font-size:11px;color:#6b6b67;margin-bottom:3px}
+.zoho-val{font-size:14px;font-weight:500}
+/* Skills */
+.skills-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+.skill-card{background:#fff;border:0.5px solid #dddbd3;border-radius:12px;padding:14px}
+.skill-card-header{display:flex;align-items:center;gap:8px;margin-bottom:12px}
+.skill-row{margin-bottom:8px}
+.skill-label{font-size:11px;color:#6b6b67;margin-bottom:3px}
+.stars{font-size:14px}
+.star-gold{color:#EF9F27}
+.star-gray{color:#dddbd3}
+a{color:#185FA5;text-decoration:none}
+a:hover{text-decoration:underline}
+select.filter-select{font-size:13px;padding:6px 12px;border:0.5px solid #dddbd3;border-radius:8px;background:#fff;color:#1a1a18;cursor:pointer;font-family:inherit}
+.empty-state{text-align:center;padding:40px;color:#6b6b67;font-size:14px}
+.section-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px}
+.section-header .section-title{margin:0}
+</style>
+</head>
+<body>
+<div class="dash">
 
-      <div class="metric-row">
-        <div class="metric-card">
-          <div class="metric-label">إيراد الفريق الكلي</div>
-          <div class="metric-val">87,500</div>
-          <div class="metric-sub">ريال / الهدف 100,000</div>
-        </div>
-        <div class="metric-card">
-          <div class="metric-label">متوسط Client Health</div>
-          <div class="metric-val" style="color: #0f6e56">82%</div>
-          <div class="metric-sub">رضا العملاء</div>
-        </div>
-        <div class="metric-card">
-          <div class="metric-label">متوسط Efficiency</div>
-          <div class="metric-val" style="color: #854f0b">76%</div>
-          <div class="metric-sub">كفاءة العمليات</div>
-        </div>
-        <div class="metric-card">
-          <div class="metric-label">إجمالي المشاريع</div>
-          <div class="metric-val">12</div>
-          <div class="metric-sub">مشروع نشط</div>
-        </div>
-      </div>
+<div class="header">
+  <div>
+    <h1>Account Managers Dashboard</h1>
+    <p id="headerDate">يونيو 2025 — تقرير شهري للفريق</p>
+  </div>
+  <div class="top-controls">
+    <select class="filter-select" id="memberFilter" onchange="renderTeam()">
+      <option value="all">كل الفريق</option>
+    </select>
+    <span class="target-badge"><i class="ti ti-target"></i> تارجت: <span id="targetDisplay">100,000</span> ريال</span>
+    <button class="btn btn-primary" onclick="openModal('settings')"><i class="ti ti-settings"></i> الإعدادات</button>
+  </div>
+</div>
 
-      <div class="tabs">
-        <button class="tab active" onclick="switchTab('team')">
-          <i class="ti ti-users"></i> الفريق
-        </button>
-        <button class="tab" onclick="switchTab('projects')">
-          <i class="ti ti-briefcase"></i> المشاريع والعقود
-        </button>
-        <button class="tab" onclick="switchTab('revenue')">
-          <i class="ti ti-chart-bar"></i> الإيرادات والتارجت
-        </button>
-        <button class="tab" onclick="switchTab('zoho')">
-          <i class="ti ti-database"></i> Zoho & المهارات
-        </button>
-      </div>
+<div class="metric-row">
+  <div class="metric-card">
+    <div class="metric-label">إيراد الفريق الكلي</div>
+    <div class="metric-val" id="totalRevDisplay">0</div>
+    <div class="metric-sub">ريال / الهدف <span id="targetSub">100,000</span></div>
+  </div>
+  <div class="metric-card">
+    <div class="metric-label">متوسط Client Health</div>
+    <div class="metric-val" id="avgHealthDisplay" style="color:#0F6E56">0%</div>
+    <div class="metric-sub">رضا العملاء</div>
+  </div>
+  <div class="metric-card">
+    <div class="metric-label">متوسط Efficiency</div>
+    <div class="metric-val" id="avgEffDisplay" style="color:#854F0B">0%</div>
+    <div class="metric-sub">كفاءة العمليات</div>
+  </div>
+  <div class="metric-card">
+    <div class="metric-label">إجمالي المشاريع</div>
+    <div class="metric-val" id="totalProjectsDisplay">0</div>
+    <div class="metric-sub">مشروع نشط</div>
+  </div>
+</div>
 
-      <!-- Team View -->
-      <div class="view active" id="view-team">
-        <div class="section-title">أداء أعضاء الفريق</div>
-        <div class="team-grid" id="teamGrid">
-          <div class="am-card">
-            <div class="am-header">
-              <div class="avatar av-blue">سا</div>
-              <div>
-                <div class="am-name">سارة الأحمد</div>
-                <div class="am-title">Account Manager</div>
-              </div>
-            </div>
-            <div class="score-row">
-              <div class="score-item">
-                <div class="score-label">Monthly Revenue</div>
-                <div class="score-num good">24,000 ر</div>
-              </div>
-              <div class="score-item">
-                <div class="score-label">Client Health</div>
-                <div class="score-num good">88%</div>
-              </div>
-            </div>
-            <div class="bar-wrap">
-              <div class="bar-label">
-                <span>Operational Efficiency</span><span>82%</span>
-              </div>
-              <div class="bar-bg">
-                <div class="bar-fill fill-green" style="width: 82%"></div>
-              </div>
-            </div>
-            <div class="bar-wrap">
-              <div class="bar-label">
-                <span>وقت الرد على العميل</span><span>جيد — 90%</span>
-              </div>
-              <div class="bar-bg">
-                <div class="bar-fill fill-blue" style="width: 90%"></div>
-              </div>
-            </div>
-            <div class="bar-wrap">
-              <div class="bar-label">
-                <span>Zoho System Score</span><span>85%</span>
-              </div>
-              <div class="bar-bg">
-                <div class="bar-fill fill-purple" style="width: 85%"></div>
-              </div>
-            </div>
-            <div class="attend-row">
-              <span class="attend-badge present-b"
-                ><i class="ti ti-check"></i> حضور: 22 يوم</span
-              >
-              <span class="attend-badge absent-b"
-                ><i class="ti ti-x"></i> غياب: 2 يوم</span
-              >
-            </div>
-          </div>
+<div class="tabs">
+  <button class="tab active" onclick="switchTab('team')"><i class="ti ti-users"></i> الفريق</button>
+  <button class="tab" onclick="switchTab('projects')"><i class="ti ti-briefcase"></i> المشاريع والعقود</button>
+  <button class="tab" onclick="switchTab('revenue')"><i class="ti ti-chart-bar"></i> الإيرادات والتارجت</button>
+  <button class="tab" onclick="switchTab('zoho')"><i class="ti ti-database"></i> Zoho & المهارات</button>
+</div>
 
-          <div class="am-card">
-            <div class="am-header">
-              <div class="avatar av-teal">مح</div>
-              <div>
-                <div class="am-name">محمد السعيد</div>
-                <div class="am-title">Account Manager</div>
-              </div>
-            </div>
-            <div class="score-row">
-              <div class="score-item">
-                <div class="score-label">Monthly Revenue</div>
-                <div class="score-num good">26,500 ر</div>
-              </div>
-              <div class="score-item">
-                <div class="score-label">Client Health</div>
-                <div class="score-num good">91%</div>
-              </div>
-            </div>
-            <div class="bar-wrap">
-              <div class="bar-label">
-                <span>Operational Efficiency</span><span>88%</span>
-              </div>
-              <div class="bar-bg">
-                <div class="bar-fill fill-green" style="width: 88%"></div>
-              </div>
-            </div>
-            <div class="bar-wrap">
-              <div class="bar-label">
-                <span>وقت الرد على العميل</span><span>ممتاز — 95%</span>
-              </div>
-              <div class="bar-bg">
-                <div class="bar-fill fill-blue" style="width: 95%"></div>
-              </div>
-            </div>
-            <div class="bar-wrap">
-              <div class="bar-label">
-                <span>Zoho System Score</span><span>92%</span>
-              </div>
-              <div class="bar-bg">
-                <div class="bar-fill fill-purple" style="width: 92%"></div>
-              </div>
-            </div>
-            <div class="attend-row">
-              <span class="attend-badge present-b"
-                ><i class="ti ti-check"></i> حضور: 24 يوم</span
-              >
-              <span class="attend-badge absent-b"
-                ><i class="ti ti-x"></i> غياب: 0 يوم</span
-              >
-            </div>
-          </div>
+<!-- TEAM -->
+<div class="view active" id="view-team">
+  <div class="section-header">
+    <div class="section-title">أداء أعضاء الفريق</div>
+    <button class="btn btn-primary" onclick="openModal('addMember')"><i class="ti ti-user-plus"></i> إضافة عضو</button>
+  </div>
+  <div class="team-grid" id="teamGrid"></div>
+</div>
 
-          <div class="am-card">
-            <div class="am-header">
-              <div class="avatar av-coral">لم</div>
-              <div>
-                <div class="am-name">لمياء القحطاني</div>
-                <div class="am-title">Account Manager</div>
-              </div>
-            </div>
-            <div class="score-row">
-              <div class="score-item">
-                <div class="score-label">Monthly Revenue</div>
-                <div class="score-num mid">18,000 ر</div>
-              </div>
-              <div class="score-item">
-                <div class="score-label">Client Health</div>
-                <div class="score-num mid">71%</div>
-              </div>
-            </div>
-            <div class="bar-wrap">
-              <div class="bar-label">
-                <span>Operational Efficiency</span><span>65%</span>
-              </div>
-              <div class="bar-bg">
-                <div class="bar-fill fill-amber" style="width: 65%"></div>
-              </div>
-            </div>
-            <div class="bar-wrap">
-              <div class="bar-label">
-                <span>وقت الرد على العميل</span><span>متأخر أحياناً — 58%</span>
-              </div>
-              <div class="bar-bg">
-                <div class="bar-fill fill-amber" style="width: 58%"></div>
-              </div>
-            </div>
-            <div class="bar-wrap">
-              <div class="bar-label">
-                <span>Zoho System Score</span><span>70%</span>
-              </div>
-              <div class="bar-bg">
-                <div class="bar-fill fill-amber" style="width: 70%"></div>
-              </div>
-            </div>
-            <div class="attend-row">
-              <span class="attend-badge present-b"
-                ><i class="ti ti-check"></i> حضور: 20 يوم</span
-              >
-              <span class="attend-badge absent-b"
-                ><i class="ti ti-x"></i> غياب: 4 يوم</span
-              >
-            </div>
-          </div>
+<!-- PROJECTS -->
+<div class="view" id="view-projects">
+  <div class="section-header">
+    <div class="section-title">عقود ومشاريع العملاء</div>
+    <button class="btn btn-primary" onclick="openModal('addProject')"><i class="ti ti-plus"></i> إضافة مشروع</button>
+  </div>
+  <div class="proj-wrap">
+    <table class="proj-table">
+      <thead>
+        <tr>
+          <th>العميل والموقع</th><th>الباقة</th><th>قيمة العقد</th>
+          <th>المشرف</th><th>السوشيال</th><th>تجديد العقد</th><th>حالة العميل</th><th></th>
+        </tr>
+      </thead>
+      <tbody id="projectsBody"></tbody>
+    </table>
+  </div>
+</div>
 
-          <div class="am-card">
-            <div class="am-header">
-              <div class="avatar av-purple">عم</div>
-              <div>
-                <div class="am-name">عمر الزهراني</div>
-                <div class="am-title">Account Manager</div>
-              </div>
-            </div>
-            <div class="score-row">
-              <div class="score-item">
-                <div class="score-label">Monthly Revenue</div>
-                <div class="score-num low">19,000 ر</div>
-              </div>
-              <div class="score-item">
-                <div class="score-label">Client Health</div>
-                <div class="score-num mid">77%</div>
-              </div>
-            </div>
-            <div class="bar-wrap">
-              <div class="bar-label">
-                <span>Operational Efficiency</span><span>72%</span>
-              </div>
-              <div class="bar-bg">
-                <div class="bar-fill fill-amber" style="width: 72%"></div>
-              </div>
-            </div>
-            <div class="bar-wrap">
-              <div class="bar-label">
-                <span>وقت الرد على العميل</span><span>متأخر أحياناً — 65%</span>
-              </div>
-              <div class="bar-bg">
-                <div class="bar-fill fill-amber" style="width: 65%"></div>
-              </div>
-            </div>
-            <div class="bar-wrap">
-              <div class="bar-label">
-                <span>Zoho System Score</span><span>78%</span>
-              </div>
-              <div class="bar-bg">
-                <div class="bar-fill fill-purple" style="width: 78%"></div>
-              </div>
-            </div>
-            <div class="attend-row">
-              <span class="attend-badge present-b"
-                ><i class="ti ti-check"></i> حضور: 21 يوم</span
-              >
-              <span class="attend-badge absent-b"
-                ><i class="ti ti-x"></i> غياب: 3 يوم</span
-              >
-            </div>
-          </div>
-        </div>
-      </div>
+<!-- REVENUE -->
+<div class="view" id="view-revenue">
+  <div class="rev-card">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px">
+      <div class="section-title" style="margin:0">تارجت الإيرادات الشهري</div>
+      <div style="font-size:13px;color:#6b6b67">إجمالي الفريق: <strong id="revTotal" style="color:#1a1a18">0 / 0 ريال</strong></div>
+    </div>
+    <div class="bar-label"><span>تقدم الفريق</span><span id="revPct">0%</span></div>
+    <div class="bar-bg" style="height:12px"><div class="bar-fill fill-green" id="revBar" style="width:0%"></div></div>
+    <div class="rev-grid" id="revGrid"></div>
+  </div>
+  <div class="chart-wrap">
+    <div class="section-title">مقارنة درجات الأداء</div>
+    <div class="chart-legend">
+      <div class="legend-item"><div class="legend-dot" style="background:#1D9E75"></div>Operational Efficiency</div>
+      <div class="legend-item"><div class="legend-dot" style="background:#378ADD"></div>Client Health</div>
+      <div class="legend-item"><div class="legend-dot" style="background:#7F77DD"></div>Zoho Score</div>
+    </div>
+    <div style="position:relative;height:260px">
+      <canvas id="scoreChart"></canvas>
+    </div>
+  </div>
+</div>
 
-      <!-- Projects View -->
-      <div class="view" id="view-projects">
-        <div class="section-title">عقود ومشاريع العملاء</div>
-        <div class="proj-wrap">
-          <table class="proj-table">
-            <thead>
-              <tr>
-                <th>العميل والموقع</th>
-                <th>الباقة</th>
-                <th>قيمة العقد</th>
-                <th>المشرف</th>
-                <th>السوشيال ميديا</th>
-                <th>تجديد العقد</th>
-                <th>حالة العميل</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>
-                  <div style="font-weight: 500">شركة الرياض للتقنية</div>
-                  <div class="site-link">
-                    <a href="https://example.com" target="_blank"
-                      >riyad-tech.com</a
-                    >
-                  </div>
-                </td>
-                <td><span class="pkg-badge pkg-gold">Gold</span></td>
-                <td>8,500 ر/شهر</td>
-                <td>
-                  <div style="display: flex; align-items: center; gap: 6px">
-                    <div
-                      class="avatar av-teal"
-                      style="width: 26px; height: 26px; font-size: 10px"
-                    >
-                      مح
-                    </div>
-                    محمد
-                  </div>
-                </td>
-                <td>
-                  <div class="social-icons">
-                    <i class="ti ti-brand-instagram" style="color: #e24b4a"></i
-                    ><i class="ti ti-brand-twitter" style="color: #378add"></i
-                    ><i class="ti ti-brand-linkedin" style="color: #185fa5"></i>
-                  </div>
-                </td>
-                <td style="font-size: 12px">15 يوليو 2025</td>
-                <td>
-                  <div class="status-ok">
-                    <i class="ti ti-circle-check"></i> راضي
-                  </div>
-                </td>
-              </tr>
-              <tr>
-                <td>
-                  <div style="font-weight: 500">مجموعة الأمل التجارية</div>
-                  <div class="site-link">
-                    <a href="https://example.com" target="_blank"
-                      >alamal-group.com</a
-                    >
-                  </div>
-                </td>
-                <td><span class="pkg-badge pkg-prem">Premium</span></td>
-                <td>12,000 ر/شهر</td>
-                <td>
-                  <div style="display: flex; align-items: center; gap: 6px">
-                    <div
-                      class="avatar av-blue"
-                      style="width: 26px; height: 26px; font-size: 10px"
-                    >
-                      سا
-                    </div>
-                    سارة
-                  </div>
-                </td>
-                <td>
-                  <div class="social-icons">
-                    <i class="ti ti-brand-instagram" style="color: #e24b4a"></i
-                    ><i class="ti ti-brand-facebook" style="color: #185fa5"></i>
-                  </div>
-                </td>
-                <td style="font-size: 12px">1 أغسطس 2025</td>
-                <td>
-                  <div class="status-ok">
-                    <i class="ti ti-circle-check"></i> راضي جداً
-                  </div>
-                </td>
-              </tr>
-              <tr>
-                <td>
-                  <div style="font-weight: 500">متجر الوفاء الإلكتروني</div>
-                  <div class="site-link">
-                    <a href="https://example.com" target="_blank"
-                      >alwafa-store.com</a
-                    >
-                  </div>
-                </td>
-                <td><span class="pkg-badge pkg-silver">Silver</span></td>
-                <td>4,500 ر/شهر</td>
-                <td>
-                  <div style="display: flex; align-items: center; gap: 6px">
-                    <div
-                      class="avatar av-coral"
-                      style="width: 26px; height: 26px; font-size: 10px"
-                    >
-                      لم
-                    </div>
-                    لمياء
-                  </div>
-                </td>
-                <td>
-                  <div class="social-icons">
-                    <i class="ti ti-brand-tiktok"></i
-                    ><i
-                      class="ti ti-brand-instagram"
-                      style="color: #e24b4a"
-                    ></i>
-                  </div>
-                </td>
-                <td style="font-size: 12px">10 سبتمبر 2025</td>
-                <td>
-                  <div class="status-warn">
-                    <i class="ti ti-alert-circle"></i> تأخر في الرد
-                  </div>
-                </td>
-              </tr>
-              <tr>
-                <td>
-                  <div style="font-weight: 500">مطاعم النجمة</div>
-                  <div class="site-link">
-                    <a href="https://example.com" target="_blank"
-                      >star-restaurants.com</a
-                    >
-                  </div>
-                </td>
-                <td><span class="pkg-badge pkg-gold">Gold</span></td>
-                <td>7,000 ر/شهر</td>
-                <td>
-                  <div style="display: flex; align-items: center; gap: 6px">
-                    <div
-                      class="avatar av-purple"
-                      style="width: 26px; height: 26px; font-size: 10px"
-                    >
-                      عم
-                    </div>
-                    عمر
-                  </div>
-                </td>
-                <td>
-                  <div class="social-icons">
-                    <i class="ti ti-brand-instagram" style="color: #e24b4a"></i
-                    ><i class="ti ti-brand-snapchat" style="color: #ef9f27"></i>
-                  </div>
-                </td>
-                <td style="font-size: 12px">20 يونيو 2025</td>
-                <td>
-                  <div class="status-bad">
-                    <i class="ti ti-alert-triangle"></i> غير راضي
-                  </div>
-                </td>
-              </tr>
-              <tr>
-                <td>
-                  <div style="font-weight: 500">شركة الإبداع للتصميم</div>
-                  <div class="site-link">
-                    <a href="https://example.com" target="_blank"
-                      >ibda3-design.com</a
-                    >
-                  </div>
-                </td>
-                <td><span class="pkg-badge pkg-prem">Premium</span></td>
-                <td>15,000 ر/شهر</td>
-                <td>
-                  <div style="display: flex; align-items: center; gap: 6px">
-                    <div
-                      class="avatar av-teal"
-                      style="width: 26px; height: 26px; font-size: 10px"
-                    >
-                      مح
-                    </div>
-                    محمد
-                  </div>
-                </td>
-                <td>
-                  <div class="social-icons">
-                    <i class="ti ti-brand-behance" style="color: #185fa5"></i
-                    ><i class="ti ti-brand-linkedin" style="color: #185fa5"></i
-                    ><i
-                      class="ti ti-brand-instagram"
-                      style="color: #e24b4a"
-                    ></i>
-                  </div>
-                </td>
-                <td style="font-size: 12px">5 أكتوبر 2025</td>
-                <td>
-                  <div class="status-ok">
-                    <i class="ti ti-circle-check"></i> ممتاز
-                  </div>
-                </td>
-              </tr>
-              <tr>
-                <td>
-                  <div style="font-weight: 500">كافيه لوكس</div>
-                  <div class="site-link">
-                    <a href="https://example.com" target="_blank"
-                      >luxecafe.sa</a
-                    >
-                  </div>
-                </td>
-                <td><span class="pkg-badge pkg-silver">Silver</span></td>
-                <td>3,500 ر/شهر</td>
-                <td>
-                  <div style="display: flex; align-items: center; gap: 6px">
-                    <div
-                      class="avatar av-blue"
-                      style="width: 26px; height: 26px; font-size: 10px"
-                    >
-                      سا
-                    </div>
-                    سارة
-                  </div>
-                </td>
-                <td>
-                  <div class="social-icons">
-                    <i class="ti ti-brand-instagram" style="color: #e24b4a"></i
-                    ><i class="ti ti-brand-snapchat" style="color: #ef9f27"></i>
-                  </div>
-                </td>
-                <td style="font-size: 12px">30 يوليو 2025</td>
-                <td>
-                  <div class="status-ok">
-                    <i class="ti ti-circle-check"></i> راضي
-                  </div>
-                </td>
-              </tr>
-              <tr>
-                <td>
-                  <div style="font-weight: 500">عيادات الصحة الحديثة</div>
-                  <div class="site-link">
-                    <a href="https://example.com" target="_blank"
-                      >modernhealth.sa</a
-                    >
-                  </div>
-                </td>
-                <td><span class="pkg-badge pkg-gold">Gold</span></td>
-                <td>9,000 ر/شهر</td>
-                <td>
-                  <div style="display: flex; align-items: center; gap: 6px">
-                    <div
-                      class="avatar av-purple"
-                      style="width: 26px; height: 26px; font-size: 10px"
-                    >
-                      عم
-                    </div>
-                    عمر
-                  </div>
-                </td>
-                <td>
-                  <div class="social-icons">
-                    <i class="ti ti-brand-instagram" style="color: #e24b4a"></i
-                    ><i class="ti ti-brand-twitter" style="color: #378add"></i>
-                  </div>
-                </td>
-                <td style="font-size: 12px">15 أغسطس 2025</td>
-                <td>
-                  <div class="status-warn">
-                    <i class="ti ti-alert-circle"></i> متأخر أحياناً
-                  </div>
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
+<!-- ZOHO & SKILLS -->
+<div class="view" id="view-zoho">
+  <div class="section-title">Zoho CRM — متابعة النظام</div>
+  <div class="zoho-grid" id="zohoGrid"></div>
+  <div class="section-title">المهارات الشخصية والمهنية</div>
+  <div class="skills-grid" id="skillsGrid"></div>
+</div>
 
-      <!-- Revenue View -->
-      <div class="view" id="view-revenue">
-        <div class="rev-card">
-          <div
-            style="
-              display: flex;
-              justify-content: space-between;
-              align-items: center;
-              margin-bottom: 14px;
-            "
-          >
-            <div class="section-title" style="margin: 0">
-              تارجت الإيرادات الشهري
-            </div>
-            <div style="font-size: 13px; color: #6b6b67">
-              إجمالي الفريق:
-              <strong style="color: #1a1a18">87,500 / 100,000 ريال</strong>
-            </div>
-          </div>
-          <div class="bar-label">
-            <span>تقدم الفريق</span><span>87.5%</span>
-          </div>
-          <div class="bar-bg" style="height: 12px">
-            <div class="bar-fill fill-green" style="width: 87.5%"></div>
-          </div>
-          <div class="rev-grid">
-            <div class="rev-item">
-              <div class="rev-name">سارة الأحمد</div>
-              <div class="rev-num" style="color: #854f0b">24,000</div>
-              <div class="rev-target-line">هدف: 25,000 ريال</div>
-              <div class="progress-outer">
-                <div class="progress-inner fill-amber" style="width: 96%"></div>
-              </div>
-              <div style="font-size: 11px; color: #854f0b; margin-top: 4px">
-                ناقص 1,000 ريال
-              </div>
-            </div>
-            <div class="rev-item">
-              <div class="rev-name">محمد السعيد</div>
-              <div class="rev-num" style="color: #0f6e56">26,500</div>
-              <div class="rev-target-line">هدف: 25,000 ريال</div>
-              <div class="progress-outer">
-                <div
-                  class="progress-inner fill-green"
-                  style="width: 100%"
-                ></div>
-              </div>
-              <div style="font-size: 11px; color: #0f6e56; margin-top: 4px">
-                تجاوز الهدف ✓
-              </div>
-            </div>
-            <div class="rev-item">
-              <div class="rev-name">لمياء القحطاني</div>
-              <div class="rev-num" style="color: #a32d2d">18,000</div>
-              <div class="rev-target-line">هدف: 25,000 ريال</div>
-              <div class="progress-outer">
-                <div class="progress-inner fill-red" style="width: 72%"></div>
-              </div>
-              <div style="font-size: 11px; color: #a32d2d; margin-top: 4px">
-                ناقص 7,000 ريال
-              </div>
-            </div>
-            <div class="rev-item">
-              <div class="rev-name">عمر الزهراني</div>
-              <div class="rev-num" style="color: #a32d2d">19,000</div>
-              <div class="rev-target-line">هدف: 25,000 ريال</div>
-              <div class="progress-outer">
-                <div class="progress-inner fill-red" style="width: 76%"></div>
-              </div>
-              <div style="font-size: 11px; color: #a32d2d; margin-top: 4px">
-                ناقص 6,000 ريال
-              </div>
-            </div>
-          </div>
-        </div>
+</div><!-- end dash -->
 
-        <div class="chart-wrap">
-          <div class="section-title">مقارنة درجات الأداء</div>
-          <div class="chart-legend">
-            <div class="legend-item">
-              <div class="legend-dot" style="background: #1d9e75"></div>
-              Operational Efficiency
-            </div>
-            <div class="legend-item">
-              <div class="legend-dot" style="background: #378add"></div>
-              Client Health
-            </div>
-            <div class="legend-item">
-              <div class="legend-dot" style="background: #7f77dd"></div>
-              Zoho Score
-            </div>
-          </div>
-          <div style="position: relative; width: 100%; height: 260px">
-            <canvas
-              id="scoreChart"
-              role="img"
-              aria-label="مقارنة درجات أداء أعضاء الفريق الأربعة"
-              >درجات الأداء: سارة 82، محمد 91، لمياء 65، عمر 72</canvas
-            >
-          </div>
-        </div>
-      </div>
+<!-- ===== MODALS ===== -->
 
-      <!-- Zoho & Skills View -->
-      <div class="view" id="view-zoho">
-        <div class="section-title">Zoho CRM — متابعة النظام</div>
-        <div class="zoho-grid2">
-          <div class="zoho-card">
-            <div class="zoho-header">
-              <div
-                class="avatar av-blue"
-                style="width: 30px; height: 30px; font-size: 11px"
-              >
-                سا
-              </div>
-              <div class="zoho-title">سارة الأحمد</div>
-            </div>
-            <div class="zoho-metrics">
-              <div class="zoho-item">
-                <div class="zoho-label">عدد اللوجات</div>
-                <div class="zoho-val">142</div>
-              </div>
-              <div class="zoho-item">
-                <div class="zoho-label">التقارير المُدخلة</div>
-                <div class="zoho-val good">18/20</div>
-              </div>
-              <div class="zoho-item">
-                <div class="zoho-label">Follow-ups</div>
-                <div class="zoho-val good">95%</div>
-              </div>
-            </div>
-          </div>
-          <div class="zoho-card">
-            <div class="zoho-header">
-              <div
-                class="avatar av-teal"
-                style="width: 30px; height: 30px; font-size: 11px"
-              >
-                مح
-              </div>
-              <div class="zoho-title">محمد السعيد</div>
-            </div>
-            <div class="zoho-metrics">
-              <div class="zoho-item">
-                <div class="zoho-label">عدد اللوجات</div>
-                <div class="zoho-val">198</div>
-              </div>
-              <div class="zoho-item">
-                <div class="zoho-label">التقارير المُدخلة</div>
-                <div class="zoho-val good">20/20</div>
-              </div>
-              <div class="zoho-item">
-                <div class="zoho-label">Follow-ups</div>
-                <div class="zoho-val good">100%</div>
-              </div>
-            </div>
-          </div>
-          <div class="zoho-card">
-            <div class="zoho-header">
-              <div
-                class="avatar av-coral"
-                style="width: 30px; height: 30px; font-size: 11px"
-              >
-                لم
-              </div>
-              <div class="zoho-title">لمياء القحطاني</div>
-            </div>
-            <div class="zoho-metrics">
-              <div class="zoho-item">
-                <div class="zoho-label">عدد اللوجات</div>
-                <div class="zoho-val mid">89</div>
-              </div>
-              <div class="zoho-item">
-                <div class="zoho-label">التقارير المُدخلة</div>
-                <div class="zoho-val mid">13/20</div>
-              </div>
-              <div class="zoho-item">
-                <div class="zoho-label">Follow-ups</div>
-                <div class="zoho-val mid">68%</div>
-              </div>
-            </div>
-          </div>
-          <div class="zoho-card">
-            <div class="zoho-header">
-              <div
-                class="avatar av-purple"
-                style="width: 30px; height: 30px; font-size: 11px"
-              >
-                عم
-              </div>
-              <div class="zoho-title">عمر الزهراني</div>
-            </div>
-            <div class="zoho-metrics">
-              <div class="zoho-item">
-                <div class="zoho-label">عدد اللوجات</div>
-                <div class="zoho-val mid">110</div>
-              </div>
-              <div class="zoho-item">
-                <div class="zoho-label">التقارير المُدخلة</div>
-                <div class="zoho-val mid">15/20</div>
-              </div>
-              <div class="zoho-item">
-                <div class="zoho-label">Follow-ups</div>
-                <div class="zoho-val mid">78%</div>
-              </div>
-            </div>
-          </div>
-        </div>
+<!-- Add/Edit Member Modal -->
+<div class="modal-overlay" id="modal-member">
+<div class="modal">
+  <button class="modal-close" onclick="closeModal('member')"><i class="ti ti-x"></i></button>
+  <h2 id="memberModalTitle">إضافة عضو جديد</h2>
+  <input type="hidden" id="memberEditIndex" value="-1">
+  <div class="form-grid">
+    <div class="form-group full"><label>الاسم</label><input id="mName" placeholder="مثال: سارة الأحمد"></div>
+    <div class="form-group full"><label>المسمى الوظيفي</label><input id="mTitle" value="Account Manager"></div>
+    <div class="form-group"><label>الإيراد الشهري (ريال)</label><input id="mRevenue" type="number" placeholder="25000"></div>
+    <div class="form-group"><label>أيام الحضور</label><input id="mPresent" type="number" placeholder="22"></div>
+    <div class="form-group"><label>أيام الغياب</label><input id="mAbsent" type="number" placeholder="2"></div>
+    <div class="form-group"></div>
+    <div class="form-group full"><label>Operational Efficiency % <span id="effVal">75</span></label>
+      <div class="range-wrap"><input type="range" id="mEfficiency" min="0" max="100" value="75" oninput="document.getElementById('effVal').textContent=this.value"></div>
+    </div>
+    <div class="form-group full"><label>Client Health % <span id="healthVal">80</span></label>
+      <div class="range-wrap"><input type="range" id="mHealth" min="0" max="100" value="80" oninput="document.getElementById('healthVal').textContent=this.value"></div>
+    </div>
+    <div class="form-group full"><label>وقت الرد على العميل % <span id="responseVal">80</span></label>
+      <div class="range-wrap"><input type="range" id="mResponse" min="0" max="100" value="80" oninput="document.getElementById('responseVal').textContent=this.value"></div>
+    </div>
+    <div class="form-group full"><label>Zoho System Score % <span id="zohoScoreVal">80</span></label>
+      <div class="range-wrap"><input type="range" id="mZoho" min="0" max="100" value="80" oninput="document.getElementById('zohoScoreVal').textContent=this.value"></div>
+    </div>
+    <!-- Zoho details -->
+    <div class="form-group"><label>عدد اللوجات في Zoho</label><input id="mZohoLogs" type="number" placeholder="120"></div>
+    <div class="form-group"><label>التقارير المُدخلة (من 20)</label><input id="mZohoReports" type="number" placeholder="16" max="20"></div>
+    <div class="form-group full"><label>Follow-ups % <span id="followupVal">80</span></label>
+      <div class="range-wrap"><input type="range" id="mFollowup" min="0" max="100" value="80" oninput="document.getElementById('followupVal').textContent=this.value"></div>
+    </div>
+    <!-- Skills -->
+    <div class="form-group"><label>مهارة التواصل (1-5)</label><input id="sk1" type="number" min="1" max="5" value="3"></div>
+    <div class="form-group"><label>مهارة التفاوض (1-5)</label><input id="sk2" type="number" min="1" max="5" value="3"></div>
+    <div class="form-group"><label>إدارة الوقت (1-5)</label><input id="sk3" type="number" min="1" max="5" value="3"></div>
+    <div class="form-group"><label>حل المشكلات (1-5)</label><input id="sk4" type="number" min="1" max="5" value="3"></div>
+  </div>
+  <div class="modal-footer">
+    <button class="btn" onclick="closeModal('member')">إلغاء</button>
+    <button class="btn btn-primary" onclick="saveMember()">حفظ</button>
+  </div>
+</div>
+</div>
 
-        <div class="section-title">المهارات الشخصية والمهنية</div>
-        <div class="skills-grid2">
-          <div class="skill-card">
-            <div class="skill-card-header">
-              <div
-                class="avatar av-blue"
-                style="width: 30px; height: 30px; font-size: 11px"
-              >
-                سا
-              </div>
-              <div style="font-size: 13px; font-weight: 500">سارة</div>
-            </div>
-            <div class="skill-row">
-              <div class="skill-label">التواصل</div>
-              <div class="stars">★★★★<span class="gray-star">★</span></div>
-            </div>
-            <div class="skill-row">
-              <div class="skill-label">التفاوض</div>
-              <div class="stars">★★★★<span class="gray-star">★</span></div>
-            </div>
-            <div class="skill-row">
-              <div class="skill-label">إدارة الوقت</div>
-              <div class="stars">★★★<span class="gray-star">★★</span></div>
-            </div>
-            <div class="skill-row">
-              <div class="skill-label">حل المشكلات</div>
-              <div class="stars">★★★★★</div>
-            </div>
-          </div>
-          <div class="skill-card">
-            <div class="skill-card-header">
-              <div
-                class="avatar av-teal"
-                style="width: 30px; height: 30px; font-size: 11px"
-              >
-                مح
-              </div>
-              <div style="font-size: 13px; font-weight: 500">محمد</div>
-            </div>
-            <div class="skill-row">
-              <div class="skill-label">التواصل</div>
-              <div class="stars">★★★★★</div>
-            </div>
-            <div class="skill-row">
-              <div class="skill-label">التفاوض</div>
-              <div class="stars">★★★★★</div>
-            </div>
-            <div class="skill-row">
-              <div class="skill-label">إدارة الوقت</div>
-              <div class="stars">★★★★★</div>
-            </div>
-            <div class="skill-row">
-              <div class="skill-label">حل المشكلات</div>
-              <div class="stars">★★★★<span class="gray-star">★</span></div>
-            </div>
-          </div>
-          <div class="skill-card">
-            <div class="skill-card-header">
-              <div
-                class="avatar av-coral"
-                style="width: 30px; height: 30px; font-size: 11px"
-              >
-                لم
-              </div>
-              <div style="font-size: 13px; font-weight: 500">لمياء</div>
-            </div>
-            <div class="skill-row">
-              <div class="skill-label">التواصل</div>
-              <div class="stars">★★★<span class="gray-star">★★</span></div>
-            </div>
-            <div class="skill-row">
-              <div class="skill-label">التفاوض</div>
-              <div class="stars">★★★<span class="gray-star">★★</span></div>
-            </div>
-            <div class="skill-row">
-              <div class="skill-label">إدارة الوقت</div>
-              <div class="stars">★★<span class="gray-star">★★★</span></div>
-            </div>
-            <div class="skill-row">
-              <div class="skill-label">حل المشكلات</div>
-              <div class="stars">★★★<span class="gray-star">★★</span></div>
-            </div>
-          </div>
-          <div class="skill-card">
-            <div class="skill-card-header">
-              <div
-                class="avatar av-purple"
-                style="width: 30px; height: 30px; font-size: 11px"
-              >
-                عم
-              </div>
-              <div style="font-size: 13px; font-weight: 500">عمر</div>
-            </div>
-            <div class="skill-row">
-              <div class="skill-label">التواصل</div>
-              <div class="stars">★★★★<span class="gray-star">★</span></div>
-            </div>
-            <div class="skill-row">
-              <div class="skill-label">التفاوض</div>
-              <div class="stars">★★★<span class="gray-star">★★</span></div>
-            </div>
-            <div class="skill-row">
-              <div class="skill-label">إدارة الوقت</div>
-              <div class="stars">★★★★<span class="gray-star">★</span></div>
-            </div>
-            <div class="skill-row">
-              <div class="skill-label">حل المشكلات</div>
-              <div class="stars">★★★★<span class="gray-star">★</span></div>
-            </div>
-          </div>
-        </div>
+<!-- Add/Edit Project Modal -->
+<div class="modal-overlay" id="modal-project">
+<div class="modal">
+  <button class="modal-close" onclick="closeModal('project')"><i class="ti ti-x"></i></button>
+  <h2 id="projectModalTitle">إضافة مشروع جديد</h2>
+  <input type="hidden" id="projectEditIndex" value="-1">
+  <div class="form-grid">
+    <div class="form-group full"><label>اسم العميل</label><input id="pClient" placeholder="مثال: شركة الرياض للتقنية"></div>
+    <div class="form-group"><label>الموقع الإلكتروني</label><input id="pWebsite" placeholder="example.com"></div>
+    <div class="form-group"><label>الباقة</label>
+      <select id="pPackage"><option>Gold</option><option>Silver</option><option>Premium</option></select>
+    </div>
+    <div class="form-group"><label>قيمة العقد (ريال/شهر)</label><input id="pValue" type="number" placeholder="8000"></div>
+    <div class="form-group"><label>المشرف</label><select id="pManager"></select></div>
+    <div class="form-group"><label>تاريخ تجديد العقد</label><input id="pRenewal" type="date"></div>
+    <div class="form-group"><label>حالة العميل</label>
+      <select id="pStatus">
+        <option value="ok">راضي</option>
+        <option value="ok2">راضي جداً / ممتاز</option>
+        <option value="warn">تأخر في الرد</option>
+        <option value="warn2">متأخر أحياناً</option>
+        <option value="bad">غير راضي</option>
+      </select>
+    </div>
+    <div class="form-group"><label>روابط السوشيال (اختاري)</label>
+      <div style="display:flex;flex-direction:column;gap:6px;margin-top:4px">
+        <label style="display:flex;align-items:center;gap:8px;font-size:13px;color:#1a1a18"><input type="checkbox" id="sInsta"> <i class="ti ti-brand-instagram" style="color:#E24B4A"></i> Instagram</label>
+        <label style="display:flex;align-items:center;gap:8px;font-size:13px;color:#1a1a18"><input type="checkbox" id="sTwitter"> <i class="ti ti-brand-twitter" style="color:#378ADD"></i> Twitter/X</label>
+        <label style="display:flex;align-items:center;gap:8px;font-size:13px;color:#1a1a18"><input type="checkbox" id="sFb"> <i class="ti ti-brand-facebook" style="color:#185FA5"></i> Facebook</label>
+        <label style="display:flex;align-items:center;gap:8px;font-size:13px;color:#1a1a18"><input type="checkbox" id="sLinked"> <i class="ti ti-brand-linkedin" style="color:#185FA5"></i> LinkedIn</label>
+        <label style="display:flex;align-items:center;gap:8px;font-size:13px;color:#1a1a18"><input type="checkbox" id="sTiktok"> <i class="ti ti-brand-tiktok"></i> TikTok</label>
+        <label style="display:flex;align-items:center;gap:8px;font-size:13px;color:#1a1a18"><input type="checkbox" id="sSnap"> <i class="ti ti-brand-snapchat" style="color:#EF9F27"></i> Snapchat</label>
       </div>
     </div>
+  </div>
+  <div class="modal-footer">
+    <button class="btn" onclick="closeModal('project')">إلغاء</button>
+    <button class="btn btn-primary" onclick="saveProject()">حفظ</button>
+  </div>
+</div>
+</div>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
-    <script>
-      var chartDone = false;
+<!-- Settings Modal -->
+<div class="modal-overlay" id="modal-settings">
+<div class="modal">
+  <button class="modal-close" onclick="closeModal('settings')"><i class="ti ti-x"></i></button>
+  <h2>إعدادات الداش بورد</h2>
+  <div class="form-grid">
+    <div class="form-group full"><label>تارجت الفريق الكلي (ريال)</label><input id="settingsTarget" type="number" value="100000"></div>
+    <div class="form-group full"><label>اسم الشهر / الفترة</label><input id="settingsPeriod" value="يونيو 2025 — تقرير شهري للفريق"></div>
+  </div>
+  <div class="modal-footer">
+    <button class="btn" onclick="closeModal('settings')">إلغاء</button>
+    <button class="btn btn-primary" onclick="saveSettings()">حفظ</button>
+  </div>
+</div>
+</div>
 
-      function switchTab(name) {
-        document.querySelectorAll(".tab").forEach(function (t) {
-          t.classList.remove("active");
-        });
-        document.querySelectorAll(".view").forEach(function (v) {
-          v.classList.remove("active");
-        });
-        var tabs = ["team", "projects", "revenue", "zoho"];
-        var idx = tabs.indexOf(name);
-        document.querySelectorAll(".tab")[idx].classList.add("active");
-        document.getElementById("view-" + name).classList.add("active");
-        if (name === "revenue" && !chartDone) {
-          chartDone = true;
-          setTimeout(function () {
-            var ctx = document.getElementById("scoreChart");
-            if (ctx) {
-              new Chart(ctx, {
-                type: "bar",
-                data: {
-                  labels: ["سارة", "محمد", "لمياء", "عمر"],
-                  datasets: [
-                    {
-                      label: "Operational Efficiency",
-                      data: [82, 88, 65, 72],
-                      backgroundColor: "#1D9E75",
-                      borderRadius: 4,
-                    },
-                    {
-                      label: "Client Health",
-                      data: [88, 91, 71, 77],
-                      backgroundColor: "#378ADD",
-                      borderRadius: 4,
-                    },
-                    {
-                      label: "Zoho Score",
-                      data: [85, 92, 70, 78],
-                      backgroundColor: "#7F77DD",
-                      borderRadius: 4,
-                    },
-                  ],
-                },
-                options: {
-                  responsive: true,
-                  maintainAspectRatio: false,
-                  plugins: { legend: { display: false } },
-                  scales: {
-                    y: {
-                      beginAtZero: true,
-                      max: 100,
-                      grid: { color: "rgba(0,0,0,0.06)" },
-                      ticks: { font: { size: 11 } },
-                    },
-                    x: {
-                      grid: { display: false },
-                      ticks: { font: { size: 12 } },
-                    },
-                  },
-                },
-              });
-            }
-          }, 100);
-        }
-      }
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+<script>
+// ===== DATA =====
+var DEFAULT_MEMBERS = [
+  {name:'سارة الأحمد',title:'Account Manager',revenue:24000,present:22,absent:2,efficiency:82,health:88,response:90,zohoScore:85,zohoLogs:142,zohoReports:18,followup:95,skills:[4,4,3,5]},
+  {name:'محمد السعيد',title:'Account Manager',revenue:26500,present:24,absent:0,efficiency:88,health:91,response:95,zohoScore:92,zohoLogs:198,zohoReports:20,followup:100,skills:[5,5,5,4]},
+  {name:'لمياء القحطاني',title:'Account Manager',revenue:18000,present:20,absent:4,efficiency:65,health:71,response:58,zohoScore:70,zohoLogs:89,zohoReports:13,followup:68,skills:[3,3,2,3]},
+  {name:'عمر الزهراني',title:'Account Manager',revenue:19000,present:21,absent:3,efficiency:72,health:77,response:65,zohoScore:78,zohoLogs:110,zohoReports:15,followup:78,skills:[4,3,4,4]}
+];
 
-      function filterMember(v) {
-        var cards = document.querySelectorAll(".am-card");
-        cards.forEach(function (c, i) {
-          c.style.display = v === "all" || v == i ? "block" : "none";
-        });
-      }
-    </script>
-  </body>
+var DEFAULT_PROJECTS = [
+  {client:'شركة الرياض للتقنية',website:'riyad-tech.com',package:'Gold',value:8500,managerIdx:1,renewal:'2025-07-15',status:'ok',social:{insta:true,twitter:true,linked:true,fb:false,tiktok:false,snap:false}},
+  {client:'مجموعة الأمل التجارية',website:'alamal-group.com',package:'Premium',value:12000,managerIdx:0,renewal:'2025-08-01',status:'ok2',social:{insta:true,twitter:false,linked:false,fb:true,tiktok:false,snap:false}},
+  {client:'متجر الوفاء الإلكتروني',website:'alwafa-store.com',package:'Silver',value:4500,managerIdx:2,renewal:'2025-09-10',status:'warn',social:{insta:true,twitter:false,linked:false,fb:false,tiktok:true,snap:false}},
+  {client:'مطاعم النجمة',website:'star-restaurants.com',package:'Gold',value:7000,managerIdx:3,renewal:'2025-06-20',status:'bad',social:{insta:true,twitter:false,linked:false,fb:false,tiktok:false,snap:true}},
+  {client:'شركة الإبداع للتصميم',website:'ibda3-design.com',package:'Premium',value:15000,managerIdx:1,renewal:'2025-10-05',status:'ok2',social:{insta:true,twitter:false,linked:true,fb:false,tiktok:false,snap:false}}
+];
+
+var DEFAULT_SETTINGS = {target:100000,period:'يونيو 2025 — تقرير شهري للفريق'};
+
+function load(){
+  var m = localStorage.getItem('am_members');
+  var p = localStorage.getItem('am_projects');
+  var s = localStorage.getItem('am_settings');
+  return {
+    members: m ? JSON.parse(m) : JSON.parse(JSON.stringify(DEFAULT_MEMBERS)),
+    projects: p ? JSON.parse(p) : JSON.parse(JSON.stringify(DEFAULT_PROJECTS)),
+    settings: s ? JSON.parse(s) : Object.assign({},DEFAULT_SETTINGS)
+  };
+}
+function save(data){ localStorage.setItem('am_members',JSON.stringify(data.members)); localStorage.setItem('am_projects',JSON.stringify(data.projects)); localStorage.setItem('am_settings',JSON.stringify(data.settings)); }
+
+var data = load();
+
+// ===== HELPERS =====
+var AVATAR_CLASSES = ['av-0','av-1','av-2','av-3','av-4'];
+function avatarClass(i){ return AVATAR_CLASSES[i % AVATAR_CLASSES.length]; }
+function initials(name){ var parts=name.trim().split(' '); return parts.length>=2?parts[0][0]+parts[1][0]:name.slice(0,2); }
+function scoreColor(v){ return v>=80?'good':v>=65?'mid':'low'; }
+function barColor(v){ return v>=80?'fill-green':v>=65?'fill-amber':'fill-red'; }
+function stars(n){
+  var s=''; for(var i=1;i<=5;i++) s+='<span class="'+(i<=n?'star-gold':'star-gray')+'">★</span>';
+  return s;
+}
+function statusHTML(s){
+  var map={ok:'<div class="status-ok"><i class="ti ti-circle-check"></i> راضي</div>',ok2:'<div class="status-ok"><i class="ti ti-circle-check"></i> ممتاز / راضي جداً</div>',warn:'<div class="status-warn"><i class="ti ti-alert-circle"></i> تأخر في الرد</div>',warn2:'<div class="status-warn"><i class="ti ti-alert-circle"></i> متأخر أحياناً</div>',bad:'<div class="status-bad"><i class="ti ti-alert-triangle"></i> غير راضي</div>'};
+  return map[s]||'';
+}
+function socialIcons(social){
+  var h='<div class="social-icons">';
+  if(social.insta) h+='<i class="ti ti-brand-instagram" style="color:#E24B4A"></i>';
+  if(social.twitter) h+='<i class="ti ti-brand-twitter" style="color:#378ADD"></i>';
+  if(social.fb) h+='<i class="ti ti-brand-facebook" style="color:#185FA5"></i>';
+  if(social.linked) h+='<i class="ti ti-brand-linkedin" style="color:#185FA5"></i>';
+  if(social.tiktok) h+='<i class="ti ti-brand-tiktok"></i>';
+  if(social.snap) h+='<i class="ti ti-brand-snapchat" style="color:#EF9F27"></i>';
+  return h+'</div>';
+}
+
+// ===== RENDER TEAM =====
+function renderTeam(){
+  var filter = document.getElementById('memberFilter').value;
+  var grid = document.getElementById('teamGrid');
+  grid.innerHTML='';
+  if(!data.members.length){grid.innerHTML='<div class="empty-state">لا يوجد أعضاء — اضغط "إضافة عضو"</div>';return;}
+  data.members.forEach(function(m,i){
+    if(filter!=='all' && filter!=i) return;
+    var card = document.createElement('div');
+    card.className='am-card';
+    card.innerHTML=
+      '<div class="am-card-actions">'+
+        '<button class="icon-btn" title="تعديل" onclick="openEditMember('+i+')"><i class="ti ti-edit"></i></button>'+
+        '<button class="icon-btn" title="حذف" onclick="deleteMember('+i+')"><i class="ti ti-trash" style="color:#A32D2D"></i></button>'+
+      '</div>'+
+      '<div class="am-header">'+
+        '<div class="avatar '+avatarClass(i)+'">'+initials(m.name)+'</div>'+
+        '<div><div class="am-name">'+m.name+'</div><div class="am-title">'+m.title+'</div></div>'+
+      '</div>'+
+      '<div class="score-row">'+
+        '<div class="score-item"><div class="score-label">Monthly Revenue</div><div class="score-num '+scoreColor(m.revenue/250)+'">'+m.revenue.toLocaleString()+' ر</div></div>'+
+        '<div class="score-item"><div class="score-label">Client Health</div><div class="score-num '+scoreColor(m.health)+'">'+m.health+'%</div></div>'+
+      '</div>'+
+      '<div class="bar-wrap"><div class="bar-label"><span>Operational Efficiency</span><span>'+m.efficiency+'%</span></div><div class="bar-bg"><div class="bar-fill '+barColor(m.efficiency)+'" style="width:'+m.efficiency+'%"></div></div></div>'+
+      '<div class="bar-wrap"><div class="bar-label"><span>وقت الرد على العميل</span><span>'+m.response+'%</span></div><div class="bar-bg"><div class="bar-fill '+barColor(m.response)+'" style="width:'+m.response+'%"></div></div></div>'+
+      '<div class="bar-wrap"><div class="bar-label"><span>Zoho System Score</span><span>'+m.zohoScore+'%</span></div><div class="bar-bg"><div class="bar-fill fill-purple" style="width:'+m.zohoScore+'%"></div></div></div>'+
+      '<div class="attend-row">'+
+        '<span class="attend-badge present-b"><i class="ti ti-check"></i> حضور: '+m.present+' يوم</span>'+
+        '<span class="attend-badge absent-b"><i class="ti ti-x"></i> غياب: '+m.absent+' يوم</span>'+
+      '</div>';
+    grid.appendChild(card);
+  });
+}
+
+// ===== RENDER PROJECTS =====
+function renderProjects(){
+  var tbody = document.getElementById('projectsBody');
+  tbody.innerHTML='';
+  if(!data.projects.length){tbody.innerHTML='<tr><td colspan="8" class="empty-state">لا يوجد مشاريع</td></tr>';return;}
+  data.projects.forEach(function(p,i){
+    var mgr = data.members[p.managerIdx];
+    var mgrName = mgr ? mgr.name.split(' ')[0] : '—';
+    var mgrAvatar = mgr ? '<div class="avatar '+avatarClass(p.managerIdx)+'" style="width:26px;height:26px;font-size:10px">'+initials(mgr.name)+'</div>' : '';
+    var renewal = p.renewal ? new Date(p.renewal).toLocaleDateString('ar-SA',{day:'numeric',month:'long',year:'numeric'}) : '—';
+    var tr = document.createElement('tr');
+    tr.innerHTML=
+      '<td><div style="font-weight:500">'+p.client+'</div><div style="font-size:11px;color:#6b6b67"><a href="https://'+p.website+'" target="_blank">'+p.website+'</a></div></td>'+
+      '<td><span class="pkg-badge pkg-'+p.package+'">'+p.package+'</span></td>'+
+      '<td>'+Number(p.value).toLocaleString()+' ر/شهر</td>'+
+      '<td><div style="display:flex;align-items:center;gap:6px">'+mgrAvatar+mgrName+'</div></td>'+
+      '<td>'+socialIcons(p.social)+'</td>'+
+      '<td style="font-size:12px">'+renewal+'</td>'+
+      '<td>'+statusHTML(p.status)+'</td>'+
+      '<td><div style="display:flex;gap:4px">'+
+        '<button class="icon-btn" onclick="openEditProject('+i+')"><i class="ti ti-edit"></i></button>'+
+        '<button class="icon-btn" onclick="deleteProject('+i+')"><i class="ti ti-trash" style="color:#A32D2D"></i></button>'+
+      '</div></td>';
+    tbody.appendChild(tr);
+  });
+}
+
+// ===== RENDER REVENUE =====
+var chartInstance = null;
+function renderRevenue(){
+  var total = data.members.reduce(function(s,m){return s+m.revenue;},0);
+  var target = data.settings.target;
+  var pct = Math.min(100,Math.round(total/target*100));
+  document.getElementById('revTotal').textContent=total.toLocaleString()+' / '+target.toLocaleString()+' ريال';
+  document.getElementById('revPct').textContent=pct+'%';
+  document.getElementById('revBar').style.width=pct+'%';
+  var grid=document.getElementById('revGrid');
+  grid.innerHTML='';
+  var perPerson=Math.round(target/Math.max(1,data.members.length));
+  data.members.forEach(function(m,i){
+    var p2=Math.min(100,Math.round(m.revenue/perPerson*100));
+    var col=m.revenue>=perPerson?'#0F6E56':m.revenue>=perPerson*.85?'#854F0B':'#A32D2D';
+    var barC=m.revenue>=perPerson?'fill-green':m.revenue>=perPerson*.85?'fill-amber':'fill-red';
+    var diff=m.revenue-perPerson;
+    var diffText=diff>=0?'<div style="font-size:11px;color:#0F6E56;margin-top:4px">تجاوز الهدف ✓</div>':'<div style="font-size:11px;color:#A32D2D;margin-top:4px">ناقص '+Math.abs(diff).toLocaleString()+' ريال</div>';
+    var div=document.createElement('div');
+    div.className='rev-item';
+    div.innerHTML='<div class="rev-name">'+m.name.split(' ')[0]+'</div>'+
+      '<div class="rev-num" style="color:'+col+'">'+m.revenue.toLocaleString()+'</div>'+
+      '<div class="rev-target-line">هدف: '+perPerson.toLocaleString()+' ريال</div>'+
+      '<div class="prog-outer"><div class="prog-inner '+barC+'" style="width:'+p2+'%"></div></div>'+diffText;
+    grid.appendChild(div);
+  });
+  // Chart
+  if(chartInstance){chartInstance.destroy();chartInstance=null;}
+  var ctx=document.getElementById('scoreChart');
+  if(ctx && data.members.length){
+    chartInstance=new Chart(ctx,{
+      type:'bar',
+      data:{
+        labels:data.members.map(function(m){return m.name.split(' ')[0];}),
+        datasets:[
+          {label:'Operational Efficiency',data:data.members.map(function(m){return m.efficiency;}),backgroundColor:'#1D9E75',borderRadius:4},
+          {label:'Client Health',data:data.members.map(function(m){return m.health;}),backgroundColor:'#378ADD',borderRadius:4},
+          {label:'Zoho Score',data:data.members.map(function(m){return m.zohoScore;}),backgroundColor:'#7F77DD',borderRadius:4}
+        ]
+      },
+      options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{y:{beginAtZero:true,max:100,grid:{color:'rgba(0,0,0,0.06)'},ticks:{font:{size:11}}},x:{grid:{display:false},ticks:{font:{size:12}}}}}
+    });
+  }
+}
+
+// ===== RENDER ZOHO & SKILLS =====
+function renderZoho(){
+  var zg=document.getElementById('zohoGrid');
+  var sg=document.getElementById('skillsGrid');
+  zg.innerHTML=''; sg.innerHTML='';
+  var skillNames=['التواصل','التفاوض','إدارة الوقت','حل المشكلات'];
+  data.members.forEach(function(m,i){
+    // Zoho card
+    var zc=document.createElement('div');
+    zc.className='zoho-card';
+    zc.innerHTML='<div class="zoho-header"><div class="avatar '+avatarClass(i)+'" style="width:30px;height:30px;font-size:11px">'+initials(m.name)+'</div><div style="font-size:13px;font-weight:500">'+m.name+'</div></div>'+
+      '<div class="zoho-metrics">'+
+        '<div class="zoho-item"><div class="zoho-label">عدد اللوجات</div><div class="zoho-val '+(m.zohoLogs>=100?'good':'mid')+'">'+m.zohoLogs+'</div></div>'+
+        '<div class="zoho-item"><div class="zoho-label">التقارير</div><div class="zoho-val '+(m.zohoReports>=18?'good':m.zohoReports>=14?'mid':'low')+'">'+m.zohoReports+'/20</div></div>'+
+        '<div class="zoho-item"><div class="zoho-label">Follow-ups</div><div class="zoho-val '+(m.followup>=85?'good':m.followup>=70?'mid':'low')+'">'+m.followup+'%</div></div>'+
+      '</div>';
+    zg.appendChild(zc);
+    // Skill card
+    var sc=document.createElement('div');
+    sc.className='skill-card';
+    var skillsHTML=skillNames.map(function(sn,si){
+      return '<div class="skill-row"><div class="skill-label">'+sn+'</div><div class="stars">'+stars(m.skills[si]||3)+'</div></div>';
+    }).join('');
+    sc.innerHTML='<div class="skill-card-header"><div class="avatar '+avatarClass(i)+'" style="width:30px;height:30px;font-size:11px">'+initials(m.name)+'</div><div style="font-size:13px;font-weight:500">'+m.name.split(' ')[0]+'</div></div>'+skillsHTML;
+    sg.appendChild(sc);
+  });
+}
+
+// ===== METRICS =====
+function renderMetrics(){
+  var total=data.members.reduce(function(s,m){return s+m.revenue;},0);
+  var avgH=data.members.length?Math.round(data.members.reduce(function(s,m){return s+m.health;},0)/data.members.length):0;
+  var avgE=data.members.length?Math.round(data.members.reduce(function(s,m){return s+m.efficiency;},0)/data.members.length):0;
+  document.getElementById('totalRevDisplay').textContent=total.toLocaleString();
+  document.getElementById('avgHealthDisplay').textContent=avgH+'%';
+  document.getElementById('avgEffDisplay').textContent=avgE+'%';
+  document.getElementById('totalProjectsDisplay').textContent=data.projects.length;
+  document.getElementById('targetDisplay').textContent=data.settings.target.toLocaleString();
+  document.getElementById('targetSub').textContent=data.settings.target.toLocaleString();
+  document.getElementById('headerDate').textContent=data.settings.period;
+}
+
+// ===== FILTER DROPDOWN =====
+function rebuildFilter(){
+  var sel=document.getElementById('memberFilter');
+  var cur=sel.value;
+  sel.innerHTML='<option value="all">كل الفريق</option>';
+  data.members.forEach(function(m,i){
+    var opt=document.createElement('option');
+    opt.value=i; opt.textContent=m.name.split(' ')[0];
+    sel.appendChild(opt);
+  });
+  sel.value=cur;
+}
+
+// ===== TABS =====
+function switchTab(name){
+  document.querySelectorAll('.tab').forEach(function(t){t.classList.remove('active');});
+  document.querySelectorAll('.view').forEach(function(v){v.classList.remove('active');});
+  var tabs=['team','projects','revenue','zoho'];
+  document.querySelectorAll('.tab')[tabs.indexOf(name)].classList.add('active');
+  document.getElementById('view-'+name).classList.add('active');
+  if(name==='revenue') renderRevenue();
+  if(name==='zoho') renderZoho();
+}
+
+// ===== MODALS =====
+function openModal(type){
+  if(type==='addMember'){ openEditMember(-1); return; }
+  if(type==='addProject'){ openEditProject(-1); return; }
+  if(type==='settings'){
+    document.getElementById('settingsTarget').value=data.settings.target;
+    document.getElementById('settingsPeriod').value=data.settings.period;
+    document.getElementById('modal-settings').classList.add('open');
+  }
+}
+function closeModal(type){ document.getElementById('modal-'+type).classList.remove('open'); }
+
+function openEditMember(idx){
+  var m = idx>=0 ? data.members[idx] : null;
+  document.getElementById('memberEditIndex').value=idx;
+  document.getElementById('memberModalTitle').textContent=idx>=0?'تعديل بيانات العضو':'إضافة عضو جديد';
+  document.getElementById('mName').value=m?m.name:'';
+  document.getElementById('mTitle').value=m?m.title:'Account Manager';
+  document.getElementById('mRevenue').value=m?m.revenue:'';
+  document.getElementById('mPresent').value=m?m.present:'';
+  document.getElementById('mAbsent').value=m?m.absent:'';
+  ['mEfficiency','mHealth','mResponse','mZoho','mFollowup'].forEach(function(id){
+    var key={mEfficiency:'efficiency',mHealth:'health',mResponse:'response',mZoho:'zohoScore',mFollowup:'followup'}[id];
+    var valId={mEfficiency:'effVal',mHealth:'healthVal',mResponse:'responseVal',mZoho:'zohoScoreVal',mFollowup:'followupVal'}[id];
+    document.getElementById(id).value=m?m[key]:80;
+    document.getElementById(valId).textContent=m?m[key]:80;
+  });
+  document.getElementById('mZohoLogs').value=m?m.zohoLogs:'';
+  document.getElementById('mZohoReports').value=m?m.zohoReports:'';
+  ['sk1','sk2','sk3','sk4'].forEach(function(id,si){
+    document.getElementById(id).value=m&&m.skills?m.skills[si]:3;
+  });
+  document.getElementById('modal-member').classList.add('open');
+}
+
+function saveMember(){
+  var idx=parseInt(document.getElementById('memberEditIndex').value);
+  var m={
+    name:document.getElementById('mName').value.trim()||'عضو جديد',
+    title:document.getElementById('mTitle').value.trim()||'Account Manager',
+    revenue:parseInt(document.getElementById('mRevenue').value)||0,
+    present:parseInt(document.getElementById('mPresent').value)||0,
+    absent:parseInt(document.getElementById('mAbsent').value)||0,
+    efficiency:parseInt(document.getElementById('mEfficiency').value),
+    health:parseInt(document.getElementById('mHealth').value),
+    response:parseInt(document.getElementById('mResponse').value),
+    zohoScore:parseInt(document.getElementById('mZoho').value),
+    zohoLogs:parseInt(document.getElementById('mZohoLogs').value)||0,
+    zohoReports:parseInt(document.getElementById('mZohoReports').value)||0,
+    followup:parseInt(document.getElementById('mFollowup').value),
+    skills:['sk1','sk2','sk3','sk4'].map(function(id){return parseInt(document.getElementById(id).value)||3;})
+  };
+  if(idx>=0) data.members[idx]=m; else data.members.push(m);
+  save(data); closeModal('member'); renderAll();
+}
+
+function deleteMember(idx){
+  if(!confirm('هل تريدي حذف '+data.members[idx].name+'؟')) return;
+  data.members.splice(idx,1);
+  save(data); renderAll();
+}
+
+function openEditProject(idx){
+  var p=idx>=0?data.projects[idx]:null;
+  // populate manager dropdown
+  var sel=document.getElementById('pManager');
+  sel.innerHTML='';
+  data.members.forEach(function(m,i){
+    var opt=document.createElement('option');
+    opt.value=i; opt.textContent=m.name;
+    sel.appendChild(opt);
+  });
+  document.getElementById('projectEditIndex').value=idx;
+  document.getElementById('projectModalTitle').textContent=idx>=0?'تعديل المشروع':'إضافة مشروع جديد';
+  document.getElementById('pClient').value=p?p.client:'';
+  document.getElementById('pWebsite').value=p?p.website:'';
+  document.getElementById('pPackage').value=p?p.package:'Gold';
+  document.getElementById('pValue').value=p?p.value:'';
+  document.getElementById('pManager').value=p?p.managerIdx:0;
+  document.getElementById('pRenewal').value=p?p.renewal:'';
+  document.getElementById('pStatus').value=p?p.status:'ok';
+  var soc=p?p.social:{insta:false,twitter:false,fb:false,linked:false,tiktok:false,snap:false};
+  document.getElementById('sInsta').checked=!!soc.insta;
+  document.getElementById('sTwitter').checked=!!soc.twitter;
+  document.getElementById('sFb').checked=!!soc.fb;
+  document.getElementById('sLinked').checked=!!soc.linked;
+  document.getElementById('sTiktok').checked=!!soc.tiktok;
+  document.getElementById('sSnap').checked=!!soc.snap;
+  document.getElementById('modal-project').classList.add('open');
+}
+
+function saveProject(){
+  var idx=parseInt(document.getElementById('projectEditIndex').value);
+  var p={
+    client:document.getElementById('pClient').value.trim()||'عميل جديد',
+    website:document.getElementById('pWebsite').value.trim(),
+    package:document.getElementById('pPackage').value,
+    value:parseInt(document.getElementById('pValue').value)||0,
+    managerIdx:parseInt(document.getElementById('pManager').value)||0,
+    renewal:document.getElementById('pRenewal').value,
+    status:document.getElementById('pStatus').value,
+    social:{insta:document.getElementById('sInsta').checked,twitter:document.getElementById('sTwitter').checked,fb:document.getElementById('sFb').checked,linked:document.getElementById('sLinked').checked,tiktok:document.getElementById('sTiktok').checked,snap:document.getElementById('sSnap').checked}
+  };
+  if(idx>=0) data.projects[idx]=p; else data.projects.push(p);
+  save(data); closeModal('project'); renderAll();
+}
+
+function deleteProject(idx){
+  if(!confirm('هل تريدي حذف هذا المشروع؟')) return;
+  data.projects.splice(idx,1);
+  save(data); renderAll();
+}
+
+function saveSettings(){
+  data.settings.target=parseInt(document.getElementById('settingsTarget').value)||100000;
+  data.settings.period=document.getElementById('settingsPeriod').value||'';
+  save(data); closeModal('settings'); renderAll();
+}
+
+// close modal on overlay click
+document.querySelectorAll('.modal-overlay').forEach(function(ov){
+  ov.addEventListener('click',function(e){if(e.target===ov) ov.classList.remove('open');});
+});
+
+// ===== RENDER ALL =====
+function renderAll(){
+  rebuildFilter();
+  renderMetrics();
+  renderTeam();
+  renderProjects();
+}
+
+renderAll();
+</script>
+</body>
 </html>
