@@ -3,171 +3,414 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Account Managers Dashboard</title>
+<title>Account Managers Dashboard — Ocoda</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&family=Sora:wght@500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@2.44.0/tabler-icons.min.css">
 <style>
+:root{
+  --purple-900:#2A1259;
+  --purple-700:#4A1E9E;
+  --purple-600:#5B2BB8;
+  --purple-500:#7C4DD6;
+  --purple-300:#B79AEC;
+  --purple-100:#EDE6FA;
+  --purple-50:#F6F2FC;
+  --ink:#1F1A2E;
+  --ink-soft:#6B6480;
+  --ink-faint:#9A93AD;
+  --line:#E9E3F4;
+  --line-soft:#F1ECF9;
+  --bg:#F7F5FB;
+  --card:#FFFFFF;
+  --green:#0F9E6E;--green-bg:#E4F6EF;
+  --amber:#C77A0A;--amber-bg:#FBF0DD;
+  --red:#D6453F;--red-bg:#FBEAE9;
+  --blue:#3B7BD4;
+  --r-sm:8px;--r-md:12px;--r-lg:16px;--r-xl:20px;
+  --shadow-sm:0 1px 2px rgba(42,18,89,.04),0 1px 3px rgba(42,18,89,.06);
+  --shadow-md:0 4px 12px rgba(42,18,89,.06),0 2px 4px rgba(42,18,89,.04);
+  --shadow-lg:0 12px 32px rgba(42,18,89,.10);
+}
 *{box-sizing:border-box;margin:0;padding:0}
-body{font-family:system-ui,-apple-system,sans-serif;background:#f5f5f3;color:#1a1a18;padding:24px;min-height:100vh}
-.dash{max-width:1100px;margin:0 auto}
-.header{display:flex;justify-content:space-between;align-items:center;margin-bottom:1.5rem;padding-bottom:1rem;border-bottom:1px solid #e0ded6}
-.header h1{font-size:20px;font-weight:600}
-.header p{font-size:13px;color:#6b6b67;margin-top:4px}
+body{
+  font-family:'IBM Plex Sans Arabic',system-ui,sans-serif;
+  background:
+    radial-gradient(1200px 400px at 100% -10%,rgba(124,77,214,.07),transparent 60%),
+    var(--bg);
+  color:var(--ink);
+  padding:28px 24px 60px;
+  min-height:100vh;
+  -webkit-font-smoothing:antialiased;
+  line-height:1.5;
+}
+.dash{max-width:1180px;margin:0 auto}
+.font-display{font-family:'Sora','IBM Plex Sans Arabic',sans-serif}
+
+/* ===== HEADER ===== */
+.header{
+  display:flex;justify-content:space-between;align-items:flex-start;
+  margin-bottom:24px;gap:20px;flex-wrap:wrap;
+}
+.brand-row{display:flex;align-items:center;gap:14px}
+.brand-mark{
+  width:46px;height:46px;border-radius:13px;flex-shrink:0;
+  background:linear-gradient(135deg,var(--purple-600),var(--purple-900));
+  display:flex;align-items:center;justify-content:center;
+  color:#fff;font-family:'Sora';font-weight:700;font-size:20px;
+  box-shadow:0 6px 16px rgba(74,30,158,.28);
+}
+.header h1{font-size:21px;font-weight:600;letter-spacing:-.01em;color:var(--ink)}
+.header .sub{font-size:13px;color:var(--ink-soft);margin-top:3px;display:flex;align-items:center;gap:6px}
+.live-dot{width:7px;height:7px;border-radius:50%;background:var(--green);box-shadow:0 0 0 3px var(--green-bg);display:inline-block}
 .top-controls{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
-.target-badge{background:#EAF3DE;color:#3B6D11;font-size:12px;padding:6px 14px;border-radius:8px;font-weight:500}
-.btn{font-size:13px;padding:7px 14px;border-radius:8px;border:0.5px solid #dddbd3;background:#fff;cursor:pointer;display:flex;align-items:center;gap:6px;font-family:inherit;color:#1a1a18}
-.btn:hover{background:#f5f5f3}
-.btn-primary{background:#1a1a18;color:#fff;border-color:#1a1a18}
-.btn-primary:hover{background:#333}
-.btn-danger{background:#FCEBEB;color:#A32D2D;border-color:#f5c5c5}
-.btn-danger:hover{background:#f5c5c5}
-.metric-row{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:1.5rem}
-.metric-card{background:#ececea;border-radius:8px;padding:14px;text-align:center}
-.metric-label{font-size:12px;color:#6b6b67;margin-bottom:6px}
-.metric-val{font-size:22px;font-weight:600}
-.metric-sub{font-size:11px;color:#6b6b67;margin-top:3px}
-.tabs{display:flex;gap:4px;margin-bottom:1.5rem;border-bottom:1px solid #e0ded6}
-.tab{font-size:13px;padding:9px 16px;cursor:pointer;color:#6b6b67;border:none;border-bottom:2px solid transparent;margin-bottom:-1px;background:none;display:flex;align-items:center;gap:6px;font-family:inherit}
-.tab.active{color:#1a1a18;border-bottom-color:#1a1a18;font-weight:500}
-.tab:hover{color:#1a1a18}
-.view{display:none}.view.active{display:block}
-.section-title{font-size:12px;font-weight:500;color:#6b6b67;text-transform:uppercase;letter-spacing:.06em;margin-bottom:14px}
-.team-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;margin-bottom:1.5rem}
-.am-card{background:#fff;border:0.5px solid #dddbd3;border-radius:12px;padding:16px;position:relative}
-.am-card-actions{position:absolute;top:12px;left:12px;display:flex;gap:6px}
-.icon-btn{background:none;border:none;cursor:pointer;color:#6b6b67;font-size:16px;padding:4px;border-radius:6px}
-.icon-btn:hover{background:#f5f5f3;color:#1a1a18}
-.am-header{display:flex;align-items:center;gap:10px;margin-bottom:14px}
-.avatar{width:40px;height:40px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:600;flex-shrink:0}
-.av-0{background:#E6F1FB;color:#185FA5}
-.av-1{background:#E1F5EE;color:#0F6E56}
-.av-2{background:#FAECE7;color:#993C1D}
-.av-3{background:#EEEDFE;color:#534AB7}
-.av-4{background:#FEF3E2;color:#7A4210}
-.am-name{font-size:14px;font-weight:500}
-.am-title{font-size:12px;color:#6b6b67}
-.score-row{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:10px}
-.score-item{background:#f5f5f3;border-radius:8px;padding:10px}
-.score-label{font-size:11px;color:#6b6b67;margin-bottom:4px}
-.score-num{font-size:16px;font-weight:500}
-.good{color:#0F6E56}.mid{color:#854F0B}.low{color:#A32D2D}
-.bar-wrap{margin-bottom:8px}
-.bar-label{display:flex;justify-content:space-between;font-size:11px;color:#6b6b67;margin-bottom:3px}
-.bar-bg{background:#ececea;border-radius:4px;height:6px;overflow:hidden}
-.bar-fill{height:100%;border-radius:4px;transition:width .4s}
-.fill-green{background:#1D9E75}.fill-amber{background:#EF9F27}.fill-red{background:#E24B4A}
-.fill-blue{background:#378ADD}.fill-purple{background:#7F77DD}
-.attend-row{display:flex;gap:8px;margin-top:10px}
-.attend-badge{font-size:11px;padding:4px 10px;border-radius:8px;font-weight:500;display:flex;align-items:center;gap:4px}
-.present-b{background:#EAF3DE;color:#3B6D11}
-.absent-b{background:#FCEBEB;color:#A32D2D}
-/* Modal */
-.modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.4);z-index:100;justify-content:center;align-items:center}
-.modal-overlay.open{display:flex}
-.modal{background:#fff;border-radius:14px;padding:24px;width:560px;max-width:95vw;max-height:90vh;overflow-y:auto;position:relative}
-.modal h2{font-size:16px;font-weight:600;margin-bottom:18px}
-.modal-close{position:absolute;top:16px;left:16px;background:none;border:none;cursor:pointer;font-size:20px;color:#6b6b67}
-.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
-.form-group{display:flex;flex-direction:column;gap:5px}
-.form-group.full{grid-column:1/-1}
-.form-group label{font-size:12px;color:#6b6b67;font-weight:500}
-.form-group input,.form-group select{font-size:13px;padding:8px 12px;border:0.5px solid #dddbd3;border-radius:8px;font-family:inherit;background:#fff;color:#1a1a18}
-.form-group input:focus,.form-group select:focus{outline:none;border-color:#888}
-.range-wrap{display:flex;align-items:center;gap:10px}
-.range-wrap input[type=range]{flex:1;accent-color:#1a1a18}
-.range-val{font-size:13px;font-weight:500;min-width:36px;text-align:center}
-.modal-footer{display:flex;justify-content:flex-end;gap:8px;margin-top:20px;padding-top:16px;border-top:0.5px solid #e0ded6}
-/* Projects */
-.proj-wrap{background:#fff;border:0.5px solid #dddbd3;border-radius:12px;overflow:hidden;margin-bottom:14px}
-.proj-table{width:100%;border-collapse:collapse;font-size:13px}
-.proj-table th{text-align:right;padding:10px 14px;color:#6b6b67;font-weight:500;font-size:12px;border-bottom:0.5px solid #e0ded6;background:#f9f9f7}
-.proj-table td{padding:11px 14px;border-bottom:0.5px solid #f0eee8;color:#1a1a18;vertical-align:middle}
-.proj-table tr:last-child td{border-bottom:none}
-.proj-table tr:hover td{background:#fafaf8}
-.pkg-badge{font-size:11px;padding:3px 9px;border-radius:8px;font-weight:500;white-space:nowrap}
-.pkg-Gold{background:#FAEEDA;color:#633806}
-.pkg-Silver{background:#F1EFE8;color:#444441}
-.pkg-Premium{background:#EEEDFE;color:#3C3489}
-.status-ok{color:#0F6E56;font-size:12px;display:flex;align-items:center;gap:4px}
-.status-warn{color:#854F0B;font-size:12px;display:flex;align-items:center;gap:4px}
-.status-bad{color:#A32D2D;font-size:12px;display:flex;align-items:center;gap:4px}
-.social-icons{display:flex;gap:6px;font-size:16px}
-/* Revenue */
-.rev-card{background:#fff;border:0.5px solid #dddbd3;border-radius:12px;padding:18px;margin-bottom:14px}
-.rev-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-top:16px}
-.rev-item{text-align:center}
-.rev-name{font-size:12px;color:#6b6b67;margin-bottom:6px}
-.rev-num{font-size:20px;font-weight:600}
-.rev-target-line{font-size:11px;color:#6b6b67;margin-top:2px}
-.prog-outer{background:#ececea;border-radius:4px;height:8px;margin-top:10px;overflow:hidden}
-.prog-inner{height:100%;border-radius:4px}
-.chart-wrap{background:#fff;border:0.5px solid #dddbd3;border-radius:12px;padding:18px}
-.chart-legend{display:flex;gap:16px;margin-bottom:10px;flex-wrap:wrap}
-.legend-item{display:flex;align-items:center;gap:5px;font-size:12px;color:#6b6b67}
-.legend-dot{width:10px;height:10px;border-radius:2px}
-/* Zoho */
-.zoho-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:1.5rem}
-.zoho-card{background:#fff;border:0.5px solid #dddbd3;border-radius:12px;padding:14px}
-.zoho-header{display:flex;align-items:center;gap:8px;margin-bottom:12px}
-.zoho-metrics{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
-.zoho-item{background:#f5f5f3;border-radius:8px;padding:10px}
-.zoho-label{font-size:11px;color:#6b6b67;margin-bottom:3px}
-.zoho-val{font-size:14px;font-weight:500}
-/* Skills */
-.skills-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
-.skill-card{background:#fff;border:0.5px solid #dddbd3;border-radius:12px;padding:14px}
-.skill-card-header{display:flex;align-items:center;gap:8px;margin-bottom:12px}
-.skill-row{margin-bottom:8px}
-.skill-label{font-size:11px;color:#6b6b67;margin-bottom:3px}
-.stars{font-size:14px}
-.star-gold{color:#EF9F27}
-.star-gray{color:#dddbd3}
-a{color:#185FA5;text-decoration:none}
-a:hover{text-decoration:underline}
-select.filter-select{font-size:13px;padding:6px 12px;border:0.5px solid #dddbd3;border-radius:8px;background:#fff;color:#1a1a18;cursor:pointer;font-family:inherit}
-.empty-state{text-align:center;padding:40px;color:#6b6b67;font-size:14px}
-.section-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px}
+.target-badge{
+  background:linear-gradient(135deg,var(--purple-50),var(--purple-100));
+  color:var(--purple-700);font-size:12.5px;padding:9px 15px;border-radius:var(--r-md);
+  font-weight:600;display:flex;align-items:center;gap:7px;border:1px solid var(--line);
+}
+.target-badge i{font-size:15px}
+
+/* ===== BUTTONS ===== */
+.btn{
+  font-size:13px;padding:9px 15px;border-radius:var(--r-md);
+  border:1px solid var(--line);background:var(--card);cursor:pointer;
+  display:inline-flex;align-items:center;gap:7px;font-family:inherit;color:var(--ink);
+  font-weight:500;transition:all .16s ease;box-shadow:var(--shadow-sm);
+}
+.btn:hover{border-color:var(--purple-300);color:var(--purple-700);transform:translateY(-1px)}
+.btn i{font-size:16px}
+.btn-primary{
+  background:linear-gradient(135deg,var(--purple-600),var(--purple-700));
+  color:#fff;border-color:transparent;box-shadow:0 4px 14px rgba(91,43,184,.30);
+}
+.btn-primary:hover{color:#fff;box-shadow:0 6px 20px rgba(91,43,184,.40);transform:translateY(-1px)}
+
+/* ===== METRICS ===== */
+.metric-row{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:26px}
+.metric-card{
+  background:var(--card);border:1px solid var(--line);border-radius:var(--r-lg);
+  padding:18px 18px 16px;box-shadow:var(--shadow-sm);position:relative;overflow:hidden;
+  transition:transform .18s ease,box-shadow .18s ease;
+}
+.metric-card:hover{transform:translateY(-2px);box-shadow:var(--shadow-md)}
+.metric-card::before{
+  content:'';position:absolute;top:0;right:0;left:0;height:3px;
+  background:linear-gradient(90deg,var(--purple-500),var(--purple-700));
+  opacity:.85;
+}
+.metric-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px}
+.metric-label{font-size:12px;color:var(--ink-soft);font-weight:500}
+.metric-icon{
+  width:32px;height:32px;border-radius:9px;display:flex;align-items:center;justify-content:center;
+  background:var(--purple-50);color:var(--purple-600);font-size:17px;
+}
+.metric-val{font-size:26px;font-weight:700;font-family:'Sora';letter-spacing:-.02em;line-height:1}
+.metric-sub{font-size:11.5px;color:var(--ink-faint);margin-top:6px}
+
+/* ===== TABS ===== */
+.tabs{
+  display:inline-flex;gap:4px;margin-bottom:24px;background:var(--card);
+  padding:5px;border-radius:14px;border:1px solid var(--line);box-shadow:var(--shadow-sm);
+}
+.tab{
+  font-size:13px;padding:9px 16px;cursor:pointer;color:var(--ink-soft);
+  border:none;border-radius:10px;background:none;display:flex;align-items:center;gap:7px;
+  font-family:inherit;font-weight:500;transition:all .16s ease;white-space:nowrap;
+}
+.tab i{font-size:16px}
+.tab.active{color:#fff;background:linear-gradient(135deg,var(--purple-600),var(--purple-700));box-shadow:0 3px 10px rgba(91,43,184,.28)}
+.tab:not(.active):hover{color:var(--purple-700);background:var(--purple-50)}
+.view{display:none;animation:fade .35s ease}
+.view.active{display:block}
+@keyframes fade{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
+
+/* ===== SECTION HEADER ===== */
+.section-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:16px}
+.section-title{
+  font-size:12px;font-weight:600;color:var(--ink-soft);text-transform:uppercase;
+  letter-spacing:.07em;margin-bottom:16px;display:flex;align-items:center;gap:8px;
+}
+.section-title::before{content:'';width:3px;height:14px;border-radius:2px;background:var(--purple-500)}
 .section-header .section-title{margin:0}
+
+/* ===== TEAM CARDS ===== */
+.team-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;margin-bottom:26px}
+.am-card{
+  background:var(--card);border:1px solid var(--line);border-radius:var(--r-lg);
+  padding:20px;position:relative;box-shadow:var(--shadow-sm);
+  transition:transform .18s ease,box-shadow .18s ease,border-color .18s ease;
+}
+.am-card:hover{transform:translateY(-2px);box-shadow:var(--shadow-md);border-color:var(--purple-300)}
+.am-card-actions{position:absolute;top:16px;left:16px;display:flex;gap:4px;opacity:0;transition:opacity .16s ease}
+.am-card:hover .am-card-actions{opacity:1}
+.icon-btn{
+  background:var(--purple-50);border:none;cursor:pointer;color:var(--purple-600);
+  font-size:15px;padding:6px;border-radius:8px;display:flex;transition:all .14s ease;
+}
+.icon-btn:hover{background:var(--purple-100);transform:scale(1.08)}
+.am-header{display:flex;align-items:center;gap:12px;margin-bottom:16px}
+.avatar{
+  width:44px;height:44px;border-radius:13px;display:flex;align-items:center;justify-content:center;
+  font-size:14px;font-weight:700;font-family:'Sora';flex-shrink:0;letter-spacing:.02em;
+}
+.av-0{background:#E9F0FC;color:#2563B8}
+.av-1{background:#E2F6EF;color:#0C8A60}
+.av-2{background:#FBEAE3;color:#B8501F}
+.av-3{background:#EDE6FA;color:#5B2BB8}
+.av-4{background:#FCF0DE;color:#9A6210}
+.am-name{font-size:15px;font-weight:600;color:var(--ink);letter-spacing:-.01em}
+.am-title{font-size:12px;color:var(--ink-soft);margin-top:1px}
+.score-row{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px}
+.score-item{background:var(--purple-50);border-radius:var(--r-md);padding:12px;border:1px solid var(--line-soft)}
+.score-label{font-size:11px;color:var(--ink-soft);margin-bottom:5px;font-weight:500}
+.score-num{font-size:18px;font-weight:700;font-family:'Sora';letter-spacing:-.01em}
+.good{color:var(--green)}.mid{color:var(--amber)}.low{color:var(--red)}
+.bar-wrap{margin-bottom:11px}
+.bar-label{display:flex;justify-content:space-between;font-size:11.5px;color:var(--ink-soft);margin-bottom:5px;font-weight:500}
+.bar-label span:last-child{color:var(--ink);font-weight:600}
+.bar-bg{background:var(--line-soft);border-radius:6px;height:7px;overflow:hidden}
+.bar-fill{height:100%;border-radius:6px;transition:width .6s cubic-bezier(.4,0,.2,1)}
+.fill-green{background:linear-gradient(90deg,#13B17E,#0F9E6E)}
+.fill-amber{background:linear-gradient(90deg,#F0A93C,#D98E1E)}
+.fill-red{background:linear-gradient(90deg,#E8615C,#D6453F)}
+.fill-blue{background:linear-gradient(90deg,#4F8BE0,#3B7BD4)}
+.fill-purple{background:linear-gradient(90deg,var(--purple-500),var(--purple-600))}
+.attend-row{display:flex;gap:8px;margin-top:14px;padding-top:14px;border-top:1px solid var(--line-soft)}
+.attend-badge{font-size:11.5px;padding:6px 11px;border-radius:9px;font-weight:600;display:flex;align-items:center;gap:5px}
+.present-b{background:var(--green-bg);color:#0B6B4A}
+.absent-b{background:var(--red-bg);color:#A8302B}
+
+/* ===== MODAL ===== */
+.modal-overlay{display:none;position:fixed;inset:0;background:rgba(31,26,46,.55);backdrop-filter:blur(4px);z-index:100;justify-content:center;align-items:center;padding:20px;animation:fade .2s ease}
+.modal-overlay.open{display:flex}
+.modal{background:var(--card);border-radius:var(--r-xl);padding:28px;width:580px;max-width:100%;max-height:90vh;overflow-y:auto;position:relative;box-shadow:var(--shadow-lg);animation:pop .25s cubic-bezier(.34,1.3,.6,1)}
+@keyframes pop{from{opacity:0;transform:scale(.96) translateY(10px)}to{opacity:1;transform:scale(1) translateY(0)}}
+.modal h2{font-size:18px;font-weight:600;margin-bottom:22px;font-family:'Sora';color:var(--ink);letter-spacing:-.01em}
+.modal-close{position:absolute;top:22px;left:22px;background:var(--purple-50);border:none;cursor:pointer;font-size:18px;color:var(--ink-soft);width:34px;height:34px;border-radius:9px;display:flex;align-items:center;justify-content:center;transition:all .14s ease}
+.modal-close:hover{background:var(--red-bg);color:var(--red)}
+.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.form-group{display:flex;flex-direction:column;gap:6px}
+.form-group.full{grid-column:1/-1}
+.form-group label{font-size:12px;color:var(--ink-soft);font-weight:600}
+.form-group input,.form-group select{font-size:13.5px;padding:10px 13px;border:1px solid var(--line);border-radius:var(--r-md);font-family:inherit;background:var(--card);color:var(--ink);transition:all .14s ease}
+.form-group input:focus,.form-group select:focus{outline:none;border-color:var(--purple-500);box-shadow:0 0 0 3px var(--purple-100)}
+.range-wrap{display:flex;align-items:center;gap:10px}
+.range-wrap input[type=range]{flex:1;accent-color:var(--purple-600);height:5px}
+.modal-footer{display:flex;justify-content:flex-end;gap:10px;margin-top:24px;padding-top:18px;border-top:1px solid var(--line)}
+
+/* ===== PROJECTS TABLE ===== */
+.proj-wrap{background:var(--card);border:1px solid var(--line);border-radius:var(--r-lg);overflow:hidden;margin-bottom:18px;box-shadow:var(--shadow-sm)}
+.proj-table{width:100%;border-collapse:collapse;font-size:13px}
+.proj-table th{text-align:right;padding:14px 16px;color:var(--ink-soft);font-weight:600;font-size:11.5px;text-transform:uppercase;letter-spacing:.04em;border-bottom:1px solid var(--line);background:var(--purple-50)}
+.proj-table td{padding:14px 16px;border-bottom:1px solid var(--line-soft);color:var(--ink);vertical-align:middle}
+.proj-table tr:last-child td{border-bottom:none}
+.proj-table tbody tr{transition:background .14s ease}
+.proj-table tr:hover td{background:var(--purple-50)}
+.pkg-badge{font-size:11px;padding:4px 11px;border-radius:20px;font-weight:600;white-space:nowrap;letter-spacing:.02em}
+.pkg-Gold{background:#FBF0DD;color:#8A5A06}
+.pkg-Silver{background:#EFEFF2;color:#54545E}
+.pkg-Premium{background:var(--purple-100);color:var(--purple-700)}
+.status-ok{color:var(--green);font-size:12.5px;display:flex;align-items:center;gap:5px;font-weight:500}
+.status-warn{color:var(--amber);font-size:12.5px;display:flex;align-items:center;gap:5px;font-weight:500}
+.status-bad{color:var(--red);font-size:12.5px;display:flex;align-items:center;gap:5px;font-weight:500}
+.social-icons{display:flex;gap:7px;font-size:16px}
+.social-icons i{transition:transform .14s ease}
+.social-icons i:hover{transform:scale(1.2)}
+
+/* ===== REVENUE ===== */
+.rev-card{background:var(--card);border:1px solid var(--line);border-radius:var(--r-lg);padding:22px;margin-bottom:18px;box-shadow:var(--shadow-sm)}
+.rev-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-top:20px}
+.rev-item{text-align:center;padding:16px 12px;background:var(--purple-50);border-radius:var(--r-md);border:1px solid var(--line-soft);transition:transform .16s ease}
+.rev-item:hover{transform:translateY(-2px)}
+.rev-name{font-size:12.5px;color:var(--ink-soft);margin-bottom:8px;font-weight:600}
+.rev-num{font-size:22px;font-weight:700;font-family:'Sora';letter-spacing:-.02em}
+.rev-target-line{font-size:11px;color:var(--ink-faint);margin-top:3px}
+.prog-outer{background:var(--line-soft);border-radius:6px;height:7px;margin-top:12px;overflow:hidden}
+.prog-inner{height:100%;border-radius:6px;transition:width .6s cubic-bezier(.4,0,.2,1)}
+.chart-wrap{background:var(--card);border:1px solid var(--line);border-radius:var(--r-lg);padding:22px;box-shadow:var(--shadow-sm)}
+.chart-legend{display:flex;gap:18px;margin-bottom:14px;flex-wrap:wrap}
+.legend-item{display:flex;align-items:center;gap:6px;font-size:12px;color:var(--ink-soft);font-weight:500}
+.legend-dot{width:11px;height:11px;border-radius:3px}
+
+/* ===== ZOHO + SKILLS ===== */
+.zoho-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:28px}
+.zoho-card{background:var(--card);border:1px solid var(--line);border-radius:var(--r-lg);padding:18px;box-shadow:var(--shadow-sm);transition:transform .16s ease,box-shadow .16s ease}
+.zoho-card:hover{transform:translateY(-2px);box-shadow:var(--shadow-md)}
+.zoho-header{display:flex;align-items:center;gap:10px;margin-bottom:14px}
+.zoho-metrics{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.zoho-item{background:var(--purple-50);border-radius:var(--r-md);padding:12px;text-align:center;border:1px solid var(--line-soft)}
+.zoho-label{font-size:11px;color:var(--ink-soft);margin-bottom:5px;font-weight:500}
+.zoho-val{font-size:16px;font-weight:700;font-family:'Sora'}
+.skills-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+.skill-card{background:var(--card);border:1px solid var(--line);border-radius:var(--r-lg);padding:18px;box-shadow:var(--shadow-sm);transition:transform .16s ease,box-shadow .16s ease}
+.skill-card:hover{transform:translateY(-2px);box-shadow:var(--shadow-md)}
+.skill-card-header{display:flex;align-items:center;gap:10px;margin-bottom:14px;padding-bottom:14px;border-bottom:1px solid var(--line-soft)}
+.skill-row{margin-bottom:10px}
+.skill-label{font-size:11.5px;color:var(--ink-soft);margin-bottom:4px;font-weight:500}
+.stars{font-size:15px;letter-spacing:2px}
+.star-gold{color:#F0A93C}
+.star-gray{color:var(--line)}
+
+/* ===== MISC ===== */
+a{color:var(--purple-600);text-decoration:none;transition:color .14s ease}
+a:hover{color:var(--purple-700);text-decoration:underline}
+select.filter-select{font-size:13px;padding:9px 13px;border:1px solid var(--line);border-radius:var(--r-md);background:var(--card);color:var(--ink);cursor:pointer;font-family:inherit;font-weight:500;box-shadow:var(--shadow-sm);transition:border-color .14s ease}
+select.filter-select:focus{outline:none;border-color:var(--purple-500)}
+.empty-state{text-align:center;padding:48px;color:var(--ink-faint);font-size:14px}
+
+/* ===== COMPLAINTS ===== */
+.complaint-box{border-radius:var(--r-md);padding:10px 12px;margin-bottom:12px;font-size:12px}
+.complaint-none{background:var(--green-bg);color:#0B6B4A}
+.complaint-has{background:var(--red-bg);color:#A8302B}
+.complaint-head{display:flex;align-items:center;gap:6px;font-weight:600}
+.complaint-head i{font-size:15px}
+.complaint-clients{margin-top:6px;font-size:11.5px;color:#8A3530;font-weight:500;line-height:1.5}
+.cc-label{color:#B5524C;font-weight:600}
+
+/* ===== ALERTS BANNER ===== */
+.alerts-bar{margin-bottom:24px}
+.alerts-head{display:flex;align-items:center;gap:8px;font-size:12px;font-weight:600;color:var(--ink-soft);text-transform:uppercase;letter-spacing:.06em;margin-bottom:12px}
+.alerts-head i{font-size:16px;color:var(--amber)}
+.alerts-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:12px}
+.alert{display:flex;gap:12px;align-items:flex-start;padding:14px 16px;border-radius:var(--r-md);background:var(--card);border:1px solid var(--line);border-right:3px solid var(--ink-faint);box-shadow:var(--shadow-sm);transition:transform .16s ease}
+.alert:hover{transform:translateY(-1px);box-shadow:var(--shadow-md)}
+.alert.sev-high{border-right-color:var(--red)}
+.alert.sev-mid{border-right-color:var(--amber)}
+.alert.sev-good{border-right-color:var(--green)}
+.alert-ic{width:34px;height:34px;border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:17px;flex-shrink:0}
+.sev-high .alert-ic{background:var(--red-bg);color:var(--red)}
+.sev-mid .alert-ic{background:var(--amber-bg);color:var(--amber)}
+.sev-good .alert-ic{background:var(--green-bg);color:var(--green)}
+.alert-body{flex:1;min-width:0}
+.alert-title{font-size:13px;font-weight:600;color:var(--ink);margin-bottom:2px}
+.alert-desc{font-size:12px;color:var(--ink-soft);line-height:1.45}
+
+/* ===== OVERALL SCORE + STATUS ===== */
+.am-card.rank-top{border-color:var(--green);box-shadow:0 0 0 1px var(--green),var(--shadow-sm)}
+.am-card.rank-risk{border-color:#F0C5C2}
+.overall-badge{display:flex;flex-direction:column;align-items:center;justify-content:center;min-width:58px;padding:6px 10px;border-radius:12px;margin-right:auto}
+.overall-badge .ov-num{font-size:22px;font-weight:700;font-family:'Sora';line-height:1}
+.overall-badge .ov-lbl{font-size:9px;font-weight:600;text-transform:uppercase;letter-spacing:.05em;margin-top:2px;opacity:.8}
+.ov-good{background:var(--green-bg);color:#0B6B4A}
+.ov-mid{background:var(--amber-bg);color:#92590A}
+.ov-low{background:var(--red-bg);color:#A8302B}
+.status-pill{position:absolute;top:16px;right:16px;font-size:10.5px;font-weight:700;padding:4px 10px;border-radius:20px;letter-spacing:.02em;display:flex;align-items:center;gap:4px}
+.pill-good{background:var(--green-bg);color:#0B6B4A}
+.pill-mid{background:var(--amber-bg);color:#92590A}
+.pill-low{background:var(--red-bg);color:#A8302B}
+.rank-tag{font-size:10px;font-weight:700;color:var(--purple-600);background:var(--purple-50);padding:2px 8px;border-radius:20px;margin-right:6px}
+
+/* ===== GRADE + TREND ===== */
+.grade-badge{width:40px;height:40px;border-radius:11px;display:flex;align-items:center;justify-content:center;font-family:'Sora';font-weight:700;font-size:17px;flex-shrink:0;letter-spacing:-.02em}
+.grade-good{background:linear-gradient(135deg,#13B17E,#0F9E6E);color:#fff;box-shadow:0 4px 12px rgba(15,158,110,.3)}
+.grade-mid{background:linear-gradient(135deg,#F0A93C,#D98E1E);color:#fff;box-shadow:0 4px 12px rgba(217,142,30,.3)}
+.grade-low{background:linear-gradient(135deg,#E8615C,#D6453F);color:#fff;box-shadow:0 4px 12px rgba(214,69,63,.3)}
+.trend{display:inline-flex;align-items:center;gap:2px;font-size:11px;font-weight:600;padding:1px 7px;border-radius:20px;margin-right:5px}
+.trend i{font-size:13px}
+.trend-up{background:var(--green-bg);color:#0B6B4A}
+.trend-down{background:var(--red-bg);color:#A8302B}
+.trend-flat{background:var(--line-soft);color:var(--ink-soft)}
+.btn-report{background:var(--purple-50);color:var(--purple-700);border-color:var(--line)}
+.btn-report:hover{background:var(--purple-100);color:var(--purple-700)}
+
+/* ===== GRADE BADGE ===== */
+.grade-badge{display:inline-flex;align-items:center;justify-content:center;width:30px;height:30px;border-radius:9px;font-family:'Sora';font-weight:700;font-size:15px;margin-right:6px}
+.grade-A{background:var(--green-bg);color:#0B6B4A}
+.grade-B{background:#E3F0FB;color:#1F5FA8}
+.grade-C{background:var(--amber-bg);color:#92590A}
+.grade-D{background:var(--red-bg);color:#A8302B}
+.ov-stack{display:flex;align-items:center;gap:4px;margin-right:auto}
+
+/* ===== MONTH CONTROLS ===== */
+.month-bar{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.month-select{font-size:13px;padding:9px 13px;border:1px solid var(--line);border-radius:var(--r-md);background:var(--card);color:var(--ink);font-family:inherit;font-weight:500;box-shadow:var(--shadow-sm);cursor:pointer}
+.month-select:focus{outline:none;border-color:var(--purple-500)}
+
+/* ===== TREND ===== */
+.trend-up{color:var(--green);font-size:11px;font-weight:600}
+.trend-down{color:var(--red);font-size:11px;font-weight:600}
+.trend-flat{color:var(--ink-faint);font-size:11px;font-weight:600}
+.report-btn-row{display:flex;gap:6px;margin-top:14px;padding-top:14px;border-top:1px solid var(--line-soft)}
+.btn-report{flex:1;justify-content:center;font-size:12.5px;padding:8px}
+
+/* ===== PRINT / PDF ===== */
+@media print{
+  body{background:#fff!important;padding:0}
+  .no-print{display:none!important}
+  .print-only{display:block!important}
+  .am-card{break-inside:avoid;box-shadow:none!important;border:1px solid #ccc!important}
+  .metric-card,.zoho-card,.skill-card{box-shadow:none!important}
+}
+.print-only{display:none}
+
+/* ===== RESPONSIVE ===== */
+@media(max-width:900px){
+  .metric-row{grid-template-columns:repeat(2,1fr)}
+  .team-grid,.zoho-grid{grid-template-columns:1fr}
+  .skills-grid{grid-template-columns:repeat(2,1fr)}
+  .rev-grid{grid-template-columns:repeat(2,1fr)}
+  .form-grid{grid-template-columns:1fr}
+  .tabs{width:100%;overflow-x:auto}
+  .proj-wrap{overflow-x:auto}
+}
+@media(max-width:560px){
+  body{padding:18px 14px 40px}
+  .metric-row,.skills-grid,.rev-grid{grid-template-columns:1fr}
+}
+@media(prefers-reduced-motion:reduce){
+  *{animation:none!important;transition:none!important}
+}
 </style>
 </head>
 <body>
+
 <div class="dash">
 
 <div class="header">
-  <div>
-    <h1>Account Managers Dashboard</h1>
-    <p id="headerDate">يونيو 2025 — تقرير شهري للفريق</p>
+  <div class="brand-row">
+    <div class="brand-mark">O</div>
+    <div>
+      <h1 class="font-display">Account Managers Dashboard</h1>
+      <p class="sub"><span class="live-dot"></span><span id="headerDate">يونيو 2025 — تقرير شهري للفريق</span></p>
+    </div>
   </div>
-  <div class="top-controls">
+  <div class="top-controls no-print">
+    <select class="month-select" id="monthSelect" onchange="switchMonth(this.value)"></select>
     <select class="filter-select" id="memberFilter" onchange="renderTeam()">
       <option value="all">كل الفريق</option>
     </select>
     <span class="target-badge"><i class="ti ti-target"></i> تارجت: <span id="targetDisplay">100,000</span> ريال</span>
+    <button class="btn" onclick="saveSnapshot()"><i class="ti ti-device-floppy"></i> حفظ الشهر</button>
     <button class="btn btn-primary" onclick="openModal('settings')"><i class="ti ti-settings"></i> الإعدادات</button>
   </div>
 </div>
 
 <div class="metric-row">
   <div class="metric-card">
-    <div class="metric-label">إيراد الفريق الكلي</div>
+    <div class="metric-top"><div class="metric-label">إيراد الفريق الكلي</div><div class="metric-icon"><i class="ti ti-coins"></i></div></div>
     <div class="metric-val" id="totalRevDisplay">0</div>
     <div class="metric-sub">ريال / الهدف <span id="targetSub">100,000</span></div>
   </div>
   <div class="metric-card">
-    <div class="metric-label">متوسط Client Health</div>
-    <div class="metric-val" id="avgHealthDisplay" style="color:#0F6E56">0%</div>
+    <div class="metric-top"><div class="metric-label">متوسط Client Health</div><div class="metric-icon"><i class="ti ti-heart-handshake"></i></div></div>
+    <div class="metric-val" id="avgHealthDisplay" style="color:var(--green)">0%</div>
     <div class="metric-sub">رضا العملاء</div>
   </div>
   <div class="metric-card">
-    <div class="metric-label">متوسط Efficiency</div>
-    <div class="metric-val" id="avgEffDisplay" style="color:#854F0B">0%</div>
+    <div class="metric-top"><div class="metric-label">متوسط Efficiency</div><div class="metric-icon"><i class="ti ti-gauge"></i></div></div>
+    <div class="metric-val" id="avgEffDisplay" style="color:var(--amber)">0%</div>
     <div class="metric-sub">كفاءة العمليات</div>
   </div>
   <div class="metric-card">
-    <div class="metric-label">إجمالي المشاريع</div>
+    <div class="metric-top"><div class="metric-label">إجمالي المشاريع</div><div class="metric-icon"><i class="ti ti-briefcase"></i></div></div>
     <div class="metric-val" id="totalProjectsDisplay">0</div>
     <div class="metric-sub">مشروع نشط</div>
   </div>
 </div>
+
+<div class="alerts-bar" id="alertsBar"></div>
 
 <div class="tabs">
   <button class="tab active" onclick="switchTab('team')"><i class="ti ti-users"></i> الفريق</button>
@@ -180,7 +423,10 @@ select.filter-select{font-size:13px;padding:6px 12px;border:0.5px solid #dddbd3;
 <div class="view active" id="view-team">
   <div class="section-header">
     <div class="section-title">أداء أعضاء الفريق</div>
-    <button class="btn btn-primary" onclick="openModal('addMember')"><i class="ti ti-user-plus"></i> إضافة عضو</button>
+    <div style="display:flex;gap:8px">
+      <button class="btn" onclick="saveCurrentMonth()"><i class="ti ti-calendar-plus"></i> حفظ تقييم الشهر</button>
+      <button class="btn btn-primary" onclick="openModal('addMember')"><i class="ti ti-user-plus"></i> إضافة عضو</button>
+    </div>
   </div>
   <div class="team-grid" id="teamGrid"></div>
 </div>
@@ -218,9 +464,9 @@ select.filter-select{font-size:13px;padding:6px 12px;border:0.5px solid #dddbd3;
   <div class="chart-wrap">
     <div class="section-title">مقارنة درجات الأداء</div>
     <div class="chart-legend">
-      <div class="legend-item"><div class="legend-dot" style="background:#1D9E75"></div>Operational Efficiency</div>
-      <div class="legend-item"><div class="legend-dot" style="background:#378ADD"></div>Client Health</div>
-      <div class="legend-item"><div class="legend-dot" style="background:#7F77DD"></div>Zoho Score</div>
+      <div class="legend-item"><div class="legend-dot" style="background:#0F9E6E"></div>Operational Efficiency</div>
+      <div class="legend-item"><div class="legend-dot" style="background:#3B7BD4"></div>Client Health</div>
+      <div class="legend-item"><div class="legend-dot" style="background:#7C4DD6"></div>Zoho Score</div>
     </div>
     <div style="position:relative;height:260px">
       <canvas id="scoreChart"></canvas>
@@ -271,6 +517,13 @@ select.filter-select{font-size:13px;padding:6px 12px;border:0.5px solid #dddbd3;
     <div class="form-group full"><label>Follow-ups % <span id="followupVal">80</span></label>
       <div class="range-wrap"><input type="range" id="mFollowup" min="0" max="100" value="80" oninput="document.getElementById('followupVal').textContent=this.value"></div>
     </div>
+    <!-- Delivery & Complaints -->
+    <div class="form-group full"><label>الالتزام بتسليمات العملاء % <span id="deliveryVal">80</span></label>
+      <div class="range-wrap"><input type="range" id="mDelivery" min="0" max="100" value="80" oninput="document.getElementById('deliveryVal').textContent=this.value"></div>
+    </div>
+    <div class="form-group"><label>عدد شكاوى العملاء هذا الشهر</label><input id="mComplaints" type="number" min="0" placeholder="0"></div>
+    <div class="form-group"></div>
+    <div class="form-group full"><label>أسماء العملاء الذين اشتكوا (افصلي بينهم بفاصلة)</label><input id="mComplaintClients" placeholder="مثال: متجر الوفاء، مطاعم النجمة"></div>
     <!-- Skills -->
     <div class="form-group"><label>مهارة التواصل (1-5)</label><input id="sk1" type="number" min="1" max="5" value="3"></div>
     <div class="form-group"><label>مهارة التفاوض (1-5)</label><input id="sk2" type="number" min="1" max="5" value="3"></div>
@@ -346,10 +599,10 @@ select.filter-select{font-size:13px;padding:6px 12px;border:0.5px solid #dddbd3;
 <script>
 // ===== DATA =====
 var DEFAULT_MEMBERS = [
-  {name:'سارة الأحمد',title:'Account Manager',revenue:24000,present:22,absent:2,efficiency:82,health:88,response:90,zohoScore:85,zohoLogs:142,zohoReports:18,followup:95,skills:[4,4,3,5]},
-  {name:'محمد السعيد',title:'Account Manager',revenue:26500,present:24,absent:0,efficiency:88,health:91,response:95,zohoScore:92,zohoLogs:198,zohoReports:20,followup:100,skills:[5,5,5,4]},
-  {name:'لمياء القحطاني',title:'Account Manager',revenue:18000,present:20,absent:4,efficiency:65,health:71,response:58,zohoScore:70,zohoLogs:89,zohoReports:13,followup:68,skills:[3,3,2,3]},
-  {name:'عمر الزهراني',title:'Account Manager',revenue:19000,present:21,absent:3,efficiency:72,health:77,response:65,zohoScore:78,zohoLogs:110,zohoReports:15,followup:78,skills:[4,3,4,4]}
+  {name:'سارة الأحمد',title:'Account Manager',revenue:24000,present:22,absent:2,efficiency:82,health:88,response:90,zohoScore:85,zohoLogs:142,zohoReports:18,followup:95,delivery:92,complaints:1,complaintClients:'متجر الوفاء',skills:[4,4,3,5]},
+  {name:'محمد السعيد',title:'Account Manager',revenue:26500,present:24,absent:0,efficiency:88,health:91,response:95,zohoScore:92,zohoLogs:198,zohoReports:20,followup:100,delivery:98,complaints:0,complaintClients:'',skills:[5,5,5,4]},
+  {name:'لمياء القحطاني',title:'Account Manager',revenue:18000,present:20,absent:4,efficiency:65,health:71,response:58,zohoScore:70,zohoLogs:89,zohoReports:13,followup:68,delivery:64,complaints:3,complaintClients:'متجر الوفاء، عيادات الصحة، كافيه لوكس',skills:[3,3,2,3]},
+  {name:'عمر الزهراني',title:'Account Manager',revenue:19000,present:21,absent:3,efficiency:72,health:77,response:65,zohoScore:78,zohoLogs:110,zohoReports:15,followup:78,delivery:75,complaints:2,complaintClients:'مطاعم النجمة، عيادات الصحة',skills:[4,3,4,4]}
 ];
 
 var DEFAULT_PROJECTS = [
@@ -386,6 +639,214 @@ function stars(n){
   var s=''; for(var i=1;i<=5;i++) s+='<span class="'+(i<=n?'star-gold':'star-gray')+'">★</span>';
   return s;
 }
+// Overall weighted score per member (0-100)
+function overallScore(m){
+  var revTarget = data.settings.target/Math.max(1,data.members.length);
+  var revScore = Math.min(100, Math.round((m.revenue/revTarget)*100));
+  var complaintPenalty = Math.min(20,(m.complaints||0)*7);
+  var raw =
+    revScore*0.30 +
+    (m.health||0)*0.20 +
+    (m.efficiency||0)*0.15 +
+    (m.delivery||0)*0.15 +
+    (m.response||0)*0.10 +
+    (m.zohoScore||0)*0.10;
+  return Math.max(0, Math.round(raw - complaintPenalty));
+}
+function scoreTier(v){ return v>=80?'good':v>=65?'mid':'low'; }
+function gradeFor(v){
+  if(v>=85) return 'A';
+  if(v>=75) return 'B';
+  if(v>=60) return 'C';
+  return 'D';
+}
+function gradeLabel(g){
+  return {A:'ممتاز',B:'جيد جداً',C:'مقبول',D:'يحتاج تحسين'}[g]||'';
+}
+
+// ===== MONTHLY SNAPSHOTS =====
+function loadSnapshots(){
+  var s=localStorage.getItem('am_snapshots');
+  return s?JSON.parse(s):{};
+}
+function saveSnapshots(snaps){ localStorage.setItem('am_snapshots',JSON.stringify(snaps)); }
+
+function saveSnapshot(){
+  var label=data.settings.period||('شهر '+new Date().toLocaleDateString('ar-EG'));
+  var key=prompt('احفظي بيانات هذا الشهر باسم (مثال: يونيو 2025):', label);
+  if(!key) return;
+  var snaps=loadSnapshots();
+  snaps[key]={
+    members:JSON.parse(JSON.stringify(data.members)),
+    projects:JSON.parse(JSON.stringify(data.projects)),
+    settings:JSON.parse(JSON.stringify(data.settings)),
+    savedAt:new Date().toISOString()
+  };
+  saveSnapshots(snaps);
+  rebuildMonthSelect(key);
+  alert('تم حفظ شهر "'+key+'" ✓\nتقدري تقارني بينه وبين الشهور التانية من القائمة.');
+}
+
+function rebuildMonthSelect(selected){
+  var sel=document.getElementById('monthSelect');
+  if(!sel) return;
+  var snaps=loadSnapshots();
+  var keys=Object.keys(snaps);
+  sel.innerHTML='<option value="__live">📊 الشهر الحالي (مباشر)</option>';
+  keys.forEach(function(k){
+    var opt=document.createElement('option');
+    opt.value=k; opt.textContent='🗓️ '+k;
+    sel.appendChild(opt);
+  });
+  sel.value=selected||'__live';
+}
+
+var viewingMonth='__live';
+function switchMonth(key){
+  viewingMonth=key;
+  if(key==='__live'){
+    data=load();
+  } else {
+    var snaps=loadSnapshots();
+    if(snaps[key]){
+      data={members:JSON.parse(JSON.stringify(snaps[key].members)),projects:JSON.parse(JSON.stringify(snaps[key].projects)),settings:JSON.parse(JSON.stringify(snaps[key].settings))};
+    }
+  }
+  renderAll();
+}
+
+// previous month for trend comparison
+function previousSnapshotMembers(){
+  var snaps=loadSnapshots();
+  var keys=Object.keys(snaps);
+  if(!keys.length) return null;
+  // most recently saved snapshot that isn't the current view
+  var sorted=keys.filter(function(k){return k!==viewingMonth;}).sort(function(a,b){return new Date(snaps[b].savedAt)-new Date(snaps[a].savedAt);});
+  return sorted.length?snaps[sorted[0]].members:null;
+}
+function trendFor(memberName,currentOv){
+  var prev=previousSnapshotMembers();
+  if(!prev) return '';
+  var pm=prev.find(function(x){return x.name===memberName;});
+  if(!pm) return '';
+  var prevOv=overallScore(pm);
+  var diff=currentOv-prevOv;
+  if(diff>1) return '<span class="trend-up"><i class="ti ti-arrow-up-right"></i> +'+diff+'</span>';
+  if(diff<-1) return '<span class="trend-down"><i class="ti ti-arrow-down-right"></i> '+diff+'</span>';
+  return '<span class="trend-flat">— ثابت</span>';
+}
+function gradeLetter(v){
+  if(v>=90) return {g:'A+',cls:'good'};
+  if(v>=80) return {g:'A',cls:'good'};
+  if(v>=70) return {g:'B',cls:'mid'};
+  if(v>=60) return {g:'C',cls:'mid'};
+  if(v>=50) return {g:'D',cls:'low'};
+  return {g:'E',cls:'low'};
+}
+// ===== MONTHLY HISTORY =====
+function loadHistory(){ var h=localStorage.getItem('am_history'); return h?JSON.parse(h):{}; }
+function saveHistory(hist){ localStorage.setItem('am_history',JSON.stringify(hist)); }
+function currentMonthKey(){ return data.settings.period||'الشهر الحالي'; }
+// snapshot of current overall scores keyed by member name
+function snapshotScores(){
+  var snap={};
+  data.members.forEach(function(m){ snap[m.name]={overall:overallScore(m),revenue:m.revenue,health:m.health}; });
+  return snap;
+}
+function saveCurrentMonth(){
+  var label=prompt('اسم الشهر اللي عايزة تحفظيه (مثال: مايو 2025):', currentMonthKey());
+  if(!label) return;
+  var hist=loadHistory();
+  hist[label]={date:new Date().toISOString(),scores:snapshotScores()};
+  saveHistory(hist);
+  renderAll();
+  alert('تم حفظ تقييم شهر "'+label+'" ✓\nدلوقتي تقدري تقارني الأداء بين الشهور.');
+}
+// returns previous month's overall for a member (most recent saved), or null
+function prevOverall(memberName){
+  var hist=loadHistory();
+  var keys=Object.keys(hist);
+  if(!keys.length) return null;
+  keys.sort(function(a,b){return new Date(hist[a].date)-new Date(hist[b].date);});
+  for(var i=keys.length-1;i>=0;i--){
+    var s=hist[keys[i]].scores[memberName];
+    if(s) return s.overall;
+  }
+  return null;
+}
+function trendHTML(memberName,currentOv){
+  var prev=prevOverall(memberName);
+  if(prev===null) return '';
+  var diff=currentOv-prev;
+  if(diff===0) return '<span class="trend trend-flat"><i class="ti ti-minus"></i> ثابت</span>';
+  if(diff>0) return '<span class="trend trend-up"><i class="ti ti-trending-up"></i> +'+diff+'</span>';
+  return '<span class="trend trend-down"><i class="ti ti-trending-down"></i> '+diff+'</span>';
+}
+function statusLabel(v){ return v>=80?{cls:'good',txt:'ممتاز',ic:'ti-circle-check'}:v>=65?{cls:'mid',txt:'يحتاج متابعة',ic:'ti-alert-circle'}:{cls:'low',txt:'خطر',ic:'ti-alert-triangle'}; }
+
+// Build prioritized alerts across team + projects
+function buildAlerts(){
+  var alerts=[];
+  var revTarget = data.settings.target/Math.max(1,data.members.length);
+  // members under target
+  data.members.forEach(function(m){
+    if(m.revenue < revTarget*0.85){
+      alerts.push({sev:'high',ic:'ti-trending-down',title:m.name.split(' ')[0]+' تحت التارجت',desc:'حقّق '+m.revenue.toLocaleString()+' من '+Math.round(revTarget).toLocaleString()+' ريال — ناقص '+Math.round(revTarget-m.revenue).toLocaleString()+' ريال'});
+    }
+    if((m.complaints||0)>=2){
+      alerts.push({sev:'high',ic:'ti-message-report',title:m.name.split(' ')[0]+' — '+m.complaints+' شكاوى',desc:(m.complaintClients||'عملاء غير محددين')});
+    }
+    if((m.delivery||0)<70){
+      alerts.push({sev:'mid',ic:'ti-clock-exclamation',title:m.name.split(' ')[0]+' — التزام تسليم منخفض',desc:'نسبة الالتزام بالتسليمات '+(m.delivery||0)+'% فقط'});
+    }
+  });
+  // unhappy clients
+  data.projects.forEach(function(p){
+    if(p.status==='bad'){
+      var mgr=data.members[p.managerIdx];
+      alerts.push({sev:'high',ic:'ti-mood-sad',title:p.client+' غير راضي',desc:'المشرف: '+(mgr?mgr.name.split(' ')[0]:'—')+' — يحتاج تدخّل عاجل'});
+    }
+  });
+  // contracts renewing within 14 days
+  var today=new Date(); 
+  data.projects.forEach(function(p){
+    if(!p.renewal) return;
+    var d=new Date(p.renewal); var days=Math.ceil((d-today)/(1000*60*60*24));
+    if(days>=0 && days<=14){
+      alerts.push({sev:'mid',ic:'ti-calendar-due',title:'تجديد عقد '+p.client,desc:'باقي '+days+' يوم على تاريخ التجديد'});
+    }
+  });
+  // sort: high first
+  var order={high:0,mid:1,good:2};
+  alerts.sort(function(a,b){return order[a.sev]-order[b.sev];});
+  // if nothing, celebrate
+  if(!alerts.length){
+    alerts.push({sev:'good',ic:'ti-confetti',title:'كل المؤشرات سليمة',desc:'لا توجد تنبيهات عاجلة هذا الشهر — أداء ممتاز للفريق'});
+  }
+  return alerts.slice(0,6);
+}
+function renderAlerts(){
+  var bar=document.getElementById('alertsBar');
+  var alerts=buildAlerts();
+  var highCount=alerts.filter(function(a){return a.sev==='high';}).length;
+  var headLabel = highCount>0 ? highCount+' بند يحتاج تدخّل' : 'حالة الفريق';
+  var html='<div class="alerts-head"><i class="ti ti-bell-ringing"></i> أولويات تحتاج انتباهك — '+headLabel+'</div><div class="alerts-grid">';
+  alerts.forEach(function(a){
+    html+='<div class="alert sev-'+a.sev+'"><div class="alert-ic"><i class="ti '+a.ic+'"></i></div><div class="alert-body"><div class="alert-title">'+a.title+'</div><div class="alert-desc">'+a.desc+'</div></div></div>';
+  });
+  html+='</div>';
+  bar.innerHTML=html;
+}
+
+function complaintsBlock(m){
+  var c=m.complaints||0;
+  if(c===0){
+    return '<div class="complaint-box complaint-none"><div class="complaint-head"><i class="ti ti-mood-smile"></i> لا توجد شكاوى هذا الشهر</div></div>';
+  }
+  var clients=(m.complaintClients||'').trim();
+  var clientsHTML=clients?'<div class="complaint-clients"><span class="cc-label">العملاء:</span> '+clients+'</div>':'';
+  return '<div class="complaint-box complaint-has"><div class="complaint-head"><i class="ti ti-alert-triangle"></i> '+c+' '+(c===1?'شكوى':'شكاوى')+' خلال الشهر</div>'+clientsHTML+'</div>';
+}
 function statusHTML(s){
   var map={ok:'<div class="status-ok"><i class="ti ti-circle-check"></i> راضي</div>',ok2:'<div class="status-ok"><i class="ti ti-circle-check"></i> ممتاز / راضي جداً</div>',warn:'<div class="status-warn"><i class="ti ti-alert-circle"></i> تأخر في الرد</div>',warn2:'<div class="status-warn"><i class="ti ti-alert-circle"></i> متأخر أحياناً</div>',bad:'<div class="status-bad"><i class="ti ti-alert-triangle"></i> غير راضي</div>'};
   return map[s]||'';
@@ -406,20 +867,36 @@ function renderTeam(){
   var filter = document.getElementById('memberFilter').value;
   var grid = document.getElementById('teamGrid');
   grid.innerHTML='';
-  if(!data.members.length){grid.innerHTML='<div class="empty-state">لا يوجد أعضاء — اضغط "إضافة عضو"</div>';return;}
-  data.members.forEach(function(m,i){
+  if(!data.members.length){grid.innerHTML='<div class="empty-state">لا يوجد أعضاء — اضغط \"إضافة عضو\"</div>';return;}
+
+  // compute overall + original index, then sort high->low for management view
+  var ranked = data.members.map(function(m,i){return {m:m,i:i,ov:overallScore(m)};});
+  ranked.sort(function(a,b){return b.ov-a.ov;});
+
+  ranked.forEach(function(entry,rankPos){
+    var m=entry.m, i=entry.i, ov=entry.ov;
     if(filter!=='all' && filter!=i) return;
+    var tier=scoreTier(ov);
+    var st=statusLabel(ov);
+    var rankClass = rankPos===0?'rank-top':(tier==='low'?'rank-risk':'');
+    var rankTag = (filter==='all' && rankPos===0)?'<span class="rank-tag">الأعلى أداءً</span>':'';
+
     var card = document.createElement('div');
-    card.className='am-card';
+    card.className='am-card '+rankClass;
     card.innerHTML=
+      '<div class="status-pill pill-'+st.cls+'"><i class="ti '+st.ic+'"></i> '+st.txt+'</div>'+
       '<div class="am-card-actions">'+
+        '<button class="icon-btn" title="تقرير PDF" onclick="generateMemberReport('+i+')"><i class="ti ti-file-type-pdf"></i></button>'+
         '<button class="icon-btn" title="تعديل" onclick="openEditMember('+i+')"><i class="ti ti-edit"></i></button>'+
-        '<button class="icon-btn" title="حذف" onclick="deleteMember('+i+')"><i class="ti ti-trash" style="color:#A32D2D"></i></button>'+
+        '<button class="icon-btn" title="حذف" onclick="deleteMember('+i+')"><i class="ti ti-trash" style="color:#D6453F"></i></button>'+
       '</div>'+
       '<div class="am-header">'+
         '<div class="avatar '+avatarClass(i)+'">'+initials(m.name)+'</div>'+
-        '<div><div class="am-name">'+m.name+'</div><div class="am-title">'+m.title+'</div></div>'+
+        '<div style="flex:1;min-width:0"><div class="am-name">'+rankTag+m.name+'</div><div class="am-title">'+m.title+' '+trendHTML(m.name,ov)+'</div></div>'+
+        '<div class="grade-badge grade-'+gradeLetter(ov).cls+'">'+gradeLetter(ov).g+'</div>'+
+        '<div class="ov-stack"><span class="grade-badge grade-'+gradeFor(ov)+'">'+gradeFor(ov)+'</span><div class="overall-badge ov-'+tier+'"><span class="ov-num">'+ov+'</span><span class="ov-lbl">Overall</span></div></div>'+
       '</div>'+
+      (trendFor(m.name,ov)?'<div style="margin:-6px 0 10px;font-size:11px">مقارنة بالشهر السابق: '+trendFor(m.name,ov)+'</div>':'')+
       '<div class="score-row">'+
         '<div class="score-item"><div class="score-label">Monthly Revenue</div><div class="score-num '+scoreColor(m.revenue/250)+'">'+m.revenue.toLocaleString()+' ر</div></div>'+
         '<div class="score-item"><div class="score-label">Client Health</div><div class="score-num '+scoreColor(m.health)+'">'+m.health+'%</div></div>'+
@@ -427,10 +904,13 @@ function renderTeam(){
       '<div class="bar-wrap"><div class="bar-label"><span>Operational Efficiency</span><span>'+m.efficiency+'%</span></div><div class="bar-bg"><div class="bar-fill '+barColor(m.efficiency)+'" style="width:'+m.efficiency+'%"></div></div></div>'+
       '<div class="bar-wrap"><div class="bar-label"><span>وقت الرد على العميل</span><span>'+m.response+'%</span></div><div class="bar-bg"><div class="bar-fill '+barColor(m.response)+'" style="width:'+m.response+'%"></div></div></div>'+
       '<div class="bar-wrap"><div class="bar-label"><span>Zoho System Score</span><span>'+m.zohoScore+'%</span></div><div class="bar-bg"><div class="bar-fill fill-purple" style="width:'+m.zohoScore+'%"></div></div></div>'+
+      '<div class="bar-wrap"><div class="bar-label"><span>الالتزام بتسليمات العملاء</span><span>'+(m.delivery||0)+'%</span></div><div class="bar-bg"><div class="bar-fill '+barColor(m.delivery||0)+'" style="width:'+(m.delivery||0)+'%"></div></div></div>'+
+      complaintsBlock(m)+
       '<div class="attend-row">'+
         '<span class="attend-badge present-b"><i class="ti ti-check"></i> حضور: '+m.present+' يوم</span>'+
         '<span class="attend-badge absent-b"><i class="ti ti-x"></i> غياب: '+m.absent+' يوم</span>'+
-      '</div>';
+      '</div>'+
+      '<div class="report-btn-row no-print"><button class="btn btn-report" onclick="generateMemberReport('+i+')"><i class="ti ti-file-type-pdf"></i> تقرير PDF لـ '+m.name.split(' ')[0]+'</button></div>';
     grid.appendChild(card);
   });
 }
@@ -497,9 +977,9 @@ function renderRevenue(){
       data:{
         labels:data.members.map(function(m){return m.name.split(' ')[0];}),
         datasets:[
-          {label:'Operational Efficiency',data:data.members.map(function(m){return m.efficiency;}),backgroundColor:'#1D9E75',borderRadius:4},
-          {label:'Client Health',data:data.members.map(function(m){return m.health;}),backgroundColor:'#378ADD',borderRadius:4},
-          {label:'Zoho Score',data:data.members.map(function(m){return m.zohoScore;}),backgroundColor:'#7F77DD',borderRadius:4}
+          {label:'Operational Efficiency',data:data.members.map(function(m){return m.efficiency;}),backgroundColor:'#0F9E6E',borderRadius:6,borderSkipped:false},
+          {label:'Client Health',data:data.members.map(function(m){return m.health;}),backgroundColor:'#3B7BD4',borderRadius:6,borderSkipped:false},
+          {label:'Zoho Score',data:data.members.map(function(m){return m.zohoScore;}),backgroundColor:'#7C4DD6',borderRadius:6,borderSkipped:false}
         ]
       },
       options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{y:{beginAtZero:true,max:100,grid:{color:'rgba(0,0,0,0.06)'},ticks:{font:{size:11}}},x:{grid:{display:false},ticks:{font:{size:12}}}}}
@@ -602,6 +1082,10 @@ function openEditMember(idx){
   });
   document.getElementById('mZohoLogs').value=m?m.zohoLogs:'';
   document.getElementById('mZohoReports').value=m?m.zohoReports:'';
+  document.getElementById('mDelivery').value=m?(m.delivery||80):80;
+  document.getElementById('deliveryVal').textContent=m?(m.delivery||80):80;
+  document.getElementById('mComplaints').value=m?(m.complaints||0):'';
+  document.getElementById('mComplaintClients').value=m?(m.complaintClients||''):'';
   ['sk1','sk2','sk3','sk4'].forEach(function(id,si){
     document.getElementById(id).value=m&&m.skills?m.skills[si]:3;
   });
@@ -623,6 +1107,9 @@ function saveMember(){
     zohoLogs:parseInt(document.getElementById('mZohoLogs').value)||0,
     zohoReports:parseInt(document.getElementById('mZohoReports').value)||0,
     followup:parseInt(document.getElementById('mFollowup').value),
+    delivery:parseInt(document.getElementById('mDelivery').value),
+    complaints:parseInt(document.getElementById('mComplaints').value)||0,
+    complaintClients:document.getElementById('mComplaintClients').value.trim(),
     skills:['sk1','sk2','sk3','sk4'].map(function(id){return parseInt(document.getElementById(id).value)||3;})
   };
   if(idx>=0) data.members[idx]=m; else data.members.push(m);
@@ -697,14 +1184,109 @@ document.querySelectorAll('.modal-overlay').forEach(function(ov){
   ov.addEventListener('click',function(e){if(e.target===ov) ov.classList.remove('open');});
 });
 
+// ===== PER-MEMBER PDF REPORT =====
+function generateMemberReport(idx){
+  var m=data.members[idx];
+  if(!m) return;
+  var ov=overallScore(m);
+  var g=gradeFor(ov);
+  var period=data.settings.period||'';
+  var firstName=m.name.split(' ')[0];
+
+  // member's projects
+  var myProjects=data.projects.filter(function(p){return p.managerIdx===idx;});
+  var projRows=myProjects.map(function(p){
+    var statusTxt={ok:'راضي',ok2:'ممتاز / راضي جداً',warn:'تأخر في الرد',warn2:'متأخر أحياناً',bad:'غير راضي'}[p.status]||'';
+    return '<tr><td>'+p.client+'</td><td>'+p.package+'</td><td>'+Number(p.value).toLocaleString()+' ريال</td><td>'+statusTxt+'</td></tr>';
+  }).join('') || '<tr><td colspan="4" style="text-align:center;color:#888">لا توجد مشاريع مسندة</td></tr>';
+
+  var skillNames=['التواصل','التفاوض','إدارة الوقت','حل المشكلات'];
+  var skillsHTML=skillNames.map(function(sn,si){
+    var v=m.skills[si]||3;
+    var st=''; for(var k=1;k<=5;k++) st+=(k<=v?'★':'☆');
+    return '<tr><td>'+sn+'</td><td style="color:#C77A0A;letter-spacing:2px">'+st+'</td></tr>';
+  }).join('');
+
+  var revTarget=Math.round(data.settings.target/Math.max(1,data.members.length));
+  var complaintLine=(m.complaints||0)===0?'لا توجد شكاوى هذا الشهر':((m.complaints)+' شكاوى — العملاء: '+(m.complaintClients||'غير محدد'));
+
+  var gradeColors={A:'#0B6B4A',B:'#1F5FA8',C:'#92590A',D:'#A8302B'};
+  var gradeBg={A:'#E4F6EF',B:'#E3F0FB',C:'#FBF0DD',D:'#FBEAE9'};
+
+  var w=window.open('','_blank');
+  var doc='<!DOCTYPE html><html dir="rtl" lang="ar"><head><meta charset="UTF-8"><title>تقرير '+m.name+'</title>'+
+  '<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&family=Sora:wght@600;700&display=swap" rel="stylesheet">'+
+  '<style>'+
+  '*{margin:0;padding:0;box-sizing:border-box}'+
+  'body{font-family:"IBM Plex Sans Arabic",sans-serif;color:#1F1A2E;padding:40px;background:#fff;line-height:1.6}'+
+  '.rep-head{display:flex;justify-content:space-between;align-items:flex-start;border-bottom:3px solid #5B2BB8;padding-bottom:20px;margin-bottom:24px}'+
+  '.rep-brand{display:flex;align-items:center;gap:12px}'+
+  '.rep-mark{width:48px;height:48px;border-radius:13px;background:linear-gradient(135deg,#5B2BB8,#2A1259);color:#fff;display:flex;align-items:center;justify-content:center;font-family:Sora;font-weight:700;font-size:22px}'+
+  '.rep-title{font-family:Sora;font-size:20px;font-weight:700}'+
+  '.rep-sub{font-size:13px;color:#6B6480;margin-top:2px}'+
+  '.rep-grade{text-align:center;padding:12px 20px;border-radius:14px;background:'+gradeBg[g]+';color:'+gradeColors[g]+'}'+
+  '.rep-grade .g{font-family:Sora;font-size:38px;font-weight:700;line-height:1}'+
+  '.rep-grade .gl{font-size:12px;font-weight:600;margin-top:2px}'+
+  '.rep-person{display:flex;align-items:center;gap:16px;margin-bottom:26px;background:#F6F2FC;padding:18px;border-radius:14px}'+
+  '.rep-av{width:60px;height:60px;border-radius:16px;background:#EDE6FA;color:#5B2BB8;display:flex;align-items:center;justify-content:center;font-family:Sora;font-weight:700;font-size:22px}'+
+  '.rep-name{font-size:20px;font-weight:700}'+
+  '.rep-role{font-size:13px;color:#6B6480}'+
+  '.rep-ov{margin-right:auto;text-align:center}'+
+  '.rep-ov .n{font-family:Sora;font-size:32px;font-weight:700;color:#5B2BB8}'+
+  '.rep-ov .l{font-size:11px;color:#6B6480;text-transform:uppercase;letter-spacing:.05em}'+
+  '.sec{margin-bottom:24px}'+
+  '.sec-h{font-size:13px;font-weight:700;color:#5B2BB8;text-transform:uppercase;letter-spacing:.05em;margin-bottom:12px;padding-bottom:6px;border-bottom:1px solid #E9E3F4}'+
+  '.kpi-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}'+
+  '.kpi{background:#F7F5FB;border:1px solid #E9E3F4;border-radius:11px;padding:14px;text-align:center}'+
+  '.kpi .v{font-family:Sora;font-size:22px;font-weight:700}'+
+  '.kpi .l{font-size:11px;color:#6B6480;margin-top:4px}'+
+  'table{width:100%;border-collapse:collapse;font-size:13px}'+
+  'th{text-align:right;background:#F6F2FC;padding:10px;font-size:11px;color:#6B6480;text-transform:uppercase;letter-spacing:.03em;font-weight:600}'+
+  'td{padding:10px;border-bottom:1px solid #F1ECF9}'+
+  '.complaint-line{padding:12px 14px;border-radius:10px;font-size:13px;font-weight:500;background:'+((m.complaints||0)===0?'#E4F6EF;color:#0B6B4A':'#FBEAE9;color:#A8302B')+'}'+
+  '.rep-foot{margin-top:30px;padding-top:16px;border-top:1px solid #E9E3F4;font-size:11px;color:#9A93AD;text-align:center}'+
+  '.print-actions{position:fixed;top:16px;left:16px;display:flex;gap:8px}'+
+  '.pa-btn{padding:9px 16px;border-radius:9px;border:none;font-family:inherit;font-size:13px;font-weight:600;cursor:pointer;background:#5B2BB8;color:#fff}'+
+  '.pa-btn.sec{background:#EDE6FA;color:#5B2BB8}'+
+  '@media print{.print-actions{display:none}body{padding:20px}}'+
+  '</style></head><body>'+
+  '<div class="print-actions"><button class="pa-btn" onclick="window.print()">🖨️ حفظ PDF / طباعة</button><button class="pa-btn sec" onclick="window.close()">إغلاق</button></div>'+
+  '<div class="rep-head"><div class="rep-brand"><div class="rep-mark">O</div><div><div class="rep-title">تقرير تقييم شهري</div><div class="rep-sub">'+period+'</div></div></div>'+
+  '<div class="rep-grade"><div class="g">'+g+'</div><div class="gl">'+gradeLabel(g)+'</div></div></div>'+
+  '<div class="rep-person"><div class="rep-av">'+initials(m.name)+'</div><div><div class="rep-name">'+m.name+'</div><div class="rep-role">'+m.title+'</div></div>'+
+  '<div class="rep-ov"><div class="n">'+ov+'</div><div class="l">Overall Score</div></div></div>'+
+  '<div class="sec"><div class="sec-h">المؤشرات الرئيسية</div><div class="kpi-grid">'+
+  '<div class="kpi"><div class="v">'+m.revenue.toLocaleString()+'</div><div class="l">الإيراد الشهري (هدف '+revTarget.toLocaleString()+')</div></div>'+
+  '<div class="kpi"><div class="v">'+m.health+'%</div><div class="l">Client Health</div></div>'+
+  '<div class="kpi"><div class="v">'+m.efficiency+'%</div><div class="l">Operational Efficiency</div></div>'+
+  '<div class="kpi"><div class="v">'+m.response+'%</div><div class="l">وقت الرد على العميل</div></div>'+
+  '<div class="kpi"><div class="v">'+(m.delivery||0)+'%</div><div class="l">الالتزام بالتسليمات</div></div>'+
+  '<div class="kpi"><div class="v">'+m.zohoScore+'%</div><div class="l">Zoho System Score</div></div>'+
+  '</div></div>'+
+  '<div class="sec"><div class="sec-h">شكاوى العملاء</div><div class="complaint-line">'+complaintLine+'</div></div>'+
+  '<div class="sec"><div class="sec-h">الحضور والانضباط</div><div class="kpi-grid">'+
+  '<div class="kpi"><div class="v" style="color:#0B6B4A">'+m.present+'</div><div class="l">أيام الحضور</div></div>'+
+  '<div class="kpi"><div class="v" style="color:#A8302B">'+m.absent+'</div><div class="l">أيام الغياب</div></div>'+
+  '<div class="kpi"><div class="v">'+m.followup+'%</div><div class="l">Follow-ups</div></div>'+
+  '</div></div>'+
+  '<div class="sec"><div class="sec-h">المشاريع المُسندة ('+myProjects.length+')</div><table><thead><tr><th>العميل</th><th>الباقة</th><th>قيمة العقد</th><th>الحالة</th></tr></thead><tbody>'+projRows+'</tbody></table></div>'+
+  '<div class="sec"><div class="sec-h">المهارات الشخصية والمهنية</div><table><tbody>'+skillsHTML+'</tbody></table></div>'+
+  '<div class="rep-foot">تم إنشاء هذا التقرير تلقائياً من Account Managers Dashboard — Ocoda · '+new Date().toLocaleDateString('ar-EG')+'</div>'+
+  '</body></html>';
+  w.document.write(doc);
+  w.document.close();
+}
+
 // ===== RENDER ALL =====
 function renderAll(){
   rebuildFilter();
   renderMetrics();
+  renderAlerts();
   renderTeam();
   renderProjects();
 }
 
+rebuildMonthSelect('__live');
 renderAll();
 </script>
 </body>
