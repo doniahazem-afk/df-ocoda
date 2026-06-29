@@ -1,12 +1,12 @@
 <!DOCTYPE html>
-<html lang="ar" dir="rtl">
+<html lang="en" dir="ltr">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Account Managers Dashboard — Ocoda</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&family=Sora:wght@500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Sora:wght@500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@2.44.0/tabler-icons.min.css">
 <style>
 :root{
@@ -35,7 +35,7 @@
 }
 *{box-sizing:border-box;margin:0;padding:0}
 body{
-  font-family:'IBM Plex Sans Arabic',system-ui,sans-serif;
+  font-family:'Inter',system-ui,sans-serif;
   background:
     radial-gradient(1200px 400px at 100% -10%,rgba(124,77,214,.07),transparent 60%),
     var(--bg);
@@ -46,7 +46,7 @@ body{
   line-height:1.5;
 }
 .dash{max-width:1180px;margin:0 auto}
-.font-display{font-family:'Sora','IBM Plex Sans Arabic',sans-serif}
+.font-display{font-family:'Sora','Inter',sans-serif}
 
 /* ===== HEADER ===== */
 .header{
@@ -143,7 +143,7 @@ body{
   transition:transform .18s ease,box-shadow .18s ease,border-color .18s ease;
 }
 .am-card:hover{transform:translateY(-2px);box-shadow:var(--shadow-md);border-color:var(--purple-300)}
-.am-card-actions{position:absolute;top:16px;left:16px;display:flex;gap:4px;opacity:0;transition:opacity .16s ease}
+.am-card-actions{position:absolute;top:16px;right:16px;display:flex;gap:4px;opacity:0;transition:opacity .16s ease}
 .am-card:hover .am-card-actions{opacity:1}
 .icon-btn{
   background:var(--purple-50);border:none;cursor:pointer;color:var(--purple-600);
@@ -188,7 +188,7 @@ body{
 .modal{background:var(--card);border-radius:var(--r-xl);padding:28px;width:580px;max-width:100%;max-height:90vh;overflow-y:auto;position:relative;box-shadow:var(--shadow-lg);animation:pop .25s cubic-bezier(.34,1.3,.6,1)}
 @keyframes pop{from{opacity:0;transform:scale(.96) translateY(10px)}to{opacity:1;transform:scale(1) translateY(0)}}
 .modal h2{font-size:18px;font-weight:600;margin-bottom:22px;font-family:'Sora';color:var(--ink);letter-spacing:-.01em}
-.modal-close{position:absolute;top:22px;left:22px;background:var(--purple-50);border:none;cursor:pointer;font-size:18px;color:var(--ink-soft);width:34px;height:34px;border-radius:9px;display:flex;align-items:center;justify-content:center;transition:all .14s ease}
+.modal-close{position:absolute;top:22px;right:22px;background:var(--purple-50);border:none;cursor:pointer;font-size:18px;color:var(--ink-soft);width:34px;height:34px;border-radius:9px;display:flex;align-items:center;justify-content:center;transition:all .14s ease}
 .modal-close:hover{background:var(--red-bg);color:var(--red)}
 .form-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
 .form-group{display:flex;flex-direction:column;gap:6px}
@@ -203,7 +203,7 @@ body{
 /* ===== PROJECTS TABLE ===== */
 .proj-wrap{background:var(--card);border:1px solid var(--line);border-radius:var(--r-lg);overflow:hidden;margin-bottom:18px;box-shadow:var(--shadow-sm)}
 .proj-table{width:100%;border-collapse:collapse;font-size:13px}
-.proj-table th{text-align:right;padding:14px 16px;color:var(--ink-soft);font-weight:600;font-size:11.5px;text-transform:uppercase;letter-spacing:.04em;border-bottom:1px solid var(--line);background:var(--purple-50)}
+.proj-table th{text-align:left;padding:14px 16px;color:var(--ink-soft);font-weight:600;font-size:11.5px;text-transform:uppercase;letter-spacing:.04em;border-bottom:1px solid var(--line);background:var(--purple-50)}
 .proj-table td{padding:14px 16px;border-bottom:1px solid var(--line-soft);color:var(--ink);vertical-align:middle}
 .proj-table tr:last-child td{border-bottom:none}
 .proj-table tbody tr{transition:background .14s ease}
@@ -274,11 +274,11 @@ select.filter-select:focus{outline:none;border-color:var(--purple-500)}
 .alerts-head{display:flex;align-items:center;gap:8px;font-size:12px;font-weight:600;color:var(--ink-soft);text-transform:uppercase;letter-spacing:.06em;margin-bottom:12px}
 .alerts-head i{font-size:16px;color:var(--amber)}
 .alerts-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:12px}
-.alert{display:flex;gap:12px;align-items:flex-start;padding:14px 16px;border-radius:var(--r-md);background:var(--card);border:1px solid var(--line);border-right:3px solid var(--ink-faint);box-shadow:var(--shadow-sm);transition:transform .16s ease}
+.alert{display:flex;gap:12px;align-items:flex-start;padding:14px 16px;border-radius:var(--r-md);background:var(--card);border:1px solid var(--line);border-left:3px solid var(--ink-faint);box-shadow:var(--shadow-sm);transition:transform .16s ease}
 .alert:hover{transform:translateY(-1px);box-shadow:var(--shadow-md)}
-.alert.sev-high{border-right-color:var(--red)}
-.alert.sev-mid{border-right-color:var(--amber)}
-.alert.sev-good{border-right-color:var(--green)}
+.alert.sev-high{border-left-color:var(--red)}
+.alert.sev-mid{border-left-color:var(--amber)}
+.alert.sev-good{border-left-color:var(--green)}
 .alert-ic{width:34px;height:34px;border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:17px;flex-shrink:0}
 .sev-high .alert-ic{background:var(--red-bg);color:var(--red)}
 .sev-mid .alert-ic{background:var(--amber-bg);color:var(--amber)}
@@ -290,24 +290,24 @@ select.filter-select:focus{outline:none;border-color:var(--purple-500)}
 /* ===== OVERALL SCORE + STATUS ===== */
 .am-card.rank-top{border-color:var(--green);box-shadow:0 0 0 1px var(--green),var(--shadow-sm)}
 .am-card.rank-risk{border-color:#F0C5C2}
-.overall-badge{display:flex;flex-direction:column;align-items:center;justify-content:center;min-width:58px;padding:6px 10px;border-radius:12px;margin-right:auto}
+.overall-badge{display:flex;flex-direction:column;align-items:center;justify-content:center;min-width:58px;padding:6px 10px;border-radius:12px;margin-left:auto}
 .overall-badge .ov-num{font-size:22px;font-weight:700;font-family:'Sora';line-height:1}
 .overall-badge .ov-lbl{font-size:9px;font-weight:600;text-transform:uppercase;letter-spacing:.05em;margin-top:2px;opacity:.8}
 .ov-good{background:var(--green-bg);color:#0B6B4A}
 .ov-mid{background:var(--amber-bg);color:#92590A}
 .ov-low{background:var(--red-bg);color:#A8302B}
-.status-pill{position:absolute;top:16px;right:16px;font-size:10.5px;font-weight:700;padding:4px 10px;border-radius:20px;letter-spacing:.02em;display:flex;align-items:center;gap:4px}
+.status-pill{position:absolute;top:16px;left:16px;font-size:10.5px;font-weight:700;padding:4px 10px;border-radius:20px;letter-spacing:.02em;display:flex;align-items:center;gap:4px}
 .pill-good{background:var(--green-bg);color:#0B6B4A}
 .pill-mid{background:var(--amber-bg);color:#92590A}
 .pill-low{background:var(--red-bg);color:#A8302B}
-.rank-tag{font-size:10px;font-weight:700;color:var(--purple-600);background:var(--purple-50);padding:2px 8px;border-radius:20px;margin-right:6px}
+.rank-tag{font-size:10px;font-weight:700;color:var(--purple-600);background:var(--purple-50);padding:2px 8px;border-radius:20px;margin-left:6px}
 
 /* ===== GRADE + TREND ===== */
 .grade-badge{width:40px;height:40px;border-radius:11px;display:flex;align-items:center;justify-content:center;font-family:'Sora';font-weight:700;font-size:17px;flex-shrink:0;letter-spacing:-.02em}
 .grade-good{background:linear-gradient(135deg,#13B17E,#0F9E6E);color:#fff;box-shadow:0 4px 12px rgba(15,158,110,.3)}
 .grade-mid{background:linear-gradient(135deg,#F0A93C,#D98E1E);color:#fff;box-shadow:0 4px 12px rgba(217,142,30,.3)}
 .grade-low{background:linear-gradient(135deg,#E8615C,#D6453F);color:#fff;box-shadow:0 4px 12px rgba(214,69,63,.3)}
-.trend{display:inline-flex;align-items:center;gap:2px;font-size:11px;font-weight:600;padding:1px 7px;border-radius:20px;margin-right:5px}
+.trend{display:inline-flex;align-items:center;gap:2px;font-size:11px;font-weight:600;padding:1px 7px;border-radius:20px;margin-left:5px}
 .trend i{font-size:13px}
 .trend-up{background:var(--green-bg);color:#0B6B4A}
 .trend-down{background:var(--red-bg);color:#A8302B}
@@ -316,12 +316,12 @@ select.filter-select:focus{outline:none;border-color:var(--purple-500)}
 .btn-report:hover{background:var(--purple-100);color:var(--purple-700)}
 
 /* ===== GRADE BADGE ===== */
-.grade-badge{display:inline-flex;align-items:center;justify-content:center;width:30px;height:30px;border-radius:9px;font-family:'Sora';font-weight:700;font-size:15px;margin-right:6px}
+.grade-badge{display:inline-flex;align-items:center;justify-content:center;width:30px;height:30px;border-radius:9px;font-family:'Sora';font-weight:700;font-size:15px;margin-left:6px}
 .grade-A{background:var(--green-bg);color:#0B6B4A}
 .grade-B{background:#E3F0FB;color:#1F5FA8}
 .grade-C{background:var(--amber-bg);color:#92590A}
 .grade-D{background:var(--red-bg);color:#A8302B}
-.ov-stack{display:flex;align-items:center;gap:4px;margin-right:auto}
+.ov-stack{display:flex;align-items:center;gap:4px;margin-left:auto}
 
 /* ===== MONTH CONTROLS ===== */
 .month-bar{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
@@ -373,59 +373,59 @@ select.filter-select:focus{outline:none;border-color:var(--purple-500)}
     <div class="brand-mark">O</div>
     <div>
       <h1 class="font-display">Account Managers Dashboard</h1>
-      <p class="sub"><span class="live-dot"></span><span id="headerDate">يونيو 2025 — تقرير شهري للفريق</span></p>
+      <p class="sub"><span class="live-dot"></span><span id="headerDate">June 2025 — Monthly Team Report</span></p>
     </div>
   </div>
   <div class="top-controls no-print">
     <select class="month-select" id="monthSelect" onchange="switchMonth(this.value)"></select>
     <select class="filter-select" id="memberFilter" onchange="renderTeam()">
-      <option value="all">كل الفريق</option>
+      <option value="all">Whole Team</option>
     </select>
-    <span class="target-badge"><i class="ti ti-target"></i> تارجت: <span id="targetDisplay">100,000</span> ريال</span>
-    <button class="btn" onclick="saveSnapshot()"><i class="ti ti-device-floppy"></i> حفظ الشهر</button>
-    <button class="btn btn-primary" onclick="openModal('settings')"><i class="ti ti-settings"></i> الإعدادات</button>
+    <span class="target-badge"><i class="ti ti-target"></i> Target: <span id="targetDisplay">100,000</span> SAR</span>
+    <button class="btn" onclick="saveSnapshot()"><i class="ti ti-device-floppy"></i> Save Month</button>
+    <button class="btn btn-primary" onclick="openModal('settings')"><i class="ti ti-settings"></i> Settings</button>
   </div>
 </div>
 
 <div class="metric-row">
   <div class="metric-card">
-    <div class="metric-top"><div class="metric-label">إيراد الفريق الكلي</div><div class="metric-icon"><i class="ti ti-coins"></i></div></div>
+    <div class="metric-top"><div class="metric-label">Total Team Revenue</div><div class="metric-icon"><i class="ti ti-coins"></i></div></div>
     <div class="metric-val" id="totalRevDisplay">0</div>
-    <div class="metric-sub">ريال / الهدف <span id="targetSub">100,000</span></div>
+    <div class="metric-sub">SAR / Target <span id="targetSub">100,000</span></div>
   </div>
   <div class="metric-card">
-    <div class="metric-top"><div class="metric-label">متوسط Client Health</div><div class="metric-icon"><i class="ti ti-heart-handshake"></i></div></div>
+    <div class="metric-top"><div class="metric-label">Avg. Client Health</div><div class="metric-icon"><i class="ti ti-heart-handshake"></i></div></div>
     <div class="metric-val" id="avgHealthDisplay" style="color:var(--green)">0%</div>
-    <div class="metric-sub">رضا العملاء</div>
+    <div class="metric-sub">Client Satisfaction</div>
   </div>
   <div class="metric-card">
-    <div class="metric-top"><div class="metric-label">متوسط Efficiency</div><div class="metric-icon"><i class="ti ti-gauge"></i></div></div>
+    <div class="metric-top"><div class="metric-label">Avg. Efficiency</div><div class="metric-icon"><i class="ti ti-gauge"></i></div></div>
     <div class="metric-val" id="avgEffDisplay" style="color:var(--amber)">0%</div>
-    <div class="metric-sub">كفاءة العمليات</div>
+    <div class="metric-sub">Operational Efficiency</div>
   </div>
   <div class="metric-card">
-    <div class="metric-top"><div class="metric-label">إجمالي المشاريع</div><div class="metric-icon"><i class="ti ti-briefcase"></i></div></div>
+    <div class="metric-top"><div class="metric-label">Total Projects</div><div class="metric-icon"><i class="ti ti-briefcase"></i></div></div>
     <div class="metric-val" id="totalProjectsDisplay">0</div>
-    <div class="metric-sub">مشروع نشط</div>
+    <div class="metric-sub">Active Projects</div>
   </div>
 </div>
 
 <div class="alerts-bar" id="alertsBar"></div>
 
 <div class="tabs">
-  <button class="tab active" onclick="switchTab('team')"><i class="ti ti-users"></i> الفريق</button>
-  <button class="tab" onclick="switchTab('projects')"><i class="ti ti-briefcase"></i> المشاريع والعقود</button>
-  <button class="tab" onclick="switchTab('revenue')"><i class="ti ti-chart-bar"></i> الإيرادات والتارجت</button>
-  <button class="tab" onclick="switchTab('zoho')"><i class="ti ti-database"></i> Zoho & المهارات</button>
+  <button class="tab active" onclick="switchTab('team')"><i class="ti ti-users"></i> Team</button>
+  <button class="tab" onclick="switchTab('projects')"><i class="ti ti-briefcase"></i> Projects & Contracts</button>
+  <button class="tab" onclick="switchTab('revenue')"><i class="ti ti-chart-bar"></i> Revenue & Target</button>
+  <button class="tab" onclick="switchTab('zoho')"><i class="ti ti-database"></i> Zoho & Skills</button>
 </div>
 
 <!-- TEAM -->
 <div class="view active" id="view-team">
   <div class="section-header">
-    <div class="section-title">أداء أعضاء الفريق</div>
+    <div class="section-title">Team Member Performance</div>
     <div style="display:flex;gap:8px">
-      <button class="btn" onclick="saveCurrentMonth()"><i class="ti ti-calendar-plus"></i> حفظ تقييم الشهر</button>
-      <button class="btn btn-primary" onclick="openModal('addMember')"><i class="ti ti-user-plus"></i> إضافة عضو</button>
+      <button class="btn" onclick="saveCurrentMonth()"><i class="ti ti-calendar-plus"></i> Save Monthly Review</button>
+      <button class="btn btn-primary" onclick="openModal('addMember')"><i class="ti ti-user-plus"></i> Add Member</button>
     </div>
   </div>
   <div class="team-grid" id="teamGrid"></div>
@@ -434,15 +434,15 @@ select.filter-select:focus{outline:none;border-color:var(--purple-500)}
 <!-- PROJECTS -->
 <div class="view" id="view-projects">
   <div class="section-header">
-    <div class="section-title">عقود ومشاريع العملاء</div>
-    <button class="btn btn-primary" onclick="openModal('addProject')"><i class="ti ti-plus"></i> إضافة مشروع</button>
+    <div class="section-title">Client Contracts & Projects</div>
+    <button class="btn btn-primary" onclick="openModal('addProject')"><i class="ti ti-plus"></i> Add Project</button>
   </div>
   <div class="proj-wrap">
     <table class="proj-table">
       <thead>
         <tr>
-          <th>العميل والموقع</th><th>الباقة</th><th>قيمة العقد</th>
-          <th>المشرف</th><th>السوشيال</th><th>تجديد العقد</th><th>حالة العميل</th><th></th>
+          <th>Client & Website</th><th>Package</th><th>Contract Value</th>
+          <th>Account Manager</th><th>Social</th><th>Contract Renewal</th><th>Client Status</th><th></th>
         </tr>
       </thead>
       <tbody id="projectsBody"></tbody>
@@ -454,15 +454,15 @@ select.filter-select:focus{outline:none;border-color:var(--purple-500)}
 <div class="view" id="view-revenue">
   <div class="rev-card">
     <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px">
-      <div class="section-title" style="margin:0">تارجت الإيرادات الشهري</div>
-      <div style="font-size:13px;color:#6b6b67">إجمالي الفريق: <strong id="revTotal" style="color:#1a1a18">0 / 0 ريال</strong></div>
+      <div class="section-title" style="margin:0">Monthly Revenue Target</div>
+      <div style="font-size:13px;color:#6b6b67">Team Total: <strong id="revTotal" style="color:#1a1a18">0 / 0 SAR</strong></div>
     </div>
-    <div class="bar-label"><span>تقدم الفريق</span><span id="revPct">0%</span></div>
+    <div class="bar-label"><span>Team Progress</span><span id="revPct">0%</span></div>
     <div class="bar-bg" style="height:12px"><div class="bar-fill fill-green" id="revBar" style="width:0%"></div></div>
     <div class="rev-grid" id="revGrid"></div>
   </div>
   <div class="chart-wrap">
-    <div class="section-title">مقارنة درجات الأداء</div>
+    <div class="section-title">Performance Score Comparison</div>
     <div class="chart-legend">
       <div class="legend-item"><div class="legend-dot" style="background:#0F9E6E"></div>Operational Efficiency</div>
       <div class="legend-item"><div class="legend-dot" style="background:#3B7BD4"></div>Client Health</div>
@@ -476,9 +476,9 @@ select.filter-select:focus{outline:none;border-color:var(--purple-500)}
 
 <!-- ZOHO & SKILLS -->
 <div class="view" id="view-zoho">
-  <div class="section-title">Zoho CRM — متابعة النظام</div>
+  <div class="section-title">Zoho CRM — System Tracking</div>
   <div class="zoho-grid" id="zohoGrid"></div>
-  <div class="section-title">المهارات الشخصية والمهنية</div>
+  <div class="section-title">Personal & Professional Skills</div>
   <div class="skills-grid" id="skillsGrid"></div>
 </div>
 
@@ -490,14 +490,14 @@ select.filter-select:focus{outline:none;border-color:var(--purple-500)}
 <div class="modal-overlay" id="modal-member">
 <div class="modal">
   <button class="modal-close" onclick="closeModal('member')"><i class="ti ti-x"></i></button>
-  <h2 id="memberModalTitle">إضافة عضو جديد</h2>
+  <h2 id="memberModalTitle">Add New Member</h2>
   <input type="hidden" id="memberEditIndex" value="-1">
   <div class="form-grid">
-    <div class="form-group full"><label>الاسم</label><input id="mName" placeholder="مثال: سارة الأحمد"></div>
-    <div class="form-group full"><label>المسمى الوظيفي</label><input id="mTitle" value="Account Manager"></div>
-    <div class="form-group"><label>الإيراد الشهري (ريال)</label><input id="mRevenue" type="number" placeholder="25000"></div>
-    <div class="form-group"><label>أيام الحضور</label><input id="mPresent" type="number" placeholder="22"></div>
-    <div class="form-group"><label>أيام الغياب</label><input id="mAbsent" type="number" placeholder="2"></div>
+    <div class="form-group full"><label>Name</label><input id="mName" placeholder="e.g. Sarah Al-Ahmad"></div>
+    <div class="form-group full"><label>Job Title</label><input id="mTitle" value="Account Manager"></div>
+    <div class="form-group"><label>Monthly Revenue (SAR)</label><input id="mRevenue" type="number" placeholder="25000"></div>
+    <div class="form-group"><label>Days Present</label><input id="mPresent" type="number" placeholder="22"></div>
+    <div class="form-group"><label>Days Absent</label><input id="mAbsent" type="number" placeholder="2"></div>
     <div class="form-group"></div>
     <div class="form-group full"><label>Operational Efficiency % <span id="effVal">75</span></label>
       <div class="range-wrap"><input type="range" id="mEfficiency" min="0" max="100" value="75" oninput="document.getElementById('effVal').textContent=this.value"></div>
@@ -505,34 +505,43 @@ select.filter-select:focus{outline:none;border-color:var(--purple-500)}
     <div class="form-group full"><label>Client Health % <span id="healthVal">80</span></label>
       <div class="range-wrap"><input type="range" id="mHealth" min="0" max="100" value="80" oninput="document.getElementById('healthVal').textContent=this.value"></div>
     </div>
-    <div class="form-group full"><label>وقت الرد على العميل % <span id="responseVal">80</span></label>
+    <div class="form-group full"><label>Client Response Time % <span id="responseVal">80</span></label>
       <div class="range-wrap"><input type="range" id="mResponse" min="0" max="100" value="80" oninput="document.getElementById('responseVal').textContent=this.value"></div>
+    </div>
+    <div class="form-group full" style="display:flex;align-items:center;gap:10px">
+      <label style="display:flex;align-items:center;gap:8px;cursor:pointer;margin:0">
+        <input type="checkbox" id="mResponds2h" style="width:17px;height:17px;cursor:pointer">
+        Responds to clients within 2 hours
+      </label>
+    </div>
+    <div class="form-group full"><label>Attitude % <span id="attitudeVal">80</span></label>
+      <div class="range-wrap"><input type="range" id="mAttitude" min="0" max="100" value="80" oninput="document.getElementById('attitudeVal').textContent=this.value"></div>
     </div>
     <div class="form-group full"><label>Zoho System Score % <span id="zohoScoreVal">80</span></label>
       <div class="range-wrap"><input type="range" id="mZoho" min="0" max="100" value="80" oninput="document.getElementById('zohoScoreVal').textContent=this.value"></div>
     </div>
     <!-- Zoho details -->
-    <div class="form-group"><label>عدد اللوجات في Zoho</label><input id="mZohoLogs" type="number" placeholder="120"></div>
-    <div class="form-group"><label>التقارير المُدخلة (من 20)</label><input id="mZohoReports" type="number" placeholder="16" max="20"></div>
+    <div class="form-group full"><label>Reports Submitted (out of 20)</label><input id="mZohoReports" type="number" placeholder="16" max="20"></div>
     <div class="form-group full"><label>Follow-ups % <span id="followupVal">80</span></label>
       <div class="range-wrap"><input type="range" id="mFollowup" min="0" max="100" value="80" oninput="document.getElementById('followupVal').textContent=this.value"></div>
     </div>
+    <div class="form-group full"><label>Zoho Evidence & Notes</label><textarea id="mZohoEvidence" placeholder="Document evidence, screenshots, or notes about Zoho system performance..." style="width:100%;min-height:80px;padding:10px;border:1px solid #ddd;border-radius:8px;font-family:inherit;font-size:13px;resize:vertical"></textarea></div>
     <!-- Delivery & Complaints -->
-    <div class="form-group full"><label>الالتزام بتسليمات العملاء % <span id="deliveryVal">80</span></label>
+    <div class="form-group full"><label>Client Delivery Commitment % <span id="deliveryVal">80</span></label>
       <div class="range-wrap"><input type="range" id="mDelivery" min="0" max="100" value="80" oninput="document.getElementById('deliveryVal').textContent=this.value"></div>
     </div>
-    <div class="form-group"><label>عدد شكاوى العملاء هذا الشهر</label><input id="mComplaints" type="number" min="0" placeholder="0"></div>
+    <div class="form-group"><label>Client Complaints This Month</label><input id="mComplaints" type="number" min="0" placeholder="0"></div>
     <div class="form-group"></div>
-    <div class="form-group full"><label>أسماء العملاء الذين اشتكوا (افصلي بينهم بفاصلة)</label><input id="mComplaintClients" placeholder="مثال: متجر الوفاء، مطاعم النجمة"></div>
+    <div class="form-group full"><label>Names of Complaining Clients (comma-separated)</label><input id="mComplaintClients" placeholder="e.g. Al-Wafa Store, Star Restaurants"></div>
     <!-- Skills -->
-    <div class="form-group"><label>مهارة التواصل (1-5)</label><input id="sk1" type="number" min="1" max="5" value="3"></div>
-    <div class="form-group"><label>مهارة التفاوض (1-5)</label><input id="sk2" type="number" min="1" max="5" value="3"></div>
-    <div class="form-group"><label>إدارة الوقت (1-5)</label><input id="sk3" type="number" min="1" max="5" value="3"></div>
-    <div class="form-group"><label>حل المشكلات (1-5)</label><input id="sk4" type="number" min="1" max="5" value="3"></div>
+    <div class="form-group"><label>Communication Skill (1-5)</label><input id="sk1" type="number" min="1" max="5" value="3"></div>
+    <div class="form-group"><label>Negotiation Skill (1-5)</label><input id="sk2" type="number" min="1" max="5" value="3"></div>
+    <div class="form-group"><label>Time Management (1-5)</label><input id="sk3" type="number" min="1" max="5" value="3"></div>
+    <div class="form-group"><label>Problem Solving (1-5)</label><input id="sk4" type="number" min="1" max="5" value="3"></div>
   </div>
   <div class="modal-footer">
-    <button class="btn" onclick="closeModal('member')">إلغاء</button>
-    <button class="btn btn-primary" onclick="saveMember()">حفظ</button>
+    <button class="btn" onclick="closeModal('member')">Cancel</button>
+    <button class="btn btn-primary" onclick="saveMember()">Save</button>
   </div>
 </div>
 </div>
@@ -541,27 +550,27 @@ select.filter-select:focus{outline:none;border-color:var(--purple-500)}
 <div class="modal-overlay" id="modal-project">
 <div class="modal">
   <button class="modal-close" onclick="closeModal('project')"><i class="ti ti-x"></i></button>
-  <h2 id="projectModalTitle">إضافة مشروع جديد</h2>
+  <h2 id="projectModalTitle">Add New Project</h2>
   <input type="hidden" id="projectEditIndex" value="-1">
   <div class="form-grid">
-    <div class="form-group full"><label>اسم العميل</label><input id="pClient" placeholder="مثال: شركة الرياض للتقنية"></div>
-    <div class="form-group"><label>الموقع الإلكتروني</label><input id="pWebsite" placeholder="example.com"></div>
-    <div class="form-group"><label>الباقة</label>
+    <div class="form-group full"><label>Client Name</label><input id="pClient" placeholder="e.g. Riyadh Tech Company"></div>
+    <div class="form-group"><label>Website</label><input id="pWebsite" placeholder="example.com"></div>
+    <div class="form-group"><label>Package</label>
       <select id="pPackage"><option>Gold</option><option>Silver</option><option>Premium</option></select>
     </div>
-    <div class="form-group"><label>قيمة العقد (ريال/شهر)</label><input id="pValue" type="number" placeholder="8000"></div>
-    <div class="form-group"><label>المشرف</label><select id="pManager"></select></div>
-    <div class="form-group"><label>تاريخ تجديد العقد</label><input id="pRenewal" type="date"></div>
-    <div class="form-group"><label>حالة العميل</label>
+    <div class="form-group"><label>Contract Value (SAR/month)</label><input id="pValue" type="number" placeholder="8000"></div>
+    <div class="form-group"><label>Account Manager</label><select id="pManager"></select></div>
+    <div class="form-group"><label>Contract Renewal Date</label><input id="pRenewal" type="date"></div>
+    <div class="form-group"><label>Client Status</label>
       <select id="pStatus">
-        <option value="ok">راضي</option>
-        <option value="ok2">راضي جداً / ممتاز</option>
-        <option value="warn">تأخر في الرد</option>
-        <option value="warn2">متأخر أحياناً</option>
-        <option value="bad">غير راضي</option>
+        <option value="ok">Satisfied</option>
+        <option value="ok2">Very Satisfied / Excellent</option>
+        <option value="warn">Slow to Respond</option>
+        <option value="warn2">Occasionally Late</option>
+        <option value="bad">Not Satisfied</option>
       </select>
     </div>
-    <div class="form-group"><label>روابط السوشيال (اختاري)</label>
+    <div class="form-group"><label>Social Links (optional)</label>
       <div style="display:flex;flex-direction:column;gap:6px;margin-top:4px">
         <label style="display:flex;align-items:center;gap:8px;font-size:13px;color:#1a1a18"><input type="checkbox" id="sInsta"> <i class="ti ti-brand-instagram" style="color:#E24B4A"></i> Instagram</label>
         <label style="display:flex;align-items:center;gap:8px;font-size:13px;color:#1a1a18"><input type="checkbox" id="sTwitter"> <i class="ti ti-brand-twitter" style="color:#378ADD"></i> Twitter/X</label>
@@ -573,8 +582,8 @@ select.filter-select:focus{outline:none;border-color:var(--purple-500)}
     </div>
   </div>
   <div class="modal-footer">
-    <button class="btn" onclick="closeModal('project')">إلغاء</button>
-    <button class="btn btn-primary" onclick="saveProject()">حفظ</button>
+    <button class="btn" onclick="closeModal('project')">Cancel</button>
+    <button class="btn btn-primary" onclick="saveProject()">Save</button>
   </div>
 </div>
 </div>
@@ -583,37 +592,38 @@ select.filter-select:focus{outline:none;border-color:var(--purple-500)}
 <div class="modal-overlay" id="modal-settings">
 <div class="modal">
   <button class="modal-close" onclick="closeModal('settings')"><i class="ti ti-x"></i></button>
-  <h2>إعدادات الداش بورد</h2>
+  <h2>Dashboard Settings</h2>
   <div class="form-grid">
-    <div class="form-group full"><label>تارجت الفريق الكلي (ريال)</label><input id="settingsTarget" type="number" value="100000"></div>
-    <div class="form-group full"><label>اسم الشهر / الفترة</label><input id="settingsPeriod" value="يونيو 2025 — تقرير شهري للفريق"></div>
+    <div class="form-group full"><label>Total Team Target (SAR)</label><input id="settingsTarget" type="number" value="100000"></div>
+    <div class="form-group full"><label>Month / Period Name</label><input id="settingsPeriod" value="June 2025 — Monthly Team Report"></div>
   </div>
   <div class="modal-footer">
-    <button class="btn" onclick="closeModal('settings')">إلغاء</button>
-    <button class="btn btn-primary" onclick="saveSettings()">حفظ</button>
+    <button class="btn" onclick="closeModal('settings')">Cancel</button>
+    <button class="btn btn-primary" onclick="saveSettings()">Save</button>
   </div>
 </div>
 </div>
+
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
 <script>
 // ===== DATA =====
 var DEFAULT_MEMBERS = [
-  {name:'سارة الأحمد',title:'Account Manager',revenue:24000,present:22,absent:2,efficiency:82,health:88,response:90,zohoScore:85,zohoLogs:142,zohoReports:18,followup:95,delivery:92,complaints:1,complaintClients:'متجر الوفاء',skills:[4,4,3,5]},
-  {name:'محمد السعيد',title:'Account Manager',revenue:26500,present:24,absent:0,efficiency:88,health:91,response:95,zohoScore:92,zohoLogs:198,zohoReports:20,followup:100,delivery:98,complaints:0,complaintClients:'',skills:[5,5,5,4]},
-  {name:'لمياء القحطاني',title:'Account Manager',revenue:18000,present:20,absent:4,efficiency:65,health:71,response:58,zohoScore:70,zohoLogs:89,zohoReports:13,followup:68,delivery:64,complaints:3,complaintClients:'متجر الوفاء، عيادات الصحة، كافيه لوكس',skills:[3,3,2,3]},
-  {name:'عمر الزهراني',title:'Account Manager',revenue:19000,present:21,absent:3,efficiency:72,health:77,response:65,zohoScore:78,zohoLogs:110,zohoReports:15,followup:78,delivery:75,complaints:2,complaintClients:'مطاعم النجمة، عيادات الصحة',skills:[4,3,4,4]}
+  {name:'Sarah Al-Ahmad',title:'Account Manager',revenue:24000,present:22,absent:2,efficiency:82,health:88,response:90,respondsWithin2h:true,attitude:85,zohoScore:85,zohoReports:18,followup:95,delivery:92,complaints:1,complaintClients:'Al-Wafa Store',skills:[4,4,3,5]},
+  {name:'Mohammed Al-Saeed',title:'Account Manager',revenue:26500,present:24,absent:0,efficiency:88,health:91,response:95,respondsWithin2h:true,attitude:95,zohoScore:92,zohoReports:20,followup:100,delivery:98,complaints:0,complaintClients:'',skills:[5,5,5,4]},
+  {name:'Lamia Al-Qahtani',title:'Account Manager',revenue:18000,present:20,absent:4,efficiency:65,health:71,response:58,respondsWithin2h:false,attitude:60,zohoScore:70,zohoReports:13,followup:68,delivery:64,complaints:3,complaintClients:'Al-Wafa Store, Health Clinics, Cafe Lux',skills:[3,3,2,3]},
+  {name:'Omar Al-Zahrani',title:'Account Manager',revenue:19000,present:21,absent:3,efficiency:72,health:77,response:65,respondsWithin2h:false,attitude:70,zohoScore:78,zohoReports:15,followup:78,delivery:75,complaints:2,complaintClients:'Star Restaurants, Health Clinics',skills:[4,3,4,4]}
 ];
 
 var DEFAULT_PROJECTS = [
-  {client:'شركة الرياض للتقنية',website:'riyad-tech.com',package:'Gold',value:8500,managerIdx:1,renewal:'2025-07-15',status:'ok',social:{insta:true,twitter:true,linked:true,fb:false,tiktok:false,snap:false}},
-  {client:'مجموعة الأمل التجارية',website:'alamal-group.com',package:'Premium',value:12000,managerIdx:0,renewal:'2025-08-01',status:'ok2',social:{insta:true,twitter:false,linked:false,fb:true,tiktok:false,snap:false}},
-  {client:'متجر الوفاء الإلكتروني',website:'alwafa-store.com',package:'Silver',value:4500,managerIdx:2,renewal:'2025-09-10',status:'warn',social:{insta:true,twitter:false,linked:false,fb:false,tiktok:true,snap:false}},
-  {client:'مطاعم النجمة',website:'star-restaurants.com',package:'Gold',value:7000,managerIdx:3,renewal:'2025-06-20',status:'bad',social:{insta:true,twitter:false,linked:false,fb:false,tiktok:false,snap:true}},
-  {client:'شركة الإبداع للتصميم',website:'ibda3-design.com',package:'Premium',value:15000,managerIdx:1,renewal:'2025-10-05',status:'ok2',social:{insta:true,twitter:false,linked:true,fb:false,tiktok:false,snap:false}}
+  {client:'Riyadh Tech Company',website:'riyad-tech.com',package:'Gold',value:8500,managerIdx:1,renewal:'2025-07-15',status:'ok',social:{insta:true,twitter:true,linked:true,fb:false,tiktok:false,snap:false}},
+  {client:'Al-Amal Trading Group',website:'alamal-group.com',package:'Premium',value:12000,managerIdx:0,renewal:'2025-08-01',status:'ok2',social:{insta:true,twitter:false,linked:false,fb:true,tiktok:false,snap:false}},
+  {client:'Al-Wafa Online Store',website:'alwafa-store.com',package:'Silver',value:4500,managerIdx:2,renewal:'2025-09-10',status:'warn',social:{insta:true,twitter:false,linked:false,fb:false,tiktok:true,snap:false}},
+  {client:'Star Restaurants',website:'star-restaurants.com',package:'Gold',value:7000,managerIdx:3,renewal:'2025-06-20',status:'bad',social:{insta:true,twitter:false,linked:false,fb:false,tiktok:false,snap:true}},
+  {client:'Ibda3 Design Company',website:'ibda3-design.com',package:'Premium',value:15000,managerIdx:1,renewal:'2025-10-05',status:'ok2',social:{insta:true,twitter:false,linked:true,fb:false,tiktok:false,snap:false}}
 ];
 
-var DEFAULT_SETTINGS = {target:100000,period:'يونيو 2025 — تقرير شهري للفريق'};
+var DEFAULT_SETTINGS = {target:100000,period:'June 2025 — Monthly Team Report'};
 
 function load(){
   var m = localStorage.getItem('am_members');
@@ -645,12 +655,13 @@ function overallScore(m){
   var revScore = Math.min(100, Math.round((m.revenue/revTarget)*100));
   var complaintPenalty = Math.min(20,(m.complaints||0)*7);
   var raw =
-    revScore*0.30 +
-    (m.health||0)*0.20 +
-    (m.efficiency||0)*0.15 +
-    (m.delivery||0)*0.15 +
-    (m.response||0)*0.10 +
-    (m.zohoScore||0)*0.10;
+    revScore*0.27 +
+    (m.health||0)*0.18 +
+    (m.efficiency||0)*0.14 +
+    (m.delivery||0)*0.14 +
+    (m.response||0)*0.09 +
+    (m.zohoScore||0)*0.08 +
+    (m.attitude||0)*0.10;
   return Math.max(0, Math.round(raw - complaintPenalty));
 }
 function scoreTier(v){ return v>=80?'good':v>=65?'mid':'low'; }
@@ -661,7 +672,7 @@ function gradeFor(v){
   return 'D';
 }
 function gradeLabel(g){
-  return {A:'ممتاز',B:'جيد جداً',C:'مقبول',D:'يحتاج تحسين'}[g]||'';
+  return {A:'Excellent',B:'Very Good',C:'Acceptable',D:'Needs Improvement'}[g]||'';
 }
 
 // ===== MONTHLY SNAPSHOTS =====
@@ -672,8 +683,8 @@ function loadSnapshots(){
 function saveSnapshots(snaps){ localStorage.setItem('am_snapshots',JSON.stringify(snaps)); }
 
 function saveSnapshot(){
-  var label=data.settings.period||('شهر '+new Date().toLocaleDateString('ar-EG'));
-  var key=prompt('احفظي بيانات هذا الشهر باسم (مثال: يونيو 2025):', label);
+  var label=data.settings.period||('Month '+new Date().toLocaleDateString('en-US'));
+  var key=prompt('Save this month\'s data as (e.g. June 2025):', label);
   if(!key) return;
   var snaps=loadSnapshots();
   snaps[key]={
@@ -684,7 +695,7 @@ function saveSnapshot(){
   };
   saveSnapshots(snaps);
   rebuildMonthSelect(key);
-  alert('تم حفظ شهر "'+key+'" ✓\nتقدري تقارني بينه وبين الشهور التانية من القائمة.');
+  alert('Month "'+key+'" saved ✓\nYou can now compare it with other months from the list.');
 }
 
 function rebuildMonthSelect(selected){
@@ -692,7 +703,7 @@ function rebuildMonthSelect(selected){
   if(!sel) return;
   var snaps=loadSnapshots();
   var keys=Object.keys(snaps);
-  sel.innerHTML='<option value="__live">📊 الشهر الحالي (مباشر)</option>';
+  sel.innerHTML='<option value="__live">📊 Current Month (Live)</option>';
   keys.forEach(function(k){
     var opt=document.createElement('option');
     opt.value=k; opt.textContent='🗓️ '+k;
@@ -733,7 +744,7 @@ function trendFor(memberName,currentOv){
   var diff=currentOv-prevOv;
   if(diff>1) return '<span class="trend-up"><i class="ti ti-arrow-up-right"></i> +'+diff+'</span>';
   if(diff<-1) return '<span class="trend-down"><i class="ti ti-arrow-down-right"></i> '+diff+'</span>';
-  return '<span class="trend-flat">— ثابت</span>';
+  return '<span class="trend-flat">— No change</span>';
 }
 function gradeLetter(v){
   if(v>=90) return {g:'A+',cls:'good'};
@@ -746,7 +757,7 @@ function gradeLetter(v){
 // ===== MONTHLY HISTORY =====
 function loadHistory(){ var h=localStorage.getItem('am_history'); return h?JSON.parse(h):{}; }
 function saveHistory(hist){ localStorage.setItem('am_history',JSON.stringify(hist)); }
-function currentMonthKey(){ return data.settings.period||'الشهر الحالي'; }
+function currentMonthKey(){ return data.settings.period||'Current Month'; }
 // snapshot of current overall scores keyed by member name
 function snapshotScores(){
   var snap={};
@@ -754,13 +765,13 @@ function snapshotScores(){
   return snap;
 }
 function saveCurrentMonth(){
-  var label=prompt('اسم الشهر اللي عايزة تحفظيه (مثال: مايو 2025):', currentMonthKey());
+  var label=prompt('Name of the month you want to save (e.g. May 2025):', currentMonthKey());
   if(!label) return;
   var hist=loadHistory();
   hist[label]={date:new Date().toISOString(),scores:snapshotScores()};
   saveHistory(hist);
   renderAll();
-  alert('تم حفظ تقييم شهر "'+label+'" ✓\nدلوقتي تقدري تقارني الأداء بين الشهور.');
+  alert('Month "'+label+'" review saved ✓\nYou can now compare performance across months.');
 }
 // returns previous month's overall for a member (most recent saved), or null
 function prevOverall(memberName){
@@ -778,11 +789,11 @@ function trendHTML(memberName,currentOv){
   var prev=prevOverall(memberName);
   if(prev===null) return '';
   var diff=currentOv-prev;
-  if(diff===0) return '<span class="trend trend-flat"><i class="ti ti-minus"></i> ثابت</span>';
+  if(diff===0) return '<span class="trend trend-flat"><i class="ti ti-minus"></i> No change</span>';
   if(diff>0) return '<span class="trend trend-up"><i class="ti ti-trending-up"></i> +'+diff+'</span>';
   return '<span class="trend trend-down"><i class="ti ti-trending-down"></i> '+diff+'</span>';
 }
-function statusLabel(v){ return v>=80?{cls:'good',txt:'ممتاز',ic:'ti-circle-check'}:v>=65?{cls:'mid',txt:'يحتاج متابعة',ic:'ti-alert-circle'}:{cls:'low',txt:'خطر',ic:'ti-alert-triangle'}; }
+function statusLabel(v){ return v>=80?{cls:'good',txt:'Excellent',ic:'ti-circle-check'}:v>=65?{cls:'mid',txt:'Needs Follow-up',ic:'ti-alert-circle'}:{cls:'low',txt:'At Risk',ic:'ti-alert-triangle'}; }
 
 // Build prioritized alerts across team + projects
 function buildAlerts(){
@@ -791,20 +802,20 @@ function buildAlerts(){
   // members under target
   data.members.forEach(function(m){
     if(m.revenue < revTarget*0.85){
-      alerts.push({sev:'high',ic:'ti-trending-down',title:m.name.split(' ')[0]+' تحت التارجت',desc:'حقّق '+m.revenue.toLocaleString()+' من '+Math.round(revTarget).toLocaleString()+' ريال — ناقص '+Math.round(revTarget-m.revenue).toLocaleString()+' ريال'});
+      alerts.push({sev:'high',ic:'ti-trending-down',title:m.name.split(' ')[0]+' Below Target',desc:'Achieved '+m.revenue.toLocaleString()+' of '+Math.round(revTarget).toLocaleString()+' SAR — short by '+Math.round(revTarget-m.revenue).toLocaleString()+' SAR'});
     }
     if((m.complaints||0)>=2){
-      alerts.push({sev:'high',ic:'ti-message-report',title:m.name.split(' ')[0]+' — '+m.complaints+' شكاوى',desc:(m.complaintClients||'عملاء غير محددين')});
+      alerts.push({sev:'high',ic:'ti-message-report',title:m.name.split(' ')[0]+' — '+m.complaints+' Complaints',desc:(m.complaintClients||'Unspecified clients')});
     }
     if((m.delivery||0)<70){
-      alerts.push({sev:'mid',ic:'ti-clock-exclamation',title:m.name.split(' ')[0]+' — التزام تسليم منخفض',desc:'نسبة الالتزام بالتسليمات '+(m.delivery||0)+'% فقط'});
+      alerts.push({sev:'mid',ic:'ti-clock-exclamation',title:m.name.split(' ')[0]+' — Low Delivery Commitment',desc:'Delivery commitment rate is only '+(m.delivery||0)+'%'});
     }
   });
   // unhappy clients
   data.projects.forEach(function(p){
     if(p.status==='bad'){
       var mgr=data.members[p.managerIdx];
-      alerts.push({sev:'high',ic:'ti-mood-sad',title:p.client+' غير راضي',desc:'المشرف: '+(mgr?mgr.name.split(' ')[0]:'—')+' — يحتاج تدخّل عاجل'});
+      alerts.push({sev:'high',ic:'ti-mood-sad',title:p.client+' Not Satisfied',desc:'Account Manager: '+(mgr?mgr.name.split(' ')[0]:'—')+' — needs urgent attention'});
     }
   });
   // contracts renewing within 14 days
@@ -813,7 +824,7 @@ function buildAlerts(){
     if(!p.renewal) return;
     var d=new Date(p.renewal); var days=Math.ceil((d-today)/(1000*60*60*24));
     if(days>=0 && days<=14){
-      alerts.push({sev:'mid',ic:'ti-calendar-due',title:'تجديد عقد '+p.client,desc:'باقي '+days+' يوم على تاريخ التجديد'});
+      alerts.push({sev:'mid',ic:'ti-calendar-due',title:p.client+' Contract Renewal',desc:days+' days left until renewal date'});
     }
   });
   // sort: high first
@@ -821,7 +832,7 @@ function buildAlerts(){
   alerts.sort(function(a,b){return order[a.sev]-order[b.sev];});
   // if nothing, celebrate
   if(!alerts.length){
-    alerts.push({sev:'good',ic:'ti-confetti',title:'كل المؤشرات سليمة',desc:'لا توجد تنبيهات عاجلة هذا الشهر — أداء ممتاز للفريق'});
+    alerts.push({sev:'good',ic:'ti-confetti',title:'All Indicators Healthy',desc:'No urgent alerts this month — excellent team performance'});
   }
   return alerts.slice(0,6);
 }
@@ -829,8 +840,8 @@ function renderAlerts(){
   var bar=document.getElementById('alertsBar');
   var alerts=buildAlerts();
   var highCount=alerts.filter(function(a){return a.sev==='high';}).length;
-  var headLabel = highCount>0 ? highCount+' بند يحتاج تدخّل' : 'حالة الفريق';
-  var html='<div class="alerts-head"><i class="ti ti-bell-ringing"></i> أولويات تحتاج انتباهك — '+headLabel+'</div><div class="alerts-grid">';
+  var headLabel = highCount>0 ? highCount+' items need attention' : 'Team Status';
+  var html='<div class="alerts-head"><i class="ti ti-bell-ringing"></i> Priorities That Need Your Attention — '+headLabel+'</div><div class="alerts-grid">';
   alerts.forEach(function(a){
     html+='<div class="alert sev-'+a.sev+'"><div class="alert-ic"><i class="ti '+a.ic+'"></i></div><div class="alert-body"><div class="alert-title">'+a.title+'</div><div class="alert-desc">'+a.desc+'</div></div></div>';
   });
@@ -841,14 +852,14 @@ function renderAlerts(){
 function complaintsBlock(m){
   var c=m.complaints||0;
   if(c===0){
-    return '<div class="complaint-box complaint-none"><div class="complaint-head"><i class="ti ti-mood-smile"></i> لا توجد شكاوى هذا الشهر</div></div>';
+    return '<div class="complaint-box complaint-none"><div class="complaint-head"><i class="ti ti-mood-smile"></i> No complaints this month</div></div>';
   }
   var clients=(m.complaintClients||'').trim();
-  var clientsHTML=clients?'<div class="complaint-clients"><span class="cc-label">العملاء:</span> '+clients+'</div>':'';
-  return '<div class="complaint-box complaint-has"><div class="complaint-head"><i class="ti ti-alert-triangle"></i> '+c+' '+(c===1?'شكوى':'شكاوى')+' خلال الشهر</div>'+clientsHTML+'</div>';
+  var clientsHTML=clients?'<div class="complaint-clients"><span class="cc-label">Clients:</span> '+clients+'</div>':'';
+  return '<div class="complaint-box complaint-has"><div class="complaint-head"><i class="ti ti-alert-triangle"></i> '+c+' '+(c===1?'Complaint':'Complaints')+' This Month</div>'+clientsHTML+'</div>';
 }
 function statusHTML(s){
-  var map={ok:'<div class="status-ok"><i class="ti ti-circle-check"></i> راضي</div>',ok2:'<div class="status-ok"><i class="ti ti-circle-check"></i> ممتاز / راضي جداً</div>',warn:'<div class="status-warn"><i class="ti ti-alert-circle"></i> تأخر في الرد</div>',warn2:'<div class="status-warn"><i class="ti ti-alert-circle"></i> متأخر أحياناً</div>',bad:'<div class="status-bad"><i class="ti ti-alert-triangle"></i> غير راضي</div>'};
+  var map={ok:'<div class="status-ok"><i class="ti ti-circle-check"></i> Satisfied</div>',ok2:'<div class="status-ok"><i class="ti ti-circle-check"></i> Excellent / Very Satisfied</div>',warn:'<div class="status-warn"><i class="ti ti-alert-circle"></i> Slow to Respond</div>',warn2:'<div class="status-warn"><i class="ti ti-alert-circle"></i> Occasionally Late</div>',bad:'<div class="status-bad"><i class="ti ti-alert-triangle"></i> Not Satisfied</div>'};
   return map[s]||'';
 }
 function socialIcons(social){
@@ -867,7 +878,7 @@ function renderTeam(){
   var filter = document.getElementById('memberFilter').value;
   var grid = document.getElementById('teamGrid');
   grid.innerHTML='';
-  if(!data.members.length){grid.innerHTML='<div class="empty-state">لا يوجد أعضاء — اضغط \"إضافة عضو\"</div>';return;}
+  if(!data.members.length){grid.innerHTML='<div class="empty-state">No members yet — click "Add Member"</div>';return;}
 
   // compute overall + original index, then sort high->low for management view
   var ranked = data.members.map(function(m,i){return {m:m,i:i,ov:overallScore(m)};});
@@ -879,16 +890,19 @@ function renderTeam(){
     var tier=scoreTier(ov);
     var st=statusLabel(ov);
     var rankClass = rankPos===0?'rank-top':(tier==='low'?'rank-risk':'');
-    var rankTag = (filter==='all' && rankPos===0)?'<span class="rank-tag">الأعلى أداءً</span>':'';
+    var rankTag = (filter==='all' && rankPos===0)?'<span class="rank-tag">Top Performer</span>':'';
+    var resp2h = m.respondsWithin2h
+      ? '<span class="attend-badge present-b"><i class="ti ti-clock-check"></i> Responds within 2h</span>'
+      : '<span class="attend-badge absent-b"><i class="ti ti-clock-x"></i> Slower than 2h</span>';
 
     var card = document.createElement('div');
     card.className='am-card '+rankClass;
     card.innerHTML=
       '<div class="status-pill pill-'+st.cls+'"><i class="ti '+st.ic+'"></i> '+st.txt+'</div>'+
       '<div class="am-card-actions">'+
-        '<button class="icon-btn" title="تقرير PDF" onclick="generateMemberReport('+i+')"><i class="ti ti-file-type-pdf"></i></button>'+
-        '<button class="icon-btn" title="تعديل" onclick="openEditMember('+i+')"><i class="ti ti-edit"></i></button>'+
-        '<button class="icon-btn" title="حذف" onclick="deleteMember('+i+')"><i class="ti ti-trash" style="color:#D6453F"></i></button>'+
+        '<button class="icon-btn" title="PDF Report" onclick="generateMemberReport('+i+')"><i class="ti ti-file-type-pdf"></i></button>'+
+        '<button class="icon-btn" title="Edit" onclick="openEditMember('+i+')"><i class="ti ti-edit"></i></button>'+
+        '<button class="icon-btn" title="Delete" onclick="deleteMember('+i+')"><i class="ti ti-trash" style="color:#D6453F"></i></button>'+
       '</div>'+
       '<div class="am-header">'+
         '<div class="avatar '+avatarClass(i)+'">'+initials(m.name)+'</div>'+
@@ -896,21 +910,23 @@ function renderTeam(){
         '<div class="grade-badge grade-'+gradeLetter(ov).cls+'">'+gradeLetter(ov).g+'</div>'+
         '<div class="ov-stack"><span class="grade-badge grade-'+gradeFor(ov)+'">'+gradeFor(ov)+'</span><div class="overall-badge ov-'+tier+'"><span class="ov-num">'+ov+'</span><span class="ov-lbl">Overall</span></div></div>'+
       '</div>'+
-      (trendFor(m.name,ov)?'<div style="margin:-6px 0 10px;font-size:11px">مقارنة بالشهر السابق: '+trendFor(m.name,ov)+'</div>':'')+
+      (trendFor(m.name,ov)?'<div style="margin:-6px 0 10px;font-size:11px">vs. last month: '+trendFor(m.name,ov)+'</div>':'')+
       '<div class="score-row">'+
-        '<div class="score-item"><div class="score-label">Monthly Revenue</div><div class="score-num '+scoreColor(m.revenue/250)+'">'+m.revenue.toLocaleString()+' ر</div></div>'+
+        '<div class="score-item"><div class="score-label">Monthly Revenue</div><div class="score-num '+scoreColor(m.revenue/250)+'">'+m.revenue.toLocaleString()+' SAR</div></div>'+
         '<div class="score-item"><div class="score-label">Client Health</div><div class="score-num '+scoreColor(m.health)+'">'+m.health+'%</div></div>'+
       '</div>'+
       '<div class="bar-wrap"><div class="bar-label"><span>Operational Efficiency</span><span>'+m.efficiency+'%</span></div><div class="bar-bg"><div class="bar-fill '+barColor(m.efficiency)+'" style="width:'+m.efficiency+'%"></div></div></div>'+
-      '<div class="bar-wrap"><div class="bar-label"><span>وقت الرد على العميل</span><span>'+m.response+'%</span></div><div class="bar-bg"><div class="bar-fill '+barColor(m.response)+'" style="width:'+m.response+'%"></div></div></div>'+
+      '<div class="bar-wrap"><div class="bar-label"><span>Client Response Time</span><span>'+m.response+'%</span></div><div class="bar-bg"><div class="bar-fill '+barColor(m.response)+'" style="width:'+m.response+'%"></div></div></div>'+
+      '<div class="bar-wrap"><div class="bar-label"><span>Attitude</span><span>'+(m.attitude||0)+'%</span></div><div class="bar-bg"><div class="bar-fill '+barColor(m.attitude||0)+'" style="width:'+(m.attitude||0)+'%"></div></div></div>'+
       '<div class="bar-wrap"><div class="bar-label"><span>Zoho System Score</span><span>'+m.zohoScore+'%</span></div><div class="bar-bg"><div class="bar-fill fill-purple" style="width:'+m.zohoScore+'%"></div></div></div>'+
-      '<div class="bar-wrap"><div class="bar-label"><span>الالتزام بتسليمات العملاء</span><span>'+(m.delivery||0)+'%</span></div><div class="bar-bg"><div class="bar-fill '+barColor(m.delivery||0)+'" style="width:'+(m.delivery||0)+'%"></div></div></div>'+
+      '<div class="bar-wrap"><div class="bar-label"><span>Client Delivery Commitment</span><span>'+(m.delivery||0)+'%</span></div><div class="bar-bg"><div class="bar-fill '+barColor(m.delivery||0)+'" style="width:'+(m.delivery||0)+'%"></div></div></div>'+
       complaintsBlock(m)+
       '<div class="attend-row">'+
-        '<span class="attend-badge present-b"><i class="ti ti-check"></i> حضور: '+m.present+' يوم</span>'+
-        '<span class="attend-badge absent-b"><i class="ti ti-x"></i> غياب: '+m.absent+' يوم</span>'+
+        '<span class="attend-badge present-b"><i class="ti ti-check"></i> Present: '+m.present+' days</span>'+
+        '<span class="attend-badge absent-b"><i class="ti ti-x"></i> Absent: '+m.absent+' days</span>'+
+        resp2h+
       '</div>'+
-      '<div class="report-btn-row no-print"><button class="btn btn-report" onclick="generateMemberReport('+i+')"><i class="ti ti-file-type-pdf"></i> تقرير PDF لـ '+m.name.split(' ')[0]+'</button></div>';
+      '<div class="report-btn-row no-print"><button class="btn btn-report" onclick="generateMemberReport('+i+')"><i class="ti ti-file-type-pdf"></i> PDF Report for '+m.name.split(' ')[0]+'</button></div>';
     grid.appendChild(card);
   });
 }
@@ -919,17 +935,17 @@ function renderTeam(){
 function renderProjects(){
   var tbody = document.getElementById('projectsBody');
   tbody.innerHTML='';
-  if(!data.projects.length){tbody.innerHTML='<tr><td colspan="8" class="empty-state">لا يوجد مشاريع</td></tr>';return;}
+  if(!data.projects.length){tbody.innerHTML='<tr><td colspan="8" class="empty-state">No projects yet</td></tr>';return;}
   data.projects.forEach(function(p,i){
     var mgr = data.members[p.managerIdx];
     var mgrName = mgr ? mgr.name.split(' ')[0] : '—';
     var mgrAvatar = mgr ? '<div class="avatar '+avatarClass(p.managerIdx)+'" style="width:26px;height:26px;font-size:10px">'+initials(mgr.name)+'</div>' : '';
-    var renewal = p.renewal ? new Date(p.renewal).toLocaleDateString('ar-SA',{day:'numeric',month:'long',year:'numeric'}) : '—';
+    var renewal = p.renewal ? new Date(p.renewal).toLocaleDateString('en-US',{day:'numeric',month:'long',year:'numeric'}) : '—';
     var tr = document.createElement('tr');
     tr.innerHTML=
       '<td><div style="font-weight:500">'+p.client+'</div><div style="font-size:11px;color:#6b6b67"><a href="https://'+p.website+'" target="_blank">'+p.website+'</a></div></td>'+
       '<td><span class="pkg-badge pkg-'+p.package+'">'+p.package+'</span></td>'+
-      '<td>'+Number(p.value).toLocaleString()+' ر/شهر</td>'+
+      '<td>'+Number(p.value).toLocaleString()+' SAR/mo</td>'+
       '<td><div style="display:flex;align-items:center;gap:6px">'+mgrAvatar+mgrName+'</div></td>'+
       '<td>'+socialIcons(p.social)+'</td>'+
       '<td style="font-size:12px">'+renewal+'</td>'+
@@ -948,7 +964,7 @@ function renderRevenue(){
   var total = data.members.reduce(function(s,m){return s+m.revenue;},0);
   var target = data.settings.target;
   var pct = Math.min(100,Math.round(total/target*100));
-  document.getElementById('revTotal').textContent=total.toLocaleString()+' / '+target.toLocaleString()+' ريال';
+  document.getElementById('revTotal').textContent=total.toLocaleString()+' / '+target.toLocaleString()+' SAR';
   document.getElementById('revPct').textContent=pct+'%';
   document.getElementById('revBar').style.width=pct+'%';
   var grid=document.getElementById('revGrid');
@@ -959,12 +975,12 @@ function renderRevenue(){
     var col=m.revenue>=perPerson?'#0F6E56':m.revenue>=perPerson*.85?'#854F0B':'#A32D2D';
     var barC=m.revenue>=perPerson?'fill-green':m.revenue>=perPerson*.85?'fill-amber':'fill-red';
     var diff=m.revenue-perPerson;
-    var diffText=diff>=0?'<div style="font-size:11px;color:#0F6E56;margin-top:4px">تجاوز الهدف ✓</div>':'<div style="font-size:11px;color:#A32D2D;margin-top:4px">ناقص '+Math.abs(diff).toLocaleString()+' ريال</div>';
+    var diffText=diff>=0?'<div style="font-size:11px;color:#0F6E56;margin-top:4px">Target exceeded ✓</div>':'<div style="font-size:11px;color:#A32D2D;margin-top:4px">Short by '+Math.abs(diff).toLocaleString()+' SAR</div>';
     var div=document.createElement('div');
     div.className='rev-item';
     div.innerHTML='<div class="rev-name">'+m.name.split(' ')[0]+'</div>'+
       '<div class="rev-num" style="color:'+col+'">'+m.revenue.toLocaleString()+'</div>'+
-      '<div class="rev-target-line">هدف: '+perPerson.toLocaleString()+' ريال</div>'+
+      '<div class="rev-target-line">Target: '+perPerson.toLocaleString()+' SAR</div>'+
       '<div class="prog-outer"><div class="prog-inner '+barC+'" style="width:'+p2+'%"></div></div>'+diffText;
     grid.appendChild(div);
   });
@@ -992,17 +1008,18 @@ function renderZoho(){
   var zg=document.getElementById('zohoGrid');
   var sg=document.getElementById('skillsGrid');
   zg.innerHTML=''; sg.innerHTML='';
-  var skillNames=['التواصل','التفاوض','إدارة الوقت','حل المشكلات'];
+  var skillNames=['Communication','Negotiation','Time Management','Problem Solving'];
   data.members.forEach(function(m,i){
     // Zoho card
     var zc=document.createElement('div');
     zc.className='zoho-card';
+    var evidenceHTML = m.zohoEvidence ? '<div style="margin-top:10px;padding:10px;background:#f5f5f5;border-radius:6px;font-size:12px;line-height:1.5;color:#555;border-left:3px solid #7C4DD6"><strong>Evidence:</strong> '+m.zohoEvidence.replace(/\n/g,'<br>')+'</div>' : '';
     zc.innerHTML='<div class="zoho-header"><div class="avatar '+avatarClass(i)+'" style="width:30px;height:30px;font-size:11px">'+initials(m.name)+'</div><div style="font-size:13px;font-weight:500">'+m.name+'</div></div>'+
       '<div class="zoho-metrics">'+
-        '<div class="zoho-item"><div class="zoho-label">عدد اللوجات</div><div class="zoho-val '+(m.zohoLogs>=100?'good':'mid')+'">'+m.zohoLogs+'</div></div>'+
-        '<div class="zoho-item"><div class="zoho-label">التقارير</div><div class="zoho-val '+(m.zohoReports>=18?'good':m.zohoReports>=14?'mid':'low')+'">'+m.zohoReports+'/20</div></div>'+
+        '<div class="zoho-item"><div class="zoho-label">Reports</div><div class="zoho-val '+(m.zohoReports>=18?'good':m.zohoReports>=14?'mid':'low')+'">'+m.zohoReports+'/20</div></div>'+
         '<div class="zoho-item"><div class="zoho-label">Follow-ups</div><div class="zoho-val '+(m.followup>=85?'good':m.followup>=70?'mid':'low')+'">'+m.followup+'%</div></div>'+
-      '</div>';
+        '<div class="zoho-item"><div class="zoho-label">Attitude</div><div class="zoho-val '+(m.attitude>=85?'good':m.attitude>=70?'mid':'low')+'">'+(m.attitude||0)+'%</div></div>'+
+      '</div>'+evidenceHTML;
     zg.appendChild(zc);
     // Skill card
     var sc=document.createElement('div');
@@ -1033,7 +1050,7 @@ function renderMetrics(){
 function rebuildFilter(){
   var sel=document.getElementById('memberFilter');
   var cur=sel.value;
-  sel.innerHTML='<option value="all">كل الفريق</option>';
+  sel.innerHTML='<option value="all">Whole Team</option>';
   data.members.forEach(function(m,i){
     var opt=document.createElement('option');
     opt.value=i; opt.textContent=m.name.split(' ')[0];
@@ -1068,20 +1085,21 @@ function closeModal(type){ document.getElementById('modal-'+type).classList.remo
 function openEditMember(idx){
   var m = idx>=0 ? data.members[idx] : null;
   document.getElementById('memberEditIndex').value=idx;
-  document.getElementById('memberModalTitle').textContent=idx>=0?'تعديل بيانات العضو':'إضافة عضو جديد';
+  document.getElementById('memberModalTitle').textContent=idx>=0?'Edit Member Details':'Add New Member';
   document.getElementById('mName').value=m?m.name:'';
   document.getElementById('mTitle').value=m?m.title:'Account Manager';
   document.getElementById('mRevenue').value=m?m.revenue:'';
   document.getElementById('mPresent').value=m?m.present:'';
   document.getElementById('mAbsent').value=m?m.absent:'';
-  ['mEfficiency','mHealth','mResponse','mZoho','mFollowup'].forEach(function(id){
-    var key={mEfficiency:'efficiency',mHealth:'health',mResponse:'response',mZoho:'zohoScore',mFollowup:'followup'}[id];
-    var valId={mEfficiency:'effVal',mHealth:'healthVal',mResponse:'responseVal',mZoho:'zohoScoreVal',mFollowup:'followupVal'}[id];
+  ['mEfficiency','mHealth','mResponse','mAttitude','mZoho','mFollowup'].forEach(function(id){
+    var key={mEfficiency:'efficiency',mHealth:'health',mResponse:'response',mAttitude:'attitude',mZoho:'zohoScore',mFollowup:'followup'}[id];
+    var valId={mEfficiency:'effVal',mHealth:'healthVal',mResponse:'responseVal',mAttitude:'attitudeVal',mZoho:'zohoScoreVal',mFollowup:'followupVal'}[id];
     document.getElementById(id).value=m?m[key]:80;
     document.getElementById(valId).textContent=m?m[key]:80;
   });
-  document.getElementById('mZohoLogs').value=m?m.zohoLogs:'';
+  document.getElementById('mResponds2h').checked=m?!!m.respondsWithin2h:false;
   document.getElementById('mZohoReports').value=m?m.zohoReports:'';
+  document.getElementById('mZohoEvidence').value=m?(m.zohoEvidence||''):'';
   document.getElementById('mDelivery').value=m?(m.delivery||80):80;
   document.getElementById('deliveryVal').textContent=m?(m.delivery||80):80;
   document.getElementById('mComplaints').value=m?(m.complaints||0):'';
@@ -1095,7 +1113,7 @@ function openEditMember(idx){
 function saveMember(){
   var idx=parseInt(document.getElementById('memberEditIndex').value);
   var m={
-    name:document.getElementById('mName').value.trim()||'عضو جديد',
+    name:document.getElementById('mName').value.trim()||'New Member',
     title:document.getElementById('mTitle').value.trim()||'Account Manager',
     revenue:parseInt(document.getElementById('mRevenue').value)||0,
     present:parseInt(document.getElementById('mPresent').value)||0,
@@ -1103,9 +1121,11 @@ function saveMember(){
     efficiency:parseInt(document.getElementById('mEfficiency').value),
     health:parseInt(document.getElementById('mHealth').value),
     response:parseInt(document.getElementById('mResponse').value),
+    respondsWithin2h:document.getElementById('mResponds2h').checked,
+    attitude:parseInt(document.getElementById('mAttitude').value),
     zohoScore:parseInt(document.getElementById('mZoho').value),
-    zohoLogs:parseInt(document.getElementById('mZohoLogs').value)||0,
     zohoReports:parseInt(document.getElementById('mZohoReports').value)||0,
+    zohoEvidence:document.getElementById('mZohoEvidence').value.trim(),
     followup:parseInt(document.getElementById('mFollowup').value),
     delivery:parseInt(document.getElementById('mDelivery').value),
     complaints:parseInt(document.getElementById('mComplaints').value)||0,
@@ -1117,7 +1137,7 @@ function saveMember(){
 }
 
 function deleteMember(idx){
-  if(!confirm('هل تريدي حذف '+data.members[idx].name+'؟')) return;
+  if(!confirm('Are you sure you want to delete '+data.members[idx].name+'?')) return;
   data.members.splice(idx,1);
   save(data); renderAll();
 }
@@ -1133,7 +1153,7 @@ function openEditProject(idx){
     sel.appendChild(opt);
   });
   document.getElementById('projectEditIndex').value=idx;
-  document.getElementById('projectModalTitle').textContent=idx>=0?'تعديل المشروع':'إضافة مشروع جديد';
+  document.getElementById('projectModalTitle').textContent=idx>=0?'Edit Project':'Add New Project';
   document.getElementById('pClient').value=p?p.client:'';
   document.getElementById('pWebsite').value=p?p.website:'';
   document.getElementById('pPackage').value=p?p.package:'Gold';
@@ -1154,7 +1174,7 @@ function openEditProject(idx){
 function saveProject(){
   var idx=parseInt(document.getElementById('projectEditIndex').value);
   var p={
-    client:document.getElementById('pClient').value.trim()||'عميل جديد',
+    client:document.getElementById('pClient').value.trim()||'New Client',
     website:document.getElementById('pWebsite').value.trim(),
     package:document.getElementById('pPackage').value,
     value:parseInt(document.getElementById('pValue').value)||0,
@@ -1168,7 +1188,7 @@ function saveProject(){
 }
 
 function deleteProject(idx){
-  if(!confirm('هل تريدي حذف هذا المشروع؟')) return;
+  if(!confirm('Are you sure you want to delete this project?')) return;
   data.projects.splice(idx,1);
   save(data); renderAll();
 }
@@ -1196,11 +1216,11 @@ function generateMemberReport(idx){
   // member's projects
   var myProjects=data.projects.filter(function(p){return p.managerIdx===idx;});
   var projRows=myProjects.map(function(p){
-    var statusTxt={ok:'راضي',ok2:'ممتاز / راضي جداً',warn:'تأخر في الرد',warn2:'متأخر أحياناً',bad:'غير راضي'}[p.status]||'';
-    return '<tr><td>'+p.client+'</td><td>'+p.package+'</td><td>'+Number(p.value).toLocaleString()+' ريال</td><td>'+statusTxt+'</td></tr>';
-  }).join('') || '<tr><td colspan="4" style="text-align:center;color:#888">لا توجد مشاريع مسندة</td></tr>';
+    var statusTxt={ok:'Satisfied',ok2:'Excellent / Very Satisfied',warn:'Slow to Respond',warn2:'Occasionally Late',bad:'Not Satisfied'}[p.status]||'';
+    return '<tr><td>'+p.client+'</td><td>'+p.package+'</td><td>'+Number(p.value).toLocaleString()+' SAR</td><td>'+statusTxt+'</td></tr>';
+  }).join('') || '<tr><td colspan="4" style="text-align:center;color:#888">No projects assigned</td></tr>';
 
-  var skillNames=['التواصل','التفاوض','إدارة الوقت','حل المشكلات'];
+  var skillNames=['Communication','Negotiation','Time Management','Problem Solving'];
   var skillsHTML=skillNames.map(function(sn,si){
     var v=m.skills[si]||3;
     var st=''; for(var k=1;k<=5;k++) st+=(k<=v?'★':'☆');
@@ -1208,17 +1228,18 @@ function generateMemberReport(idx){
   }).join('');
 
   var revTarget=Math.round(data.settings.target/Math.max(1,data.members.length));
-  var complaintLine=(m.complaints||0)===0?'لا توجد شكاوى هذا الشهر':((m.complaints)+' شكاوى — العملاء: '+(m.complaintClients||'غير محدد'));
+  var complaintLine=(m.complaints||0)===0?'No complaints this month':((m.complaints)+' complaints — Clients: '+(m.complaintClients||'Unspecified'));
+  var resp2hText=m.respondsWithin2h?'Yes':'No';
 
   var gradeColors={A:'#0B6B4A',B:'#1F5FA8',C:'#92590A',D:'#A8302B'};
   var gradeBg={A:'#E4F6EF',B:'#E3F0FB',C:'#FBF0DD',D:'#FBEAE9'};
 
   var w=window.open('','_blank');
-  var doc='<!DOCTYPE html><html dir="rtl" lang="ar"><head><meta charset="UTF-8"><title>تقرير '+m.name+'</title>'+
-  '<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&family=Sora:wght@600;700&display=swap" rel="stylesheet">'+
+  var doc='<!DOCTYPE html><html dir="ltr" lang="en"><head><meta charset="UTF-8"><title>Report — '+m.name+'</title>'+
+  '<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700&display=swap" rel="stylesheet">'+
   '<style>'+
   '*{margin:0;padding:0;box-sizing:border-box}'+
-  'body{font-family:"IBM Plex Sans Arabic",sans-serif;color:#1F1A2E;padding:40px;background:#fff;line-height:1.6}'+
+  'body{font-family:"Sora",system-ui,sans-serif;color:#1F1A2E;padding:40px;background:#fff;line-height:1.6}'+
   '.rep-head{display:flex;justify-content:space-between;align-items:flex-start;border-bottom:3px solid #5B2BB8;padding-bottom:20px;margin-bottom:24px}'+
   '.rep-brand{display:flex;align-items:center;gap:12px}'+
   '.rep-mark{width:48px;height:48px;border-radius:13px;background:linear-gradient(135deg,#5B2BB8,#2A1259);color:#fff;display:flex;align-items:center;justify-content:center;font-family:Sora;font-weight:700;font-size:22px}'+
@@ -1231,7 +1252,7 @@ function generateMemberReport(idx){
   '.rep-av{width:60px;height:60px;border-radius:16px;background:#EDE6FA;color:#5B2BB8;display:flex;align-items:center;justify-content:center;font-family:Sora;font-weight:700;font-size:22px}'+
   '.rep-name{font-size:20px;font-weight:700}'+
   '.rep-role{font-size:13px;color:#6B6480}'+
-  '.rep-ov{margin-right:auto;text-align:center}'+
+  '.rep-ov{margin-left:auto;text-align:center}'+
   '.rep-ov .n{font-family:Sora;font-size:32px;font-weight:700;color:#5B2BB8}'+
   '.rep-ov .l{font-size:11px;color:#6B6480;text-transform:uppercase;letter-spacing:.05em}'+
   '.sec{margin-bottom:24px}'+
@@ -1241,37 +1262,45 @@ function generateMemberReport(idx){
   '.kpi .v{font-family:Sora;font-size:22px;font-weight:700}'+
   '.kpi .l{font-size:11px;color:#6B6480;margin-top:4px}'+
   'table{width:100%;border-collapse:collapse;font-size:13px}'+
-  'th{text-align:right;background:#F6F2FC;padding:10px;font-size:11px;color:#6B6480;text-transform:uppercase;letter-spacing:.03em;font-weight:600}'+
+  'th{text-align:left;background:#F6F2FC;padding:10px;font-size:11px;color:#6B6480;text-transform:uppercase;letter-spacing:.03em;font-weight:600}'+
   'td{padding:10px;border-bottom:1px solid #F1ECF9}'+
   '.complaint-line{padding:12px 14px;border-radius:10px;font-size:13px;font-weight:500;background:'+((m.complaints||0)===0?'#E4F6EF;color:#0B6B4A':'#FBEAE9;color:#A8302B')+'}'+
   '.rep-foot{margin-top:30px;padding-top:16px;border-top:1px solid #E9E3F4;font-size:11px;color:#9A93AD;text-align:center}'+
-  '.print-actions{position:fixed;top:16px;left:16px;display:flex;gap:8px}'+
+  '.print-actions{position:fixed;top:16px;right:16px;display:flex;gap:8px}'+
   '.pa-btn{padding:9px 16px;border-radius:9px;border:none;font-family:inherit;font-size:13px;font-weight:600;cursor:pointer;background:#5B2BB8;color:#fff}'+
   '.pa-btn.sec{background:#EDE6FA;color:#5B2BB8}'+
   '@media print{.print-actions{display:none}body{padding:20px}}'+
   '</style></head><body>'+
-  '<div class="print-actions"><button class="pa-btn" onclick="window.print()">🖨️ حفظ PDF / طباعة</button><button class="pa-btn sec" onclick="window.close()">إغلاق</button></div>'+
-  '<div class="rep-head"><div class="rep-brand"><div class="rep-mark">O</div><div><div class="rep-title">تقرير تقييم شهري</div><div class="rep-sub">'+period+'</div></div></div>'+
+  '<div class="print-actions"><button class="pa-btn" onclick="window.print()">🖨️ Save PDF / Print</button><button class="pa-btn sec" onclick="window.close()">Close</button></div>'+
+  '<div class="rep-head"><div class="rep-brand"><div class="rep-mark">O</div><div><div class="rep-title">Monthly Performance Report</div><div class="rep-sub">'+period+'</div></div></div>'+
   '<div class="rep-grade"><div class="g">'+g+'</div><div class="gl">'+gradeLabel(g)+'</div></div></div>'+
   '<div class="rep-person"><div class="rep-av">'+initials(m.name)+'</div><div><div class="rep-name">'+m.name+'</div><div class="rep-role">'+m.title+'</div></div>'+
   '<div class="rep-ov"><div class="n">'+ov+'</div><div class="l">Overall Score</div></div></div>'+
-  '<div class="sec"><div class="sec-h">المؤشرات الرئيسية</div><div class="kpi-grid">'+
-  '<div class="kpi"><div class="v">'+m.revenue.toLocaleString()+'</div><div class="l">الإيراد الشهري (هدف '+revTarget.toLocaleString()+')</div></div>'+
+  '<div class="sec"><div class="sec-h">Key Indicators</div><div class="kpi-grid">'+
+  '<div class="kpi"><div class="v">'+m.revenue.toLocaleString()+'</div><div class="l">Monthly Revenue (target '+revTarget.toLocaleString()+')</div></div>'+
   '<div class="kpi"><div class="v">'+m.health+'%</div><div class="l">Client Health</div></div>'+
   '<div class="kpi"><div class="v">'+m.efficiency+'%</div><div class="l">Operational Efficiency</div></div>'+
-  '<div class="kpi"><div class="v">'+m.response+'%</div><div class="l">وقت الرد على العميل</div></div>'+
-  '<div class="kpi"><div class="v">'+(m.delivery||0)+'%</div><div class="l">الالتزام بالتسليمات</div></div>'+
+  '<div class="kpi"><div class="v">'+m.response+'%</div><div class="l">Client Response Time</div></div>'+
+  '<div class="kpi"><div class="v">'+resp2hText+'</div><div class="l">Responds Within 2 Hours</div></div>'+
+  '<div class="kpi"><div class="v">'+(m.attitude||0)+'%</div><div class="l">Attitude</div></div>'+
+  '<div class="kpi"><div class="v">'+(m.delivery||0)+'%</div><div class="l">Delivery Commitment</div></div>'+
   '<div class="kpi"><div class="v">'+m.zohoScore+'%</div><div class="l">Zoho System Score</div></div>'+
   '</div></div>'+
-  '<div class="sec"><div class="sec-h">شكاوى العملاء</div><div class="complaint-line">'+complaintLine+'</div></div>'+
-  '<div class="sec"><div class="sec-h">الحضور والانضباط</div><div class="kpi-grid">'+
-  '<div class="kpi"><div class="v" style="color:#0B6B4A">'+m.present+'</div><div class="l">أيام الحضور</div></div>'+
-  '<div class="kpi"><div class="v" style="color:#A8302B">'+m.absent+'</div><div class="l">أيام الغياب</div></div>'+
+  '<div class="sec"><div class="sec-h">Client Complaints</div><div class="complaint-line">'+complaintLine+'</div></div>'+
+  '<div class="sec"><div class="sec-h">Attendance & Discipline</div><div class="kpi-grid">'+
+  '<div class="kpi"><div class="v" style="color:#0B6B4A">'+m.present+'</div><div class="l">Days Present</div></div>'+
+  '<div class="kpi"><div class="v" style="color:#A8302B">'+m.absent+'</div><div class="l">Days Absent</div></div>'+
   '<div class="kpi"><div class="v">'+m.followup+'%</div><div class="l">Follow-ups</div></div>'+
   '</div></div>'+
-  '<div class="sec"><div class="sec-h">المشاريع المُسندة ('+myProjects.length+')</div><table><thead><tr><th>العميل</th><th>الباقة</th><th>قيمة العقد</th><th>الحالة</th></tr></thead><tbody>'+projRows+'</tbody></table></div>'+
-  '<div class="sec"><div class="sec-h">المهارات الشخصية والمهنية</div><table><tbody>'+skillsHTML+'</tbody></table></div>'+
-  '<div class="rep-foot">تم إنشاء هذا التقرير تلقائياً من Account Managers Dashboard — Ocoda · '+new Date().toLocaleDateString('ar-EG')+'</div>'+
+  '<div class="sec"><div class="sec-h">Zoho CRM & System Performance</div><table><thead><tr><th>Metric</th><th>Value</th></tr></thead><tbody>'+
+  '<tr><td>Reports Submitted</td><td>'+m.zohoReports+'/20</td></tr>'+
+  '<tr><td>Follow-ups Rate</td><td>'+m.followup+'%</td></tr>'+
+  '<tr><td>System Score</td><td>'+m.zohoScore+'%</td></tr>'+
+  '</tbody></table></div>'+
+  (m.zohoEvidence?'<div class="sec"><div class="sec-h">Evidence & Notes</div><div style="padding:12px 14px;border-radius:10px;background:#F9F7FC;border-left:3px solid #7C4DD6;white-space:pre-wrap;font-size:13px;line-height:1.6">'+m.zohoEvidence+'</div></div>':'')+
+  '<div class="sec"><div class="sec-h">Assigned Projects ('+myProjects.length+')</div><table><thead><tr><th>Client</th><th>Package</th><th>Contract Value</th><th>Status</th></tr></thead><tbody>'+projRows+'</tbody></table></div>'+
+  '<div class="sec"><div class="sec-h">Personal & Professional Skills</div><table><tbody>'+skillsHTML+'</tbody></table></div>'+
+  '<div class="rep-foot">This report was generated automatically by Account Managers Dashboard — Ocoda · '+new Date().toLocaleDateString('en-US')+'</div>'+
   '</body></html>';
   w.document.write(doc);
   w.document.close();
